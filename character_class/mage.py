@@ -16,5 +16,7 @@ class Mage(Player):
     def fireball(self, other_player):
         if self.mana <= 20:
             other_player.hp -= 25
+            return True
         else:
             print("\nBrakuje many\n")
+            return False

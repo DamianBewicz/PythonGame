@@ -5,7 +5,6 @@ from items.backpack import Backpack
 class Player:
     def __init__(self, name):
         self.name = name
-        self.type = None
         self.max_dmg = None
         self.min_dmg = None
         self.max_hp = None
@@ -26,15 +25,20 @@ class Player:
 
     def attack(self, other_player):
         other_player.hp -= randint(self.min_dmg, self.max_dmg)
+        return True
 
-    def choose_action(self, other_player):
-        for number, action in enumerate(self.actions):
-            print(number + 1, action[0])
-        choice = int(input("\nWybierz akcje\n"))
-        if choice == 1 or choice == 2:
-            return self.actions[choice - 1][1](other_player)
-        if choice == 3 or choice == 4:
-            return self.actions[choice - 1][1]()
+    def perform_action(self, other_player):
+        while True:
+            for number, action in enumerate(self.actions):
+                print(number + 1, action[0])
+            choice = int(input("\nWybierz akcje\n"))
+            result = True
+            if choice == 1 or choice == 2:
+                result = self.actions[choice - 1][1](other_player)
+            if choice == 3 or choice == 4:
+                result = self.actions[choice - 1][1]()
+            if result is True:
+                break
 
     def choose_skill(self, other_player):
         for number, skill in enumerate(self.skills):
@@ -42,15 +46,17 @@ class Player:
         choice = int(input("\nWybierz atak\n")) - 1
         return self.skills[choice][1](other_player)
 
-    def use(self, other_player):
+    def use(self) -> bool:
+        # Returns True if item was corectly used,otherwise returns False.
         if not self.backpack.is_empty():
             self.backpack.print_available_items()
             choice = int(input("\nWybierz przedmiot\n"))
             self.backpack.items[choice - 1].use_item(self)
             self.backpack.items.pop(choice - 1)
+            return True
         else:
             print("\nPlecak jest pusty!\n")
-            return self.choose_action(other_player)
+            return False
 
     def is_dead(self):
         return self.hp <= 0

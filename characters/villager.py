@@ -11,4 +11,4 @@ class Villager(Enemy):
         self.max_hp = 30
         self.hp = 30
         self.gold_loot_range = 0, 20
-        self.loot = [HealthPotion()]
+        self.loot = [HealthPotion() for _ in range(11)]

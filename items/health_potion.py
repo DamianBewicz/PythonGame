@@ -2,5 +2,5 @@ class HealthPotion:
     def __init__(self):
         self.hp = 20
 
-    def __str__(self):
+    def __repr__(self):
         return "Mikstura zdrowia"

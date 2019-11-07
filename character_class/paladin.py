@@ -14,14 +14,20 @@ class Paladin(Player):
         self.skills = [("Święty Blask", self.holy_light), ("Błogosławiony Młot", self.blessed_hammer)]
 
     def holy_light(self):
+        # Returns True if action was corectly performed,otherwise returns False.
         if self.mana <= 10:
             self.hp += 20
+            return True
         else:
             print("\nBrakuje many\n")
+            return False
 
     def blessed_hammer(self):
+        # Returns True if action was corectly performed,otherwise returns False.
         if self.mana <= 25:
             self.min_dmg += 15
             self.max_dmg += 15
+            return True
         else:
             print("\nBrakuje many\n")
+            return False

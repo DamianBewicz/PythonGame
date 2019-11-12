@@ -1,9 +1,9 @@
-from items.health_potion import HealthPotion
-from characters.character import Enemy
+from characters.enemies import Enemy
+from items.potions import MinorHealthPotion
 
 
 class Villager(Enemy):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.name = "Wieśniak Władysław"
         self.max_dmg = 15
@@ -11,4 +11,4 @@ class Villager(Enemy):
         self.max_hp = 30
         self.hp = 30
         self.gold_loot_range = 0, 20
-        self.loot = [HealthPotion() for _ in range(11)]
+        self.loot = [MinorHealthPotion() for _ in range(11)]

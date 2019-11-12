@@ -1,48 +1,67 @@
-from character_class import Knight, Mage, Paladin
-from characters.blacksmith import Blacksmith
-from characters.villager import Villager
+from typing import Type
+from castle.old_town import OldTown
+from characters import Knight, Mage, Paladin, Blacksmith, Villager, Player
 from story_line import *
 
 
 class Game:
 
+    def __init__(self) -> None:
+        self.player = Game.create_character()
+        self.act = 0
+        self.castles = OldTown(self.player)
+        self.enemies = [Villager, Blacksmith]
+
     STORY_LINE = {
-        1: part1,
-        2: part2,
+        0: part1,
+        1: part2,
     }
 
-    CHARACTER_CLASSES = (
-        ("Rycerz", Knight),
-        ("Mag", Mage),
-        ("Palladyn", Paladin),
-    )
+    def start_story(self) -> None:
+        Game.make_acion(self)
 
     @staticmethod
-    def create_character():
+    def create_character() -> Player:
+        classes = (
+            Knight,
+            Mage,
+            Paladin,
+        )
+
         character_name = input("Podaj nazwę gracza\n")
         while True:
             try:
                 print()
-                for number, class_name in enumerate(Game.CHARACTER_CLASSES):
-                    print(f"{number + 1} {class_name[0]}")
-                selected_class = int(input("\n\nWybierz klasę swojej postaci\n"))
-                return Game.CHARACTER_CLASSES[selected_class - 1][1](character_name)
+                for number, cls in enumerate(classes):
+                    print(f"{number + 1} {cls.NAME}")
+                choice = int(input("\n\nWybierz klasę swojej postaci\n"))
+                return classes[choice - 1](character_name)
             except IndexError:
                 print("Nieprawidłowy number!")
             except ValueError:
                 print("Potrzebna cyfra!")
 
-    @staticmethod
-    def tell_story(part):
-        return Game.STORY_LINE[part]
+    def make_acion(self) -> None:
+        main_actions = (
+            ("Idź do zamku", self.castles.introduce_interactions),
+            ("Kontynuuj przygodę", self.continue_story),
+        )
+        while True:
+            print("\nDokonaj wyboru\n")
+            for number, action in enumerate(main_actions):
+                print(number + 1, action[0])
+            choice = int(input())
+            main_actions[choice - 1][1]()
+            if Game.is_finished(self):
+                break
 
     @staticmethod
     def create_enemy(part):
         enemies = [Villager, Blacksmith]
-        return enemies[part - 1]()
+        return enemies[part]()
 
     @staticmethod
-    def fight_boss(player, enemy):
+    def fight_boss(player, enemy) -> None:
         while True:
             print(player)
             player.perform_action(enemy)
@@ -56,18 +75,15 @@ class Game:
                 break
             enemy.attack(player)
 
-    @staticmethod
-    def start_story():
-        created_player = Game.create_character()
-        act = 1
-        while True:
-            print(Game.tell_story(act))
-            created_enemy = Game.create_enemy(act)
-            Game.fight_boss(created_player, created_enemy)
-            if act == len(Game.STORY_LINE):
-                break
-            else:
-                act += 1
+    def continue_story(self) -> None:
+        print(Game.STORY_LINE[self.act])
+        created_enemy = Game.create_enemy(self.act)
+        Game.fight_boss(self.player, created_enemy)
+        self.act += 1
+
+    def is_finished(self) -> bool:
+        return self.act == len(Game.STORY_LINE)
 
 
-Game.start_story()
+game1 = Game()
+game1.start_story()

@@ -10,6 +10,7 @@ class Enemy:
         self.hp = NotImplemented
         self.gold_loot_range = NotImplemented, NotImplemented
         self.loot = NotImplemented
+        self.effects = []
 
     def __str__(self) -> str:
         return f"""\n{self.name}

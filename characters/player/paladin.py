@@ -1,3 +1,4 @@
+from effects.holyhammer import HolyHammer
 from .player import Player
 
 
@@ -20,19 +21,20 @@ class Paladin(Player):
             ("Błogosławiony Młot", self.blessed_hammer),
         ]
 
-    def holy_light(self) -> bool:
+    def holy_light(self, enemy) -> bool:
         # Returns True if action was corectly performed,otherwise returns False.
-        if self.mana <= 10:
+        if self.mana >= 10:
             self.hp += 20
             return True
         print("\nBrakuje many\n")
         return False
 
-    def blessed_hammer(self) -> bool:
+    def blessed_hammer(self, enemy) -> bool:
         # Returns True if action was corectly performed,otherwise returns False.
-        if self.mana <= 25:
-            self.min_dmg += 15
-            self.max_dmg += 15
+        hammer = HolyHammer()
+        if self.mana >= 25:
+            hammer.add_effect(self)
+            self.mana -= 25
             return True
         print("\nBrakuje many\n")
         return False

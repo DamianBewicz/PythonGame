@@ -19,16 +19,18 @@ class Merchant:
 
     def buy_item(self, player) -> bool:
         while True:
-            print(f"\nWybierz przedmiot który chcesz kupić, kliknij enter żeby wyjść\nPieniądze gracza - {player.money}\n"
-                  f"Dostępne miejsce - {player.backpack.avaible_slots}\n")
+            print(f"\nWybierz przedmiot który chcesz kupić, kliknij enter żeby wyjść"
+                  f"\nPieniądze gracza - {player.money}"
+                  f"\nDostępne miejsce - {player.backpack.avaible_slots}\n")
             for number, item in enumerate(self.items):
                 print(number + 1, item, f"\nCena przedmiotu - {item.cost}\n")
             choice = input()
             if choice == "":
                 return False
-            elif player.money >= self.items[int(choice) - 1].cost and not player.backpack.is_full():
-                player.backpack.add(self.items[int(choice) - 1])
-                player.money -= self.items[int(choice) - 1].cost
+            chosen_item = self.items[int(choice) - 1]
+            if player.money >= chosen_item.cost and not player.backpack.is_full():
+                player.backpack.add(chosen_item)
+                player.money -= chosen_item.cost
                 return True
             print("\nNie można dokonąć zakupu!\n")
             return False
@@ -43,7 +45,8 @@ class Merchant:
                 choice = input()
                 if choice == "":
                     return False
-                removed_item = player.backpack.items.pop(int(choice) - 1)
+                chosen_item = int(choice) - 1
+                removed_item = player.backpack.remove_item(chosen_item, is_player_choosing=False,)
                 player.money += round(removed_item.cost * self.margin)
                 player.backpack.avaible_slots += 1
                 return True

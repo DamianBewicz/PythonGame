@@ -1,6 +1,6 @@
 from typing import Type
 from random import randint
-
+from effects.bleed import Bleed
 from ..enemies import Enemy
 from .player import Player
 
@@ -21,6 +21,7 @@ class Knight(Player):
         self.rest_mana_rate = 5
         self.skills = [
             ("Berserker", self.berserker),
+            ("Krwawe cięcie", self.bloody_slice),
             ("Okrzyk bojowy", self.battle_shout),
         ]
 
@@ -33,9 +34,18 @@ class Knight(Player):
         print("\nBrakuje many\n")
         return False
 
+    def bloody_slice(self, enemy: Enemy):
+        if self.mana >= 10:
+            bleed = Bleed()
+            enemy.hp -= randint(self.min_dmg, self.max_dmg)
+            bleed.add_effect(enemy)
+            return True
+        print("\nBrakuje many\n")
+        return False
+
     def battle_shout(self) -> bool:
         # Returns True if action was corectly performed,otherwise returns False.
-        if self.mana <= 5:
+        if self.mana >= 5:
             self.min_dmg += 4
             self.max_dmg += 4
             return True

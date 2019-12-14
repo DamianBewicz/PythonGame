@@ -18,7 +18,7 @@ class OldTown:
 
     def introduce_interactions(self) -> None:
         while True:
-            print("\nWybierz akcje, jeśli chcesz wyjść naciśnij enter.\n")
+            print("\nWybierz akcję, jeśli chcesz wyjść naciśnij enter.\n")
             for number, interaction in enumerate(self.interactions):
                 print(number + 1, interaction[0])
             choice = input()

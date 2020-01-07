@@ -36,7 +36,7 @@ class Knight(Player):
 
     def bloody_slice(self, enemy: Enemy):
         if self.mana >= 10:
-            bleed = Bleed()
+            bleed = Bleed(100)
             enemy.hp -= randint(self.min_dmg, self.max_dmg)
             bleed.add_effect(enemy)
             return True
@@ -51,4 +51,3 @@ class Knight(Player):
             return True
         print("\nBrakuje many\n")
         return False
-

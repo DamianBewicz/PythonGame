@@ -1,4 +1,3 @@
-from typing import Type
 from castle.old_town import OldTown
 from characters import Knight, Mage, Paladin, Blacksmith, Villager, Player
 from effects.effect import Effect

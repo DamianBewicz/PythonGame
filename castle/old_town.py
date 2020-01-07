@@ -39,4 +39,3 @@ class OldTown:
             print(number + 1, profession)
         choice = int(input())
         self.professions[choice - 1].get_pay(self.player)
-

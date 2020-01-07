@@ -22,7 +22,7 @@ class Effect:
             if self.__class__ not in [effect.__class__ for effect in character.effects]:
                 created_object = self
                 character.effects.append(created_object)
-                if created_object.type is "Static":
+                if created_object.type == "Static":
                     created_object.perform_action(character)
             else:
                 self.remove_effect(character)
@@ -41,18 +41,16 @@ class Effect:
             return True
         return False
 
-    def is_finished(self, character) -> None:
-        if self.duration == 0:
-            self.remove_effect(character)
+    def is_finished(self) -> bool:
+        return self.duration == 0
 
     def effect_countdown(self, character) -> None:
-        if self.duration != 0:
-            if self.type is "Static":
-                self.duration -= 1
-            else:
-                self.duration -= 1
+        if not self.is_finished():
+            self.duration -= 1
+            if self.type != "Static":
                 self.perform_action(character)
-            self.is_finished(character)
+            if self.is_finished():
+                self.remove_effect(character)
 
     @staticmethod
     def effects_action(character) -> None:

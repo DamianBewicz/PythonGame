@@ -24,5 +24,3 @@ class HolyHammer(Effect):
     def remove_buff(self, character) -> None:
         character.min_dmg -= self.dmg_buff.min_dmg
         character.max_dmg -= self.dmg_buff.max_dmg
-
-

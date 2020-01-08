@@ -1,6 +1,6 @@
-from typing import Type
 from castle.old_town import OldTown
 from characters import Knight, Mage, Paladin, Blacksmith, Villager, Player
+from effects.effect import Effect
 from story_line import *
 
 
@@ -64,11 +64,14 @@ class Game:
     def fight_boss(player, enemy) -> None:
         while True:
             print(player)
+            Effect.effects_action(player)
             player.perform_action(enemy)
+            print(player.max_dmg)
             if player.is_dead():
                 player.lose_item()
                 break
             print(enemy)
+            Effect.effects_action(enemy)
             if enemy.is_dead():
                 enemy.drop_loot(player)
                 player.reset()

@@ -22,4 +22,3 @@ class WoodCutter:
             player.backpack.items.append(self.drop[0])
         elif second_item_chance_draw == self.item_drop_rate[1]:
             player.backpack.items.append(self.drop[1])
-

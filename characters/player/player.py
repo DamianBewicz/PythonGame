@@ -87,7 +87,4 @@ class Player:
     def reset(self) -> None:
         self.hp = self.max_hp
         self.mana = self.max_mana
-
-    def go_oldtown(self) -> None:
-        pass
-
+        self.effects = []

@@ -3,6 +3,7 @@ from random import randint
 from effects.bleed import Bleed
 from ..enemies import Enemy
 from .player import Player
+from skills.knight_skills import Berserker
 
 
 class Knight(Player):
@@ -20,7 +21,7 @@ class Knight(Player):
         self.rest_hp_rate = 20
         self.rest_mana_rate = 5
         self.skills = [
-            ("Berserker", self.berserker),
+            (Berserker(), Berserker().main),
             ("Krwawe cięcie", self.bloody_slice),
             ("Okrzyk bojowy", self.battle_shout),
         ]

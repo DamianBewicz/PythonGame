@@ -17,9 +17,6 @@ class Game:
         1: part2,
     }
 
-    def start_story(self) -> None:
-        Game.make_acion(self)
-
     @staticmethod
     def create_character() -> Player:
         classes = (
@@ -41,7 +38,7 @@ class Game:
             except ValueError:
                 print("Potrzebna cyfra!")
 
-    def make_acion(self) -> None:
+    def main(self) -> None:
         main_actions = (
             ("Idź do zamku", self.castles.introduce_interactions),
             ("Kontynuuj przygodę", self.continue_story),
@@ -89,4 +86,4 @@ class Game:
 
 
 game1 = Game()
-game1.start_story()
+game1.main()

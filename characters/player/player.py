@@ -53,7 +53,7 @@ class Player:
         for number, skill in enumerate(self.skills):
             print(f"{number + 1} {skill[0]}")
         choice = int(input("\nWybierz atak\n")) - 1
-        return self.skills[choice][1](enemy)
+        return self.skills[choice][1](self, enemy)
 
     def use(self) -> bool:
         # Returns True if item was corectly used,otherwise returns False.

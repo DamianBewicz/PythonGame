@@ -37,7 +37,7 @@ class Effect:
 
     def is_triggered(self) -> bool:
         chance_number = randint(self.effect_chance_range.start, self.effect_chance_range.end)
-        if chance_number in range(self.effect_chance + 1):
+        if chance_number in range(1, self.effect_chance + 1):
             return True
         return False
 

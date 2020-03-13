@@ -46,7 +46,7 @@ class Merchant:
                 if choice == "":
                     return False
                 chosen_item = int(choice) - 1
-                removed_item = player.backpack.remove_item(chosen_item, is_player_choosing=False,)
+                removed_item = player.backpack.remove_item(chosen_item, is_player_choosing=False)
                 player.money += round(removed_item.cost * self.margin)
                 player.backpack.avaible_slots += 1
                 return True

@@ -52,10 +52,8 @@ class Game:
             if Game.is_finished(self):
                 break
 
-    @staticmethod
-    def create_enemy(part):
-        enemies = [Villager, Blacksmith]
-        return enemies[part]()
+    def create_enemy(self):
+        return self.enemies[self.act]()
 
     @staticmethod
     def fight_boss(player, enemy) -> None:
@@ -77,7 +75,7 @@ class Game:
 
     def continue_story(self) -> None:
         print(Game.STORY_LINE[self.act])
-        created_enemy = Game.create_enemy(self.act)
+        created_enemy = Game.create_enemy(self)
         Game.fight_boss(self.player, created_enemy)
         self.act += 1
 

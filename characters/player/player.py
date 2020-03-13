@@ -42,18 +42,19 @@ class Player:
                 print(number + 1, action[0])
             choice = int(input("\nWybierz akcje\n"))
             result = True
-            if choice == 1 or choice == 2:
-                result = self.actions[choice - 1][1](enemy)
-            if choice == 3 or choice == 4:
-                result = self.actions[choice - 1][1]()
+            chosen_action = self.actions[choice - 1][1]
+            try:
+                result = chosen_action()
+            except TypeError:
+                result = chosen_action(enemy)
             if result is True:
                 break
 
     def choose_skill(self, enemy: Enemy) -> bool:
         for number, skill in enumerate(self.skills):
-            print(f"{number + 1} {skill[0]}")
+            print(f"{number + 1} {skill}")
         choice = int(input("\nWybierz atak\n")) - 1
-        return self.skills[choice][1](self, enemy)
+        return self.skills[choice].cast(self, enemy)
 
     def use(self) -> bool:
         # Returns True if item was corectly used,otherwise returns False.

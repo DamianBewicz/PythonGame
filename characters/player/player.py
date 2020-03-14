@@ -1,91 +1,99 @@
 from random import randint
-from characters.enemies import Enemy
-from items.backpack import Backpack
 
 
-class Player:
-    NAME = NotImplemented
-
-    def __init__(self, name: str) -> None:
+class Character:
+    def __init__(self, name: str):
         self.name = name
-        self.max_dmg = NotImplemented
-        self.min_dmg = NotImplemented
         self.max_hp = NotImplemented
         self.max_mana = NotImplemented
         self.hp = NotImplemented
         self.mana = NotImplemented
-        self.rest_hp_rate = NotImplemented
-        self.rest_mana_rate = NotImplemented
-        self.backpack = Backpack()
-        self.money = 100
-        self.skills = NotImplemented
-        self.effects = []
-        self.actions = [
-            ("Zwykły atak", self.attack),
-            ("Atak specjalny", self.choose_skill),
-            ("Odpoczynek", self.rest),
-            ("Plecak", self.use),
-        ]
+        self.attack = NotImplemented
+        self.effects = NotImplemented
 
-    def __str__(self) -> str:
-        return f"\n{self.name}\n" \
-               f"Życie postaci : {self.hp}\n" \
-               f"Mana postaci : {self.mana}\n"
+    def take_dmg(self, attack):
+        self.hp -= attack.dmg
 
-    def attack(self, enemy: Enemy) -> True:
-        enemy.hp -= randint(self.min_dmg, self.max_dmg)
-        return True
-
-    def perform_action(self, enemy: Enemy) -> None:
-        while True:
-            for number, action in enumerate(self.actions):
-                print(number + 1, action[0])
-            choice = int(input("\nWybierz akcje\n"))
-            result = True
-            chosen_action = self.actions[choice - 1][1]
-            try:
-                result = chosen_action()
-            except TypeError:
-                result = chosen_action(enemy)
-            if result is True:
-                break
-
-    def choose_skill(self, enemy: Enemy) -> bool:
-        for number, skill in enumerate(self.skills):
-            print(f"{number + 1} {skill}")
-        choice = int(input("\nWybierz atak\n")) - 1
-        return self.skills[choice].cast(self, enemy)
-
-    def use(self) -> bool:
-        # Returns True if item was corectly used,otherwise returns False.
-        if not self.backpack.is_empty():
-            self.backpack.print_available_items()
-            choice = int(input("\nWybierz przedmiot\n"))
-            if self.backpack.items[choice - 1].use_item(self):
-                self.backpack.items.pop(choice - 1)
-                return True
-            return False
-        print("\nPlecak jest pusty!\n")
-        return False
-
-    def is_dead(self) -> bool:
+    def is_dead(self):
         return self.hp <= 0
 
-    def lose_item(self) -> None:
-        self.money = int(0.1 * self.money)
-        self.backpack.items.clear()
+    def add_effect(self, effect):
+        for e in self.effects:
+            if isinstance(e, type(effect)):
+                self.remove_effect(e)
+                break
+        self.effects.append(effect)
 
-    def rest(self) -> True:
-        self.hp += self.rest_hp_rate
+    def remove_effect(self, effect):
+        self.effects.remove(effect)
+
+    def activate_effect(self):
+        for effect in self.effects:
+            print(effect._duration)
+            effect.activate(self)
+            if effect.is_finished():
+                self.remove_effect(effect)
+
+
+class Player(Character):
+    NAME = None
+
+    def __init__(self, name: str):
+        super().__init__(name)
+        self.rest_hp = NotImplemented
+        self.rest_mana = NotImplemented
+        self.skills = NotImplemented
+        self.actions = (
+            "Zwykły atak",
+            "Umiejętność",
+            "Odpoczynek",
+        )
+
+    def rest(self):
+        self.hp += self.rest_hp
+        self.mana += self.rest_mana
         if self.hp > self.max_hp:
             self.hp = self.max_hp
-
-        self.mana += self.rest_mana_rate
         if self.mana > self.max_mana:
             self.mana = self.max_mana
         return True
 
-    def reset(self) -> None:
-        self.hp = self.max_hp
-        self.mana = self.max_mana
-        self.effects = []
+    def introduce_actions(self):
+        for number, action in enumerate(self.actions, start=1):
+            print(number, action)
+
+    def perform_action(self, character):
+        while True:
+            actions = {
+                "1": self.attack.perform,
+                "2": self.perform_skill,
+                "3": self.rest
+            }
+            self.introduce_actions()
+            result = True
+            try:
+                choice = input("\nWybierz akcje\n")
+                if choice == "1" or choice == "2":
+                    result = actions[choice](character)
+                else:
+                    result = actions[choice]()
+            except KeyError:
+                print("\nPodana wartość jest nieprawidłowa\n")
+                continue
+            if result:
+                break
+
+    def has_mana(self, choosen_attack):
+        return self.mana >= choosen_attack.mana_cost
+
+    def perform_skill(self, character):
+        while True:
+            chosen_attack = self.skills.choose()
+            if chosen_attack is None:
+                break
+            elif self.has_mana(chosen_attack):
+                self.mana -= chosen_attack.mana_cost
+                if chosen_attack.type == "BUFF" or chosen_attack.type == "HEAL":
+                    return chosen_attack.perform(self)
+                return chosen_attack.perform(character)
+            print("Brakuje many")

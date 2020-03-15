@@ -1,7 +1,5 @@
-from random import randint
-from math import floor
-
-from characters.player.abstract_classes import Character
+from characters.player.player import Character
+from skills.attack_skill import Attack
 
 
 class Enemy(Character):
@@ -15,3 +13,8 @@ class Enemy(Character):
         self.rest_hp = 15
         self.rest_mana = 5
         self.effects = []
+
+    def perform_action(self, character):
+        print(self.is_blinded())
+        if not self.is_blinded:
+            super().perform_action(character)

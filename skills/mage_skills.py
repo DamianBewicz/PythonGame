@@ -1,34 +1,70 @@
+from effects.abstract_effects import Effect
+from effects.effectv import BurnEffect, FireShieldEffect, Blind
+from skills.abstract_skills import Skill, Type
 from random import randint
-from skills.abstract_skills import Spell
 
 
-class Fireball(Spell):
-    def __init__(self, mana_cost=20, dmg=30):
-        super().__init__(mana_cost, dmg)
+class Fireball(Skill):
 
-    def has_mana(self, player):
-        return player.mana >= self.mana_cost
+    def __init__(self, mana_cost=20) -> None:
+        super().__init__(mana_cost)
+        self.type = Type.MAGIC
+        self.min_dmg = 25
+        self.max_dmg = 40
 
-    def cast(self, player, enemy):
-        if self.has_mana(player):
-            enemy.hp -= self.dmg
-        return self.has_mana(player)
+    def __str__(self) -> str:
+        return "Kula Ognia"
+
+    @property
+    def dmg(self) -> int:
+        return randint(self.min_dmg, self.max_dmg)
+
+    @property
+    def debuff(self) -> Effect:
+        return BurnEffect()
+
+    def perform(self, character) -> None:
+        if self.debuff.is_activated():
+            character.add_effect(self.debuff)
+        character.take_dmg(self)
 
 
-class FireShield:
-    def __init__(self):
-        self.mana_cost = 15
-        self.dmg = 15
-        self.skill_type = "magic"
+class FireShield(Skill):
+    def __init__(self, mana_cost=20) -> None:
+        super().__init__(mana_cost)
+        self.type = Type.BUFF
 
-    def has_mana(self, player):
-        return player.mana >= self.mana_cost
+    def __str__(self):
+        return "Ogniowa Tarcza"
 
-    def cast(self, player):
-        can_cast = self.has_mana(player)
-        if self.has_mana(player):
-            player.mana -= self.mana_cost
-            player.effects.append(FireShield(100))
-            return can_cast
-        print("\nBrakuje many!\n")
-        return can_cast
+    @property
+    def buff(self) -> Effect:
+        return FireShieldEffect()
+
+    def perform(self, character) -> None:
+        if self.buff.is_activated():
+            character.add_effect(self.buff)
+
+
+class Lightining(Skill):
+    def __init__(self, mana_cost=30) -> None:
+        super().__init__(mana_cost)
+        self.type = Type.MAGIC
+        self.min_dmg = 15
+        self.max_dmg = 25
+
+    @property
+    def dmg(self) -> int:
+        return randint(self.min_dmg, self.max_dmg)
+
+    @property
+    def debuff(self) -> Effect:
+        return Blind()
+
+    def __str__(self) -> str:
+        return "Błyskawica"
+
+    def perform(self, character) -> None:
+        if self.debuff.is_activated():
+            character.add_effect(self.debuff)
+        character.take_dmg(self)

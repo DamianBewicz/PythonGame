@@ -1,26 +1,35 @@
+from enum import Enum
+from typing import Optional
+
+
 class Skill:
-    def __init__(self, mana_cost=NotImplemented):
+    def __init__(self, mana_cost=None) -> None:
         self.mana_cost = mana_cost
-
-    def has_mana(self, player):
-        return player.mana >= self.mana_cost
+        self.type = NotImplemented
 
 
-class Spell(Skill):
-    def __init__(self, mana_cost, dmg):
-        super().__init__(mana_cost)
-        self.dmg = dmg
+class SkillSet:
+    def __init__(self, skills=None) -> None:
+        self.skills = skills
+
+    def introduce(self) -> None:
+        for number, skill in self.skills.items():
+            print(number, skill)
+
+    def choose(self) -> Optional[Skill]:
+        while True:
+            self.introduce()
+            choice = input("\nWybierz umiejętność, jeśli chcesz wyjść naciśnij enter\n")
+            try:
+                if choice == "":
+                    return None
+                return self.skills[choice]
+            except KeyError:
+                print("\nPodana wartość jest nieprawidłowa, proszę podać cyfrę!\n")
 
 
-class SpecialAttack(Skill):
-    def __init__(self, mana_cost):
-        super().__init__(mana_cost)
-
-
-class Buff(Skill):
-    def __init__(self, mana_cost, buff=NotImplemented):
-        super().__init__(mana_cost)
-            self.buff = buff
-
-
-b = Buff(15)
+class Type(Enum):
+    HEAL = "HEAL"
+    BUFF = "BUFF"
+    PHYSICAL = "PHYSICAL"
+    MAGIC = "MAGIC"

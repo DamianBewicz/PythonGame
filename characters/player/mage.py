@@ -1,26 +1,36 @@
-from characters.enemies import Enemy
+from effects.effectv import FireShieldEffect
+from skills.mage_skills import FireShield, Fireball, Lightining
 from .player import Player
+from skills.abstract_skills import SkillSet, Type
+from skills.attack_skill import Attack
+from math import ceil
 
 
 class Mage(Player):
-    NAME = "Mag"
-
-    def __init__(self, name: str) -> None:
+    def __init__(self, name):
         super().__init__(name)
         self.name = name
-        self.max_dmg = 7
-        self.min_dmg = 5
-        self.max_hp = 50
-        self.max_mana = 40
-        self.hp = 50
-        self.mana = 40
-        self.rest_hp_rate = 10
-        self.rest_mana_rate = 15
-        self.skills = [("Kula ognia", self.fireball), ]
+        self.max_hp = 40
+        self.max_mana = 60
+        self.hp = 40
+        self.mana = 60
+        self.attack = Attack(5, 5)
+        self.rest_hp = 10
+        self.rest_mana = 20
+        self.effects = []
+        self.skills = SkillSet({
+            "1": Fireball(),
+            "2": FireShield(),
+            "3": Lightining(),
+        })
 
-    def fireball(self, enemy: Enemy) -> bool:
-        if self.mana >= 20:
-            enemy.hp -= 25
-            return True
-        print("\nBrakuje many\n")
-        return False
+    def __str__(self):
+        return "Mag"
+
+    def take_dmg(self, attack) -> None:
+        for e in self.effects:
+            if isinstance(e, FireShieldEffect):
+                self.hp -= ceil(FireShieldEffect.DMG_RED * attack.dmg)
+                return
+        super().take_dmg(attack)
+

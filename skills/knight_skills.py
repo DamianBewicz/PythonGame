@@ -1,71 +1,63 @@
+from effects.effectv import BleedEffect, BattleShoutEffect
+from skills.abstract_skills import Skill, Type
 from random import randint
-from effects.bleed import Bleed
 
 
-class Berserker:
-    def __init__(self):
-        self.mana_cost = 15
-        self.skill_type = "physical"
+class Berserker(Skill):
+    def __init__(self, mana_cost=15, min_dmg=20, max_dmg=30):
+        super().__init__(mana_cost)
+        self.type = Type.PHYSICAL
+        self.min_dmg = min_dmg
+        self.max_dmg = max_dmg
 
     def __str__(self):
         return "Berserker"
 
-    def cast(self, player, enemy) -> bool:
-        can_cast = self.has_mana(player)
-        if can_cast:
-            player.mana -= self.mana_cost
-            enemy.hp -= randint(player.min_dmg, player.max_dmg) * 2
-            return can_cast
-        print("\nBrakuje many!\n")
-        return can_cast
+    @property
+    def dmg(self):
+        return randint(self.min_dmg, self.max_dmg)
 
-    def has_mana(self, player) -> bool:
-        return player.mana >= self.mana_cost
+    def perform(self, character):
+        character.take_dmg(self)
 
 
-class BloodySlice:
-    def __init__(self):
-        self.mana_cost = 10
-        self.skill_type = "physical"
+class BloodySlice(Skill):
+    def __init__(self, mana_cost=10, min_dmg=10, max_dmg=15):
+        super().__init__(mana_cost)
+        self.type = Type.PHYSICAL
+        self.min_dmg = min_dmg
+        self.max_dmg = max_dmg
 
     def __str__(self):
-        return "Krwawe cięcie"
+        return "Krawe Cięcie"
 
-    def cast(self, player, enemy) -> bool:
-        if self.has_mana(player):
-            can_cast = self.has_mana(player)
-            if can_cast:
-                player.mana -= self.mana_cost
-                bleed = Bleed(100)
-                enemy.hp -= randint(player.min_dmg, player.max_dmg)
-                bleed.add_effect(enemy)
-                return can_cast
-            print("Brakuje many")
-            return can_cast
+    @property
+    def dmg(self):
+        return randint(self.min_dmg, self.max_dmg)
 
-    def has_mana(self, player):
-        return player.mana >= self.mana_cost
+    @property
+    def debuff(self):
+        return BleedEffect()
+
+    def perform(self, character) -> None:
+        if self.debuff.is_activated():
+            character.add_effect(self.debuff)
+        character.take_dmg(self)
 
 
-class BattleShout:
-    def __init__(self):
-        self.min_dmg_buff = 5
-        self.max_dmg_buff = 5
-        self.mana_cost = 10
-        self.duration_time = 3
-        self.skill_type = "buff"
+class BattleShout(Skill):
+    def __init__(self, mana_cost=10) -> None:
+        super().__init__(mana_cost)
+        self.type = Type.BUFF
 
-    def __str__(self):
-        return "Okrzyk bojowy"
+    def __str__(self) -> str:
+        return "Okrzyk Bojowy"
 
-    def cast(self, player) -> bool:
-        can_cast = self.has_mana(player)
-        if can_cast:
-            player.mana -= self.mana_cost
-            player.effects.append()
-        print("\nBrakuje many!\n")
-        return can_cast
+    @property
+    def effect(self):
+        return BattleShoutEffect()
 
-    def has_mana(self, player):
-        return player.mana >= self.mana_cost
-
+    def perform(self, character) -> None:
+        if self.effect.is_activated():
+            character.attack.add(self.effect)
+            character.add_effect(self.effect)

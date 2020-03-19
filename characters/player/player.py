@@ -43,7 +43,6 @@ class Character:
 
     def activate_effect(self) -> None:
         for effect in self.effects:
-            print(effect._duration)
             effect.activate(self)
             if effect.is_finished():
                 self.remove_effect(effect)
@@ -52,10 +51,18 @@ class Character:
         self.attack.perform(character)
 
     def is_blinded(self):
-        for e in self.effects:
-            if isinstance(e, Blind):
-                return True
-        return False
+        return any(isinstance(x, Blind) for x in self.effects)
+
+    def heal(self, effect) -> None:
+        self.hp += effect.hp
+        if self.hp > self.max_hp:
+            self.hp = self.max_hp
+
+    def reset(self):
+        self.hp = self.max_hp
+        self.mana = self.max_mana
+        for effect in self.effects:
+            self.remove_effect(effect)
 
 
 class Player(Character):

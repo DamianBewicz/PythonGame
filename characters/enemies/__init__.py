@@ -1,3 +1,4 @@
-from .enemy import Enemy
+from .goblin import Goblin
+from .orc import Orc
 
 

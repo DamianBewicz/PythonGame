@@ -1,4 +1,4 @@
-from characters import Enemy
+from characters.enemies.enemy import Enemy
 from skills.attack_skill import Attack
 from skills.villager_skills import SpearAttack
 from random import choices
@@ -17,8 +17,9 @@ class Goblin(Enemy):
         self.skills = [SpearAttack()]
 
     def perform_action(self, character):
-        move = self.randomize_move()[0]
-        move.perform(character)
+        if not self.is_blinded():
+            move = self.randomize_move()[0]
+            move.perform(character)
 
     def randomize_move(self):
         possible_moves = [self.attack]

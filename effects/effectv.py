@@ -4,13 +4,13 @@ from effects.abstract_effects import Effect, PeriodicDamage
 class BleedEffect(PeriodicDamage):
 
     def __init__(self, duration=3, dmg=4, chance=100):
-        super().__init__(duration, dmg, chance)
+        super().__init__(duration, dmg=dmg, chance=chance)
 
 
 class BurnEffect(PeriodicDamage):
 
     def __init__(self, duration=3, dmg=4, chance=30):
-        super().__init__(duration, dmg, chance)
+        super().__init__(duration, dmg=dmg, chance=chance)
 
 
 class BattleShoutEffect(Effect):
@@ -54,4 +54,6 @@ class RevengeEffect(Effect):
         super().__init__(duration, chance)
 
 
-
+class FuryEffect(Effect):
+    def __init__(self, duration=2, chance=50):
+        super().__init__(duration, chance)

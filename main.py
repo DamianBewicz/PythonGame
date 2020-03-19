@@ -1,5 +1,4 @@
-from characters import Enemy, Paladin, Mage, Knight
-from characters.enemies.villager import Goblin
+from characters import Paladin, Mage, Knight, Goblin, Orc
 
 
 class Game:
@@ -9,10 +8,18 @@ class Game:
         "3": Mage,
     }
 
-    def __init__(self, ):
+    ENEMIES = {
+        1: Goblin(),
+        2: Orc()
+    }
+
+    LAST_PART = 2
+
+    def __init__(self):
         self.player = NotImplemented
-        self.enemy = Enemy("Adaś")
+        self.enemy = Goblin()
         self.part = 1
+        self.game_over = False
 
     @staticmethod
     def choose_name() -> str:
@@ -34,22 +41,44 @@ class Game:
             except KeyError:
                 print("\nPodana wartość jest nieprawidłowa\n")
 
+    def start_fight(self):
+        while True:
+            print(self.player.effects)
+            print(self.player)
+            self.player.activate_effect()
+            self.player.perform_action(self.enemy)
+            if self.enemy.is_dead():
+                self.player.reset()
+                break
+            self.enemy.perform_action(self.player)
+            print(self.enemy)
+            print(self.enemy.effects)
+            self.enemy.activate_effect()
+            if self.player.is_dead():
+                break
 
-player = Knight("Bebikowy")
-enemy = Goblin()
+    def add_part(self):
+        self.part += 1
 
-while True:
-    print(player.effects)
-    print(player)
-    player.activate_effect()
-    player.perform_action(enemy)
-    print(enemy.hp)
-    if enemy.is_dead():
-        break
-    enemy.perform_action(player)
-    print(player.hp)
-    print(enemy)
-    print(enemy.effects)
-    enemy.activate_effect()
-    if player.is_dead():
-        break
+    def change_enemy(self):
+        self.enemy = Game.ENEMIES[self.part]
+
+
+def main():
+    game = Game()
+    game.create_character()
+    while True:
+        game.change_enemy()
+        game.start_fight()
+        if game.player.is_dead():
+            break
+        elif game.part == game.LAST_PART:
+            print("\nBrawo, pokonałeś wszystkich wrogów, moje gratulację :D\n")
+            break
+        game.add_part()
+
+
+if __name__ == "__main__":
+    main()
+
+

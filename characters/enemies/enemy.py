@@ -1,4 +1,5 @@
 from characters.player.player import Character
+from skills.abstract_skills import Type
 
 
 class Enemy(Character):
@@ -13,8 +14,12 @@ class Enemy(Character):
         self.effects = NotImplemented
 
     def perform_action(self, character):
-        if not self.is_blinded:
-            super().perform_action(character)
+        if not self.is_blinded():
+            move = self.randomize_move()[0]
+            if move.type == Type.MAGIC or move.type == Type.PHYSICAL:
+                move.perform(character)
+            else:
+                move.perform(self)
 
     def randomize_move(self):
         return NotImplemented

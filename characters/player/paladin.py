@@ -23,8 +23,3 @@ class Paladin(Player):
             "2": HolyLight(),
             "3": HolyShield(),
         })
-
-    def heal(self, effect) -> None:
-        self.hp += effect.hp
-        if self.hp > self.max_hp:
-            self.hp = self.max_hp

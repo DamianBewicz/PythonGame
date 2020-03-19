@@ -5,6 +5,8 @@ from skills.paladin_skills import HammerTime, HolyLight, HolyShield
 
 
 class Paladin(Player):
+    NAME = "Paladyn"
+
     def __init__(self, name) -> None:
         super().__init__(name)
         self.name = name
@@ -21,9 +23,6 @@ class Paladin(Player):
             "2": HolyLight(),
             "3": HolyShield(),
         })
-
-    def __str__(self):
-        return "Paladyn"
 
     def heal(self, effect) -> None:
         self.hp += effect.hp

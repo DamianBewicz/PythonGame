@@ -1,5 +1,5 @@
 from effects.effectv import BleedEffect, BattleShoutEffect
-from skills.abstract_skills import Skill, Type
+from skills.abstract_skills import Skill, Type, DmgDebuff, Buff
 from random import randint
 
 
@@ -21,9 +21,9 @@ class Berserker(Skill):
         character.take_dmg(self)
 
 
-class BloodySlice(Skill):
+class BloodySlice(DmgDebuff):
     def __init__(self, mana_cost=10, min_dmg=10, max_dmg=15):
-        super().__init__(mana_cost)
+        super().__init__(mana_cost, min_dmg, max_dmg)
         self.type = Type.PHYSICAL
         self.min_dmg = min_dmg
         self.max_dmg = max_dmg
@@ -32,32 +32,22 @@ class BloodySlice(Skill):
         return "Krawe Cięcie"
 
     @property
-    def dmg(self):
-        return randint(self.min_dmg, self.max_dmg)
-
-    @property
     def debuff(self):
         return BleedEffect()
 
-    def perform(self, character) -> None:
-        if self.debuff.is_activated():
-            character.add_effect(self.debuff)
-        character.take_dmg(self)
 
-
-class BattleShout(Skill):
+class BattleShout(Buff):
     def __init__(self, mana_cost=10) -> None:
         super().__init__(mana_cost)
-        self.type = Type.BUFF
 
     def __str__(self) -> str:
         return "Okrzyk Bojowy"
 
     @property
-    def effect(self):
+    def buff(self):
         return BattleShoutEffect()
 
     def perform(self, character) -> None:
-        if self.effect.is_activated():
-            character.attack.add(self.effect)
-            character.add_effect(self.effect)
+        if self.buff.is_activated():
+            character.attack.add(self.buff)
+            character.add_effect(self.buff)

@@ -20,7 +20,7 @@ class Effect:
 class PeriodicDamage(Effect):
     TYPE = "DEBUFF"
 
-    def __init__(self, duration, dmg, chance) -> None:
+    def __init__(self, duration, chance, dmg) -> None:
         super().__init__(duration, chance)
         self.dmg = dmg
 

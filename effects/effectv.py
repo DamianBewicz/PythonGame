@@ -4,13 +4,13 @@ from effects.abstract_effects import Effect, PeriodicDamage
 class BleedEffect(PeriodicDamage):
 
     def __init__(self, duration=3, dmg=4, chance=100):
-        super().__init__(duration, chance, dmg)
+        super().__init__(duration, dmg, chance)
 
 
 class BurnEffect(PeriodicDamage):
 
     def __init__(self, duration=3, dmg=4, chance=30):
-        super().__init__(duration, chance, dmg)
+        super().__init__(duration, dmg, chance)
 
 
 class BattleShoutEffect(Effect):
@@ -47,3 +47,11 @@ class Blind(Effect):
 
     def __init__(self, duration=2, chance=50) -> None:
         super().__init__(duration, chance)
+
+
+class RevengeEffect(Effect):
+    def __init__(self, duration=3, chance=100):
+        super().__init__(duration, chance)
+
+
+

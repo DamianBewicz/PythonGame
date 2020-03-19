@@ -16,6 +16,11 @@ class Character:
         self.attack = NotImplemented
         self.effects = NotImplemented
 
+    def __str__(self):
+        return f'{self.name}\n' \
+               f'Punkty życia: {self.hp}\n' \
+               f'Punkty many: {self.mana}\n'
+
     def take_dmg(self, attack) -> None:
         self.hp -= attack.dmg
 
@@ -25,12 +30,15 @@ class Character:
     def add_effect(self, effect) -> None:
         for e in self.effects:
             # if isinstance(e, type(effect)):
+            print(type(e) == type(effect))
             if type(e) == type(effect):
                 self.remove_effect(e)
                 break
         self.effects.append(effect)
 
     def remove_effect(self, effect) -> None:
+        if effect.TYPE == "DEBUFF STATS":
+            self.attack.add(effect)
         self.effects.remove(effect)
 
     def activate_effect(self) -> None:
@@ -51,6 +59,7 @@ class Character:
 
 
 class Player(Character):
+    CLASS_NAME = NotImplemented
 
     def __init__(self, name: str) -> None:
         super().__init__(name)

@@ -5,6 +5,8 @@ from skills.knight_skills import Berserker, BloodySlice, BattleShout
 
 
 class Knight(Player):
+    NAME = "Rycerz"
+
     def __init__(self, name=None):
         super().__init__(name)
         self.name = name
@@ -12,7 +14,7 @@ class Knight(Player):
         self.max_mana = 25
         self.hp = 60
         self.mana = 25
-        self.attack = Attack(10, 20)
+        self.attack = Attack(10, 10)
         self.rest_hp = 15
         self.rest_mana = 5
         self.effects = []
@@ -22,12 +24,7 @@ class Knight(Player):
             "3": BattleShout(),
         })
 
-    def __str__(self):
-        return "Rycerz"
-
     def remove_effect(self, effect):
-        if effect.type == "DEBUFF STATS":
-            self.attack.add(effect)
-        if effect.type == "BUFF STATS":
+        if effect.TYPE == "BUFF STATS":
             self.attack.sub(effect)
-        self.effects.remove(effect)
+        super().remove_effect(effect)

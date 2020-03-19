@@ -7,6 +7,8 @@ from math import ceil
 
 
 class Mage(Player):
+    NAME = "Mag"
+
     def __init__(self, name):
         super().__init__(name)
         self.name = name
@@ -23,9 +25,6 @@ class Mage(Player):
             "2": FireShield(),
             "3": Lightining(),
         })
-
-    def __str__(self):
-        return "Mag"
 
     def take_dmg(self, attack) -> None:
         for e in self.effects:

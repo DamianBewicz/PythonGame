@@ -1,4 +1,5 @@
 from characters import Paladin, Mage, Knight, Goblin, Orc
+from termcolor import colored
 
 
 class Game:
@@ -71,9 +72,10 @@ def main():
         game.change_enemy()
         game.start_fight()
         if game.player.is_dead():
+            print(colored("\nPrzegrałeś, powodzenia następnym razem\n", "white"))
             break
         elif game.part == game.LAST_PART:
-            print("\nBrawo, pokonałeś wszystkich wrogów, moje gratulacje :D\n")
+            print(colored("\nBrawo, pokonałeś wszystkich wrogów, moje gratulacje :D\n", "blue"))
             break
         game.add_part()
 

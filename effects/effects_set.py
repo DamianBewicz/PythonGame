@@ -40,3 +40,6 @@ class EffectSet:
 
     def stats_effects(self):
         return filter(lambda effect: effect.TYPE in ("BUFF STATS", "DEBUFF STATS"), self.__effects)
+
+    def contains_stats_effect(self):
+        return any((effect.TYPE in ("BUFF STATS", "DEBUFF STATS") for effect in self.__effects))

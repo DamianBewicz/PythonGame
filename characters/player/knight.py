@@ -22,8 +22,3 @@ class Knight(Player):
             "2": BloodySlice(),
             "3": BattleShout(),
         })
-
-    def remove_effect(self, effect):
-        if effect.TYPE == "BUFF STATS":
-            self.attack.sub(effect)
-        super().remove_effect(effect)

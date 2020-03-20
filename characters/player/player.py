@@ -42,10 +42,6 @@ class Character:
         if self.hp > self.max_hp:
             self.hp = self.max_hp
 
-    def reset(self):
-        self.hp = self.max_hp
-        self.mana = self.max_mana
-
 
 class Player(Character):
     CLASS_NAME = NotImplemented
@@ -108,3 +104,8 @@ class Player(Character):
                     return chosen_attack.perform(self)
                 return chosen_attack.perform(character)
             raise NoManaException
+
+    def reset(self):
+        self.hp = self.max_hp
+        self.mana = self.max_mana
+        self.effects.clear()

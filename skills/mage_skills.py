@@ -1,5 +1,5 @@
 from effects.abstract_effects import Effect
-from effects.effectv import BurnEffect, FireShieldEffect, Blind
+from effects.effects import BurnEffect, FireShieldEffect, Blind
 from skills.abstract_skills import Skill, Type
 from random import randint
 
@@ -25,7 +25,7 @@ class Fireball(Skill):
 
     def perform(self, character) -> None:
         if self.debuff.is_activated():
-            character.add_effect(self.debuff)
+            character.effects.append(self.debuff)
         character.take_dmg(self)
 
 
@@ -43,7 +43,7 @@ class FireShield(Skill):
 
     def perform(self, character) -> None:
         if self.buff.is_activated():
-            character.add_effect(self.buff)
+            character.effects.append(self.buff)
 
 
 class Lightining(Skill):
@@ -66,5 +66,5 @@ class Lightining(Skill):
 
     def perform(self, character) -> None:
         if self.debuff.is_activated():
-            character.add_effect(self.debuff)
+            character.effects.append(self.debuff)
         character.take_dmg(self)

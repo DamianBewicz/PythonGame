@@ -1,4 +1,4 @@
-from effects.effectv import BleedEffect
+from effects.effects import BleedEffect
 from skills.abstract_skills import DmgDebuff, Type
 
 

@@ -1,5 +1,5 @@
 from effects.abstract_effects import Effect
-from effects.effectv import HolyShieldEffect
+from effects.effects import HolyShieldEffect
 from skills.abstract_skills import Skill, Type
 from random import randint
 
@@ -49,4 +49,4 @@ class HolyShield(Skill):
 
     def perform(self, character) -> None:
         if self.buff.is_activated():
-            character.add_effect(self.buff)
+            character.effects.append(self.buff)

@@ -2,8 +2,10 @@ from random import randint
 
 
 class Effect:
+    TYPE = NotImplemented
+
     def __init__(self, duration=None, chance=None) -> None:
-        self.type = NotImplemented
+        self.name = NotImplemented
         self._duration = duration
         self.chance = chance
 

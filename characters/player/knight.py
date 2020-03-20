@@ -14,10 +14,9 @@ class Knight(Player):
         self.max_mana = 25
         self.hp = 60
         self.mana = 25
-        self.attack = Attack(10, 10)
+        self.attack = Attack(10, 10, effects=self.effects)
         self.rest_hp = 15
         self.rest_mana = 5
-        self.effects = []
         self.skills = SkillSet({
             "1": Berserker(),
             "2": BloodySlice(),

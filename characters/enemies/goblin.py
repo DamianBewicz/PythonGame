@@ -1,6 +1,6 @@
 from characters.enemies.enemy import Enemy
 from skills.attack_skill import Attack
-from skills.villager_skills import SpearAttack
+from skills.goblin_skills import SpearAttack
 from random import choices
 
 
@@ -12,12 +12,11 @@ class Goblin(Enemy):
         self.max_mana = 0
         self.hp = 60
         self.mana = 0
-        self.attack = Attack(5, 10)
-        self.effects = []
+        self.attack = Attack(5, 5, effects=self.effects)
         self.skills = [SpearAttack()]
 
     def perform_action(self, character):
-        if not self.is_blinded():
+        if not self.cant_move():
             move = self.randomize_move()[0]
             move.perform(character)
 

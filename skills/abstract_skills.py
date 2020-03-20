@@ -24,9 +24,8 @@ class DmgDebuff(Skill):
         return NotImplemented
 
     def perform(self, character) -> None:
-        print(self.debuff.chance)
         if self.debuff.is_activated():
-            character.add_effect(self.debuff)
+            character.effects.append(self.debuff)
         character.take_dmg(self)
 
 

@@ -1,4 +1,4 @@
-from effects.effectv import BleedEffect, BattleShoutEffect
+from effects.effects import BleedEffect, BattleShoutEffect
 from skills.abstract_skills import Skill, Type, DmgDebuff, Buff
 from random import randint
 
@@ -49,5 +49,4 @@ class BattleShout(Buff):
 
     def perform(self, character) -> None:
         if self.buff.is_activated():
-            character.attack.add(self.buff)
-            character.add_effect(self.buff)
+            character.effects.append(self.buff)

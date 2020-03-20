@@ -1,4 +1,5 @@
-from effects.effectv import Blind
+from effects.effects import Blind
+from effects.effects_set import EffectSet
 from skills.abstract_skills import Type
 
 
@@ -14,7 +15,7 @@ class Character:
         self.hp = NotImplemented
         self.mana = NotImplemented
         self.attack = NotImplemented
-        self.effects = NotImplemented
+        self.effects = EffectSet()
 
     def __str__(self):
         return f'{self.name}\n' \
@@ -27,31 +28,14 @@ class Character:
     def is_dead(self) -> None:
         return self.hp <= 0
 
-    def add_effect(self, effect) -> None:
-        for e in self.effects:
-            # if isinstance(e, type(effect)):
-            print(type(e) == type(effect))
-            if type(e) == type(effect):
-                self.remove_effect(e)
-                break
-        self.effects.append(effect)
-
-    def remove_effect(self, effect) -> None:
-        if effect.TYPE == "DEBUFF STATS":
-            self.attack.add(effect)
-        self.effects.remove(effect)
-
-    def activate_effect(self) -> None:
-        for effect in self.effects:
-            effect.activate(self)
-            if effect.is_finished():
-                self.remove_effect(effect)
-
     def perform_action(self, character):
         self.attack.perform(character)
 
-    def is_blinded(self):
-        return any(isinstance(x, Blind) for x in self.effects)
+    def cant_move(self):
+        return self.effects.contains(Blind)
+
+    def activate_effects(self):
+        self.effects.activate(self)
 
     def heal(self, effect) -> None:
         self.hp += effect.hp
@@ -61,8 +45,6 @@ class Character:
     def reset(self):
         self.hp = self.max_hp
         self.mana = self.max_mana
-        for effect in self.effects:
-            self.remove_effect(effect)
 
 
 class Player(Character):

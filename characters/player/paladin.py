@@ -14,10 +14,9 @@ class Paladin(Player):
         self.max_mana = 35
         self.hp = 50
         self.mana = 35
-        self.attack = Attack(5, 15)
+        self.attack = Attack(5, 15, effects=self.effects)
         self.rest_hp = 10
         self.rest_mana = 15
-        self.effects = []
         self.skills = SkillSet({
             "1": HammerTime(),
             "2": HolyLight(),

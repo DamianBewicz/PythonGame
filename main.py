@@ -43,9 +43,9 @@ class Game:
 
     def start_fight(self):
         while True:
-            print(self.player.effects)
             print(self.player)
-            self.player.activate_effect()
+            print(self.player.effects)
+            self.player.activate_effects()
             self.player.perform_action(self.enemy)
             if self.enemy.is_dead():
                 self.player.reset()
@@ -53,7 +53,7 @@ class Game:
             self.enemy.perform_action(self.player)
             print(self.enemy)
             print(self.enemy.effects)
-            self.enemy.activate_effect()
+            self.enemy.activate_effects()
             if self.player.is_dead():
                 break
 
@@ -73,7 +73,7 @@ def main():
         if game.player.is_dead():
             break
         elif game.part == game.LAST_PART:
-            print("\nBrawo, pokonałeś wszystkich wrogów, moje gratulację :D\n")
+            print("\nBrawo, pokonałeś wszystkich wrogów, moje gratulacje :D\n")
             break
         game.add_part()
 

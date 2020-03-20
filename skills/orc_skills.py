@@ -1,4 +1,4 @@
-from effects.effectv import FuryEffect
+from effects.effects import FuryEffect
 from skills.abstract_skills import Type, Buff
 
 
@@ -13,7 +13,7 @@ class Fury(Buff):
 
     def perform(self, character) -> None:
         if self.buff.is_activated():
-            character.add_effect(self.buff)
+            character.effects.append(self.buff)
 
 
 

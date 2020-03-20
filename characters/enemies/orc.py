@@ -1,6 +1,6 @@
 from random import choices
 from characters.enemies.enemy import Enemy
-from effects.effectv import FuryEffect
+from effects.effects import FuryEffect, Blind
 from skills.attack_skill import Attack
 from skills.knight_skills import BloodySlice
 from skills.orc_skills import Fury
@@ -13,13 +13,12 @@ class Orc(Enemy):
         self.max_mana = 0
         self.hp = 60
         self.mana = 0
-        self.attack = Attack(5, 10)
-        self.effects = []
+        self.attack = Attack(5, 10, effects=self.effects)
         self.skills = [Fury(), BloodySlice()]
 
     def perform_action(self, character):
         super().perform_action(character)
-        if not self.is_blinded and any(isinstance(x, FuryEffect) for x in self.effects):
+        if not self.effects.contains(Blind) and self.effects.contains(FuryEffect):
             self.attack.perform(character)
 
     def randomize_move(self):

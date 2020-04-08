@@ -42,8 +42,5 @@ class Shaman(Enemy):
         possible_moves.extend(self.skills)
         return choices(possible_moves, [60, 20, 20])
 
-    def has_mana(self, skill):
-        return self.mana >= skill.mana_cost
-
     def has_full_hp(self):
         return self.hp == self.max_hp

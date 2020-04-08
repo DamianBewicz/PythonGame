@@ -1,27 +1,33 @@
+from math import floor
 from random import randint
-
+from effects.effects import CurseEffect
 from skills.abstract_skills import Type
 
 
 class Attack:
-    def __init__(self, min_dmg=None, max_dmg=None, effects=None, type=Type.PHYSICAL):
+    def __init__(self, min_dmg=None, max_dmg=None, effects=None, type=Type.PHYSICAL) -> None:
         self.min_dmg = min_dmg
         self.max_dmg = max_dmg
         self.type = type
         self.effects = effects
 
     @property
-    def dmg(self):
+    def dmg(self) -> int:
+        percent_damage_reduction = 1
+        if self.effects.contains(CurseEffect):
+            percent_damage_reduction = self.effects.get_effect(CurseEffect).get_damage_reduction()
+        bonus_dmg = {
+            "min_dmg": 0,
+            "max_dmg": 0,
+        }
         if self.effects.contains_stats_effect():
             bonus_dmg = self.count_bonus_dmg()
-            print(bonus_dmg)
-            return randint(self.min_dmg + bonus_dmg["min_dmg"], self.max_dmg + bonus_dmg["max_dmg"])
-        return randint(self.min_dmg, self.max_dmg)
+        return floor(percent_damage_reduction * randint(self.min_dmg + bonus_dmg["min_dmg"], self.max_dmg + bonus_dmg["max_dmg"]))
 
-    def perform(self, character):
+    def perform(self, character) -> None:
         character.take_dmg(self)
 
-    def count_bonus_dmg(self):
+    def count_bonus_dmg(self) -> dict:
         bonus_min_dmg = 0
         bonus_max_dmg = 0
         for effect in self.effects.stats_effects():

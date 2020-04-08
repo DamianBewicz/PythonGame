@@ -9,28 +9,12 @@ class Skill:
         self.type = NotImplemented
 
 
-class DmgDebuff(Skill):
-    def __init__(self, mana_cost, min_dmg, max_dmg):
+class StatusEffect(Skill):
+    def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
-        self.min_dmg = min_dmg
-        self.max_dmg = max_dmg
-        self.type = NotImplemented
-
-    @property
-    def dmg(self):
-        return randint(self.min_dmg, self.max_dmg)
-
-    @property
-    def debuff(self):
-        return NotImplemented
-
-    def perform(self, character) -> None:
-        if self.debuff.is_activated():
-            character.effects.append(self.debuff)
-        character.take_dmg(self)
 
 
-class Buff(Skill):
+class Buff(StatusEffect):
     def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
         self.type = Type.BUFF
@@ -40,11 +24,26 @@ class Buff(Skill):
         return NotImplemented
 
     def perform(self, character) -> None:
+        if self.buff.is_activated():
+            character.effects.append(self.buff)
+
+
+class Debuff(StatusEffect):
+    def __init__(self, mana_cost) -> None:
+        super().__init__(mana_cost)
+        self.type = Type.DEBUFF
+
+    @property
+    def debuff(self):
         return NotImplemented
+
+    def perform(self, character) -> None:
+        if self.debuff.is_activated():
+            character.effects.append(self.debuff)
 
 
 class Heal(Skill):
-    def __init__(self, mana_cost):
+    def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
         self.type = Type.HEAL
         self.heal = NotImplemented
@@ -73,8 +72,25 @@ class SkillSet:
                 print("\nPodana wartość jest nieprawidłowa, proszę podać cyfrę!\n")
 
 
+class DmgDebuff(Debuff):
+    def __init__(self, mana_cost, min_dmg, max_dmg) -> None:
+        super().__init__(mana_cost)
+        self.min_dmg = min_dmg
+        self.max_dmg = max_dmg
+        self.type = NotImplemented
+
+    @property
+    def dmg(self) -> int:
+        return randint(self.min_dmg, self.max_dmg)
+
+    def perform(self, character) -> None:
+        super().perform(character)
+        character.take_dmg(self)
+
+
 class Type(Enum):
     HEAL = "HEAL"
     BUFF = "BUFF"
     PHYSICAL = "PHYSICAL"
     MAGIC = "MAGIC"
+    DEBUFF = "DEBUFF"

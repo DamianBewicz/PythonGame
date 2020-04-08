@@ -1,5 +1,7 @@
 from termcolor import colored
 
+from effects.abstract_effects import Effect
+
 
 class EffectSet:
     def __init__(self):
@@ -31,15 +33,18 @@ class EffectSet:
             if effect.is_finished():
                 self.remove(effect)
 
-    def contains(self, cls):
+    def contains(self, cls) -> bool:
         return any(isinstance(effect, cls) for effect in self.__effects)
 
-    def clear(self):
+    def clear(self) -> None:
         for effect in self.__effects:
             self.__effects.remove(effect)
 
-    def stats_effects(self):
+    def get_effect(self, effect) -> Effect:
+        return next(filter(lambda x: type(x) == effect,  self.__effects))
+
+    def stats_effects(self) -> iter:
         return filter(lambda effect: effect.TYPE in ("BUFF STATS", "DEBUFF STATS"), self.__effects)
 
-    def contains_stats_effect(self):
+    def contains_stats_effect(self) -> bool:
         return any((effect.TYPE in ("BUFF STATS", "DEBUFF STATS") for effect in self.__effects))

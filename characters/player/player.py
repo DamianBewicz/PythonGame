@@ -18,7 +18,7 @@ class Character:
         self.attack = NotImplemented
         self.effects = EffectSet()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.name}\n' \
                f'Punkty życia: {self.hp}\n' \
                f'Punkty many: {self.mana}\n'
@@ -29,13 +29,13 @@ class Character:
     def is_dead(self) -> None:
         return self.hp <= 0
 
-    def perform_action(self, character):
+    def perform_action(self, character) -> None:
         self.attack.perform(character)
 
-    def cant_move(self):
+    def cant_move(self) -> bool:
         return self.effects.contains(Blind) or self.effects.contains(CrowdControl)
 
-    def activate_effects(self):
+    def activate_effects(self) -> None:
         self.effects.activate(self)
 
     def heal(self, effect) -> None:
@@ -108,7 +108,7 @@ class Player(Character):
                 return chosen_attack.perform(character)
             raise NoManaException
 
-    def reset(self):
+    def reset(self) -> None:
         self.hp = self.max_hp
         self.mana = self.max_mana
         self.effects.clear()

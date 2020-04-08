@@ -62,11 +62,29 @@ class EarthQuakeEffect(CrowdControl):
 
 
 class FuryEffect(Effect):
-    TYPE = "BUFF CONTROL"
+    TYPE = "BUFF"
 
     def __init__(self, duration=2, chance=50):
         super().__init__(duration, chance)
         self.name = "Szał"
+
+
+class CurseEffect(Effect):
+    TYPE = "DEBUFF"
+
+    def __init__(self, duration=2, chance=100, percent_damage_reduction=40) -> None:
+        super().__init__(duration, chance)
+        self.name = "Klątwa"
+        self.percent_damage_reduction = percent_damage_reduction
+
+    def activate(self, character) -> None:
+        self._duration -= 1
+
+    def get_damage_reduction(self) -> float:
+        return self.percent_damage_reduction/100
+
+    def is_finished(self) -> bool:
+        return self._duration == 0
 
 
 # class RevengeEffect(Effect):

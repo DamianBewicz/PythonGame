@@ -1,4 +1,4 @@
-from characters import Paladin, Mage, Knight, Goblin, Orc, Shaman
+from characters import Paladin, Mage, Knight, Goblin, Orc, Shaman, Warlock
 from termcolor import colored
 from os import system
 
@@ -13,7 +13,8 @@ class Game:
     ENEMIES = {
         1: Goblin(),
         2: Orc(),
-        3: Shaman()
+        3: Warlock(),
+        4: Shaman()
     }
 
     LAST_PART = len(ENEMIES)

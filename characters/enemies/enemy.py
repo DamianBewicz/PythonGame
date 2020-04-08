@@ -24,3 +24,6 @@ class Enemy(Character):
 
     def randomize_move(self):
         return NotImplemented
+
+    def has_mana(self, skill):
+        return self.mana >= skill.mana_cost

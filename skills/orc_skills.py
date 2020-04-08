@@ -14,9 +14,3 @@ class Fury(Buff):
     def perform(self, character) -> None:
         if self.buff.is_activated():
             character.effects.append(self.buff)
-
-
-
-
-
-

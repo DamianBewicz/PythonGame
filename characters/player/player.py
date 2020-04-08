@@ -1,4 +1,5 @@
-from effects.effects import Blind
+from effects.abstract_effects import CrowdControl
+from effects.effects import Blind, EarthQuakeEffect
 from effects.effects_set import EffectSet
 from skills.abstract_skills import Type
 
@@ -32,7 +33,7 @@ class Character:
         self.attack.perform(character)
 
     def cant_move(self):
-        return self.effects.contains(Blind)
+        return self.effects.contains(Blind) or self.effects.contains(CrowdControl)
 
     def activate_effects(self):
         self.effects.activate(self)
@@ -70,25 +71,27 @@ class Player(Character):
             print(number, action)
 
     def perform_action(self, character) -> None:
-        while True:
-            actions = {
-                "1": self.attack.perform,
-                "2": self.perform_skill,
-                "3": self.rest
-            }
-            self.introduce_actions()
-            try:
-                choice = input("\nWybierz akcję\n")
-                action = actions[choice]
-                if choice in ("1", "2"):
-                    action(character)
-                else:
-                    action()
-                return
-            except KeyError:
-                print("\nPodana wartość jest nieprawidłowa\n")
-            except NoManaException:
-                print("Brakuje many")
+        if not self.cant_move():
+            while True:
+                actions = {
+                    "1": self.attack.perform,
+                    "2": self.perform_skill,
+                    "3": self.rest
+                }
+                self.introduce_actions()
+                try:
+                    choice = input("\nWybierz akcję\n")
+                    print()
+                    action = actions[choice]
+                    if choice in ("1", "2"):
+                        action(character)
+                    else:
+                        action()
+                    return
+                except KeyError:
+                    print("\nPodana wartość jest nieprawidłowa\n")
+                except NoManaException:
+                    print("Brakuje many")
 
     def has_mana(self, choosen_attack) -> bool:
         return self.mana >= choosen_attack.mana_cost

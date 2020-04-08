@@ -13,7 +13,7 @@ class Orc(Enemy):
         self.max_mana = 0
         self.hp = 60
         self.mana = 0
-        self.attack = Attack(5, 10, effects=self.effects)
+        self.attack = Attack(10, 10, effects=self.effects)
         self.skills = [Fury(), BloodySlice()]
 
     def perform_action(self, character):

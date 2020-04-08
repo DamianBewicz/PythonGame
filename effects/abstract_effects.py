@@ -31,3 +31,10 @@ class PeriodicDamage(Effect):
         character.take_dmg(self)
 
 
+class CrowdControl(Effect):
+    TYPE = "CROWD CONTROL"
+
+    def __init__(self, duration=None, chance=None) -> None:
+        super().__init__(duration, chance)
+        self.name = NotImplemented
+

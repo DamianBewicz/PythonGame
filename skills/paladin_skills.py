@@ -1,20 +1,16 @@
 from effects.abstract_effects import Effect
 from effects.effects import HolyShieldEffect
-from skills.abstract_skills import Skill, Type
+from skills.abstract_skills import Skill, Type, Heal
 from random import randint
 
 
-class HolyLight(Skill):
+class HolyLight(Heal):
     def __init__(self, mana_cost=20) -> None:
         super().__init__(mana_cost)
         self.hp = 30
-        self.type = Type.HEAL
 
     def __str__(self) -> str:
         return "Święty Blask"
-
-    def perform(self, character) -> None:
-        character.heal(self)
 
 
 class HammerTime(Skill):

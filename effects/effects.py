@@ -1,4 +1,4 @@
-from effects.abstract_effects import PeriodicDamage, Effect
+from effects.abstract_effects import PeriodicDamage, Effect, CrowdControl
 
 
 class BleedEffect(PeriodicDamage):
@@ -47,19 +47,29 @@ class FireShieldEffect(Effect):
         self.name = "Płomienna Tarcza"
 
 
-class Blind(Effect):
-    TYPE = "CROWD CONTROL"
+class Blind(CrowdControl):
 
     def __init__(self, duration=2, chance=50) -> None:
         super().__init__(duration, chance)
         self.name = "Oślepienie"
 
 
-class RevengeEffect(Effect):
-    def __init__(self, duration=3, chance=100):
+class EarthQuakeEffect(CrowdControl):
+
+    def __init__(self, duration=2, chance=100) -> None:
         super().__init__(duration, chance)
+        self.name = "Ogłuszenie"
 
 
 class FuryEffect(Effect):
+    TYPE = "BUFF CONTROL"
+
     def __init__(self, duration=2, chance=50):
         super().__init__(duration, chance)
+        self.name = "Szał"
+
+
+# class RevengeEffect(Effect):
+#     def __init__(self, duration=3, chance=100):
+#         super().__init__(duration, chance)
+#         self.name = "Zemsta"

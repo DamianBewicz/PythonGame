@@ -1,5 +1,6 @@
-from characters import Paladin, Mage, Knight, Goblin, Orc
+from characters import Paladin, Mage, Knight, Goblin, Orc, Shaman
 from termcolor import colored
+from os import system
 
 
 class Game:
@@ -11,10 +12,11 @@ class Game:
 
     ENEMIES = {
         1: Goblin(),
-        2: Orc()
+        2: Orc(),
+        3: Shaman()
     }
 
-    LAST_PART = 2
+    LAST_PART = len(ENEMIES)
 
     def __init__(self):
         self.player = NotImplemented
@@ -35,6 +37,7 @@ class Game:
         chosen_name = self.choose_name()
         while True:
             try:
+                print()
                 self.introduce_classes()
                 chosen_character = input("\nWybierz klasę swojej postaci\n")
                 self.player = self.AVAIBLE_CLASSES[chosen_character](chosen_name)
@@ -42,21 +45,24 @@ class Game:
             except KeyError:
                 print("\nPodana wartość jest nieprawidłowa\n")
 
+    def has_someone_died(self):
+        return self.player.is_dead() or self.enemy.is_dead()
+
     def start_fight(self):
         while True:
             print(self.player)
             print(self.player.effects)
-            self.player.activate_effects()
-            self.player.perform_action(self.enemy)
-            if self.enemy.is_dead():
-                self.player.reset()
-                break
-            self.enemy.perform_action(self.player)
             print(self.enemy)
             print(self.enemy.effects)
-            self.enemy.activate_effects()
-            if self.player.is_dead():
+            self.player.perform_action(self.enemy)
+            self.player.activate_effects()
+            if self.has_someone_died():
                 break
+            self.enemy.perform_action(self.player)
+            self.enemy.activate_effects()
+            if self.has_someone_died():
+                break
+            system("clear")
 
     def add_part(self):
         self.part += 1
@@ -68,6 +74,7 @@ class Game:
 def main():
     game = Game()
     game.create_character()
+    system("clear")
     while True:
         game.change_enemy()
         game.start_fight()
@@ -77,6 +84,7 @@ def main():
         elif game.part == game.LAST_PART:
             print(colored("\nBrawo, pokonałeś wszystkich wrogów, moje gratulacje :D\n", "blue"))
             break
+        game.player.reset()
         game.add_part()
 
 

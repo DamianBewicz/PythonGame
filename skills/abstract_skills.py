@@ -14,6 +14,7 @@ class DmgDebuff(Skill):
         super().__init__(mana_cost)
         self.min_dmg = min_dmg
         self.max_dmg = max_dmg
+        self.type = NotImplemented
 
     @property
     def dmg(self):
@@ -40,6 +41,16 @@ class Buff(Skill):
 
     def perform(self, character) -> None:
         return NotImplemented
+
+
+class Heal(Skill):
+    def __init__(self, mana_cost):
+        super().__init__(mana_cost)
+        self.type = Type.HEAL
+        self.heal = NotImplemented
+
+    def perform(self, character) -> None:
+        character.heal(self)
 
 
 class SkillSet:

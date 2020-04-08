@@ -25,8 +25,6 @@ class BloodySlice(DmgDebuff):
     def __init__(self, mana_cost=10, min_dmg=10, max_dmg=15):
         super().__init__(mana_cost, min_dmg, max_dmg)
         self.type = Type.PHYSICAL
-        self.min_dmg = min_dmg
-        self.max_dmg = max_dmg
 
     def __str__(self):
         return "Krawe Cięcie"

@@ -28,5 +28,3 @@ class Attack:
             bonus_min_dmg += effect.min_dmg
             bonus_max_dmg += effect.max_dmg
         return {"min_dmg": bonus_min_dmg, "max_dmg": bonus_max_dmg}
-
-

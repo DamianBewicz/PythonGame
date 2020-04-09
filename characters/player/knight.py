@@ -10,9 +10,9 @@ class Knight(Player):
     def __init__(self, name=None):
         super().__init__(name)
         self.name = name
-        self.max_hp = 60
+        self.max_hp = 6000
         self.max_mana = 25
-        self.hp = 60
+        self.hp = 6000
         self.mana = 25
         self.attack = Attack(10, 10, effects=self.effects)
         self.rest_hp = 15

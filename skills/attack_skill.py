@@ -25,7 +25,7 @@ class Attack:
         return floor(percent_damage_reduction * randint(self.min_dmg + bonus_dmg["min_dmg"], self.max_dmg + bonus_dmg["max_dmg"]))
 
     def perform(self, character) -> None:
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)
 
     def count_bonus_dmg(self) -> dict:
         bonus_min_dmg = 0

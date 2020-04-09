@@ -4,14 +4,13 @@ from random import randint
 
 
 class Skill:
-    def __init__(self, mana_cost=None) -> None:
+    def __init__(self, mana_cost: int = None) -> None:
         self.mana_cost = mana_cost
         self.type = NotImplemented
 
 
 class StatusEffect(Skill):
-    def __init__(self, mana_cost) -> None:
-        super().__init__(mana_cost)
+    pass
 
 
 class Buff(StatusEffect):
@@ -46,10 +45,10 @@ class Heal(Skill):
     def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
         self.type = Type.HEAL
-        self.heal = NotImplemented
+        self.hp = NotImplemented
 
     def perform(self, character) -> None:
-        character.heal(self)
+        character.heal(self.hp)
 
 
 class SkillSet:
@@ -85,7 +84,7 @@ class DmgDebuff(Debuff):
 
     def perform(self, character) -> None:
         super().perform(character)
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)
 
 
 class Type(Enum):

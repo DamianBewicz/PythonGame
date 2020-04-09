@@ -29,11 +29,11 @@ class Shaman(Enemy):
                 if self.has_mana(move):
                     if move.type == Type.MAGIC or move.type == Type.PHYSICAL:
                         move.perform(character)
-                        self.mana -= move.mana_cost
+                        self.lose_mana(move.mana_cost)
                     else:
                         if not self.has_full_hp():
                             move.perform(self)
-                            self.mana -= move.mana_cost
+                            self.lose_mana(move.mana_cost)
                         else:
                             self.attack.perform(character)
 

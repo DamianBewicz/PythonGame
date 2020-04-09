@@ -26,7 +26,7 @@ class Fireball(Skill):
     def perform(self, character) -> None:
         if self.debuff.is_activated():
             character.effects.append(self.debuff)
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)
 
 
 class FireShield(Skill):
@@ -34,7 +34,7 @@ class FireShield(Skill):
         super().__init__(mana_cost)
         self.type = Type.BUFF
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Ogniowa Tarcza"
 
     @property
@@ -67,4 +67,4 @@ class Lightining(Skill):
     def perform(self, character) -> None:
         if self.debuff.is_activated():
             character.effects.append(self.debuff)
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)

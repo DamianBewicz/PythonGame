@@ -35,7 +35,7 @@ class HolyShieldEffect(Effect):
 
     def activate(self, character):
         super().activate(character)
-        character.heal(self)
+        character.heal(self.hp)
 
 
 class FireShieldEffect(Effect):

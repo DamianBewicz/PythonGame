@@ -28,7 +28,7 @@ class HammerTime(Skill):
         return randint(self.min_dmg, self.max_dmg)
 
     def perform(self, character) -> None:
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)
 
 
 class HolyShield(Skill):

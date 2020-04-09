@@ -1,5 +1,5 @@
 from effects.abstract_effects import CrowdControl
-from effects.effects import Blind, EarthQuakeEffect
+from effects.effects import Blind
 from effects.effects_set import EffectSet
 from skills.abstract_skills import Type
 
@@ -23,8 +23,8 @@ class Character:
                f'Punkty życia: {self.hp}\n' \
                f'Punkty many: {self.mana}\n'
 
-    def take_dmg(self, attack) -> None:
-        self.hp -= attack.dmg
+    def take_dmg(self, dmg: int) -> None:
+        self.hp -= dmg
 
     def is_dead(self) -> None:
         return self.hp <= 0
@@ -38,10 +38,21 @@ class Character:
     def activate_effects(self) -> None:
         self.effects.activate(self)
 
-    def heal(self, effect) -> None:
-        self.hp += effect.hp
+    def heal(self, heal: int) -> None:
+        self.hp += heal
         if self.hp > self.max_hp:
             self.hp = self.max_hp
+
+    def gain_mana(self, mana: int) -> None:
+        self.mana += mana
+        if self.mana > self.max_mana:
+            self.mana = self.max_mana
+
+    def lose_mana(self, mana: int) -> None:
+        self.mana -= mana
+
+    def has_mana(self, skill):
+        return self.mana >= skill.mana_cost
 
 
 class Player(Character):
@@ -93,16 +104,13 @@ class Player(Character):
                 except NoManaException:
                     print("Brakuje many")
 
-    def has_mana(self, choosen_attack) -> bool:
-        return self.mana >= choosen_attack.mana_cost
-
     def perform_skill(self, character) -> None:
         while True:
             chosen_attack = self.skills.choose()
             if chosen_attack is None:
                 break
             elif self.has_mana(chosen_attack):
-                self.mana -= chosen_attack.mana_cost
+                self.lose_mana(chosen_attack.mana_cost)
                 if chosen_attack.type in (Type.BUFF, Type.HEAL):
                     return chosen_attack.perform(self)
                 return chosen_attack.perform(character)

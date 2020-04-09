@@ -18,7 +18,7 @@ class Berserker(Skill):
         return randint(self.min_dmg, self.max_dmg)
 
     def perform(self, character):
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)
 
 
 class BloodySlice(DmgDebuff):

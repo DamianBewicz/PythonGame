@@ -10,9 +10,9 @@ class Paladin(Player):
     def __init__(self, name) -> None:
         super().__init__(name)
         self.name = name
-        self.max_hp = 50
+        self.max_hp = 5000
         self.max_mana = 35
-        self.hp = 50
+        self.hp = 5000
         self.mana = 35
         self.attack = Attack(5, 15, effects=self.effects)
         self.rest_hp = 10

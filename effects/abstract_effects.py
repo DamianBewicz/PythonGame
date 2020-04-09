@@ -28,7 +28,7 @@ class PeriodicDamage(Effect):
 
     def activate(self, character) -> None:
         super().activate(character)
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)
 
 
 class CrowdControl(Effect):

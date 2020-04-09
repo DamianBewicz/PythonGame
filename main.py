@@ -19,7 +19,7 @@ class Game:
 
     LAST_PART = len(ENEMIES)
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.player = NotImplemented
         self.enemy = Goblin()
         self.part = 1
@@ -34,7 +34,7 @@ class Game:
         for number, cls in enumerate(self.AVAIBLE_CLASSES.values(), start=1):
             print(number, cls.NAME)
 
-    def create_character(self):
+    def create_character(self) -> None:
         chosen_name = self.choose_name()
         while True:
             try:
@@ -46,10 +46,10 @@ class Game:
             except KeyError:
                 print("\nPodana wartość jest nieprawidłowa\n")
 
-    def has_someone_died(self):
+    def has_someone_died(self) -> None:
         return self.player.is_dead() or self.enemy.is_dead()
 
-    def start_fight(self):
+    def start_fight(self) -> None:
         while True:
             print(self.player)
             print(self.player.effects)
@@ -65,14 +65,14 @@ class Game:
                 break
             system("clear")
 
-    def add_part(self):
+    def add_part(self) -> None:
         self.part += 1
 
-    def change_enemy(self):
+    def change_enemy(self) -> None:
         self.enemy = Game.ENEMIES[self.part]
 
 
-def main():
+def main() -> None:
     game = Game()
     game.create_character()
     system("clear")

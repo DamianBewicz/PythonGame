@@ -1,6 +1,6 @@
 from characters.player.player import Character
 from effects.effects_set import EffectSet
-from skills.abstract_skills import Type
+from skills.abstract_skills import AttackType
 
 
 class Enemy(Character):
@@ -17,7 +17,7 @@ class Enemy(Character):
     def perform_action(self, character):
         if not self.cant_move():
             move = self.randomize_move()[0]
-            if move.type == Type.MAGIC or move.type == Type.PHYSICAL:
+            if move.type == AttackType.MAGIC or move.type == AttackType.PHYSICAL:
                 move.perform(character)
             else:
                 move.perform(self)

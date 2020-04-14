@@ -1,11 +1,11 @@
 from effects.effects import FuryEffect
-from skills.abstract_skills import Type, Buff
+from skills.abstract_skills import AttackType, Buff
 
 
 class Fury(Buff):
     def __init__(self, mana_cost=10):
         super().__init__(mana_cost)
-        self.type = Type.BUFF
+        self.type = AttackType.BUFF
 
     @property
     def buff(self):

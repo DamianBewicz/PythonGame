@@ -1,7 +1,7 @@
 from characters.player.player import Character, Player
 from effects.effects import CurseEffect
 from pets.warlock_pet import Imp
-from skills.abstract_skills import Debuff, Skill, Type
+from skills.abstract_skills import Debuff, Skill, AttackType
 
 
 class Curse(Debuff):
@@ -17,7 +17,7 @@ class HealthDrain(Skill):
     def __init__(self, caster: Character, mana_cost: int = 30, hp: int = 15) -> None:
         super().__init__(mana_cost)
         self.caster = caster
-        self.type = Type.MAGIC
+        self.type = AttackType.MAGIC
         self.hp = hp
 
     @property
@@ -33,7 +33,7 @@ class ManaDrain(Skill):
     def __init__(self, caster: Character, mana_cost: int = 20, mana: int = 30) -> None:
         super().__init__(mana_cost)
         self.caster = caster
-        self.type = Type.MAGIC
+        self.type = AttackType.MAGIC
         self.mana = mana
 
     def perform(self, character: Player) -> None:

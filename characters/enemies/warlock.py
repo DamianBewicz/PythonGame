@@ -1,5 +1,5 @@
 from random import choices
-from characters import Player
+from ..player.player import Player
 from characters.enemies.enemy import Enemy
 from skills.attack_skill import Attack
 from skills.warlock_skills import Curse, HealthDrain, ManaDrain, SummonImp

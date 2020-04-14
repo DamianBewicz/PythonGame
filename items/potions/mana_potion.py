@@ -1,15 +1,11 @@
-from characters.player.player import Player
-from items.item import Item
-
-
-class ManaPotion(Item):
+class ManaPotion:
     mana = NotImplemented
     cost = NotImplemented
 
     def __str__(self) -> str:
         return "NotImplemented"
 
-    def use_item(self, player: Player) -> False:
+    def use_item(self, player) -> False:
         # Return false, use items makes no round loss
         if player.mana > player.max_mana:
             print("\nMasz pełną manę!\n")

@@ -1,11 +1,11 @@
 from effects.effects import BleedEffect
-from skills.abstract_skills import DmgDebuff, Type
+from skills.abstract_skills import DmgDebuff, AttackType
 
 
 class SpearAttack(DmgDebuff):
     def __init__(self, mana_cost=0, min_dmg=20, max_dmg=30):
         super().__init__(mana_cost, min_dmg, max_dmg)
-        self.type = Type.PHYSICAL
+        self.type = AttackType.PHYSICAL
 
     @property
     def debuff(self):

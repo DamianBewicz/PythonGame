@@ -1,6 +1,6 @@
 from effects.abstract_effects import Effect
 from effects.effects import HolyShieldEffect
-from skills.abstract_skills import Skill, Type, Heal
+from skills.abstract_skills import Skill, AttackType, Heal
 from random import randint
 
 
@@ -16,7 +16,7 @@ class HolyLight(Heal):
 class HammerTime(Skill):
     def __init__(self, mana_cost=15):
         super().__init__(mana_cost)
-        self.type = Type.MAGIC
+        self.type = AttackType.MAGIC
         self.min_dmg = 10
         self.max_dmg = 25
 
@@ -34,7 +34,7 @@ class HammerTime(Skill):
 class HolyShield(Skill):
     def __init__(self, mana_cost=20) -> None:
         super().__init__(mana_cost)
-        self.type = Type.BUFF
+        self.type = AttackType.BUFF
 
     def __str__(self) -> str:
         return "Święta Tarcza"

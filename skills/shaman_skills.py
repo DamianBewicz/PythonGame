@@ -1,6 +1,6 @@
 from random import randint
 from effects.effects import EarthQuakeEffect
-from skills.abstract_skills import Heal, DmgDebuff, Type
+from skills.abstract_skills import Heal, DmgDebuff, AttackType
 
 
 class HealingRain(Heal):
@@ -17,7 +17,7 @@ class EarthQuake(DmgDebuff):
 
     def __init__(self, mana_cost=20, min_dmg=10, max_dmg=20):
         super().__init__(mana_cost, min_dmg, max_dmg)
-        self.type = Type.MAGIC
+        self.type = AttackType.MAGIC
 
     @property
     def dmg(self):

@@ -1,6 +1,6 @@
 from effects.abstract_effects import Effect
 from effects.effects import BurnEffect, FireShieldEffect, Blind
-from skills.abstract_skills import Skill, Type
+from skills.abstract_skills import Skill, AttackType
 from random import randint
 
 
@@ -8,7 +8,7 @@ class Fireball(Skill):
 
     def __init__(self, mana_cost=20) -> None:
         super().__init__(mana_cost)
-        self.type = Type.MAGIC
+        self.type = AttackType.MAGIC
         self.min_dmg = 25
         self.max_dmg = 40
 
@@ -32,7 +32,7 @@ class Fireball(Skill):
 class FireShield(Skill):
     def __init__(self, mana_cost=20) -> None:
         super().__init__(mana_cost)
-        self.type = Type.BUFF
+        self.type = AttackType.BUFF
 
     def __str__(self) -> str:
         return "Ogniowa Tarcza"
@@ -49,7 +49,7 @@ class FireShield(Skill):
 class Lightining(Skill):
     def __init__(self, mana_cost=30) -> None:
         super().__init__(mana_cost)
-        self.type = Type.MAGIC
+        self.type = AttackType.MAGIC
         self.min_dmg = 15
         self.max_dmg = 25
 

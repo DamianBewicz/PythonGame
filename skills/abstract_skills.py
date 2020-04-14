@@ -16,7 +16,7 @@ class StatusEffect(Skill):
 class Buff(StatusEffect):
     def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
-        self.type = Type.BUFF
+        self.type = AttackType.BUFF
 
     @property
     def buff(self):
@@ -30,7 +30,7 @@ class Buff(StatusEffect):
 class Debuff(StatusEffect):
     def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
-        self.type = Type.DEBUFF
+        self.type = AttackType.DEBUFF
 
     @property
     def debuff(self):
@@ -44,7 +44,7 @@ class Debuff(StatusEffect):
 class Heal(Skill):
     def __init__(self, mana_cost) -> None:
         super().__init__(mana_cost)
-        self.type = Type.HEAL
+        self.type = AttackType.HEAL
         self.hp = NotImplemented
 
     def perform(self, character) -> None:
@@ -87,7 +87,7 @@ class DmgDebuff(Debuff):
         character.take_dmg(self.dmg)
 
 
-class Type(Enum):
+class AttackType(Enum):
     HEAL = "HEAL"
     BUFF = "BUFF"
     PHYSICAL = "PHYSICAL"

@@ -1,11 +1,11 @@
 from math import floor
 from random import randint
 from effects.effects import CurseEffect
-from skills.abstract_skills import Type
+from skills.abstract_skills import AttackType
 
 
 class Attack:
-    def __init__(self, min_dmg=None, max_dmg=None, effects=None, type=Type.PHYSICAL) -> None:
+    def __init__(self, min_dmg=None, max_dmg=None, effects=None, type=AttackType.PHYSICAL) -> None:
         self.min_dmg = min_dmg
         self.max_dmg = max_dmg
         self.type = type

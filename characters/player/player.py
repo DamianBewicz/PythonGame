@@ -1,7 +1,8 @@
 from effects.abstract_effects import CrowdControl
 from effects.effects import Blind
 from effects.effects_set import EffectSet
-from skills.abstract_skills import Type
+from items import Backpack, PersonalItems
+from skills.abstract_skills import AttackType
 
 
 class NoManaException(Exception):
@@ -63,10 +64,14 @@ class Player(Character):
         self.rest_hp = NotImplemented
         self.rest_mana = NotImplemented
         self.skills = NotImplemented
+        self.equipment = PersonalItems()
+        self.backpack = Backpack(self.equipment)
+        self.equipment.set_backpack(self.backpack)
         self.actions = (
             "Zwykły atak",
             "Umiejętność",
             "Odpoczynek",
+            "Plecak",
         )
 
     def rest(self) -> None:
@@ -76,6 +81,9 @@ class Player(Character):
             self.hp = self.max_hp
         if self.mana > self.max_mana:
             self.mana = self.max_mana
+
+    def use_backpack(self):
+        self.backpack.use_item(self)
 
     def introduce_actions(self) -> None:
         for number, action in enumerate(self.actions, start=1):
@@ -87,7 +95,8 @@ class Player(Character):
                 actions = {
                     "1": self.attack.perform,
                     "2": self.perform_skill,
-                    "3": self.rest
+                    "3": self.rest,
+                    "4": self.use_backpack
                 }
                 self.introduce_actions()
                 try:
@@ -102,7 +111,7 @@ class Player(Character):
                 except KeyError:
                     print("\nPodana wartość jest nieprawidłowa\n")
                 except NoManaException:
-                    print("Brakuje many")
+                    print("\nBrakuje many\n")
 
     def perform_skill(self, character) -> None:
         while True:
@@ -111,7 +120,7 @@ class Player(Character):
                 break
             elif self.has_mana(chosen_attack):
                 self.lose_mana(chosen_attack.mana_cost)
-                if chosen_attack.type in (Type.BUFF, Type.HEAL):
+                if chosen_attack.type in (AttackType.BUFF, AttackType.HEAL):
                     return chosen_attack.perform(self)
                 return chosen_attack.perform(character)
             raise NoManaException

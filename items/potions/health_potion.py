@@ -1,7 +1,4 @@
-from items.item import Item
-
-
-class HealthPotion(Item):
+class HealthPotion:
     hp = NotImplemented
     cost = NotImplemented
 

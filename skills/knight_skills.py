@@ -1,12 +1,12 @@
 from effects.effects import BleedEffect, BattleShoutEffect
-from skills.abstract_skills import Skill, Type, DmgDebuff, Buff
+from skills.abstract_skills import Skill, AttackType, DmgDebuff, Buff
 from random import randint
 
 
 class Berserker(Skill):
     def __init__(self, mana_cost=15, min_dmg=20, max_dmg=30):
         super().__init__(mana_cost)
-        self.type = Type.PHYSICAL
+        self.type = AttackType.PHYSICAL
         self.min_dmg = min_dmg
         self.max_dmg = max_dmg
 
@@ -24,7 +24,7 @@ class Berserker(Skill):
 class BloodySlice(DmgDebuff):
     def __init__(self, mana_cost=10, min_dmg=10, max_dmg=15):
         super().__init__(mana_cost, min_dmg, max_dmg)
-        self.type = Type.PHYSICAL
+        self.type = AttackType.PHYSICAL
 
     def __str__(self):
         return "Krawe Cięcie"

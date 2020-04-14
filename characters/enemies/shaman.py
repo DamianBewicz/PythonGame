@@ -1,6 +1,6 @@
 from random import choices
 from characters.enemies.enemy import Enemy
-from skills.abstract_skills import Type
+from skills.abstract_skills import AttackType
 from skills.attack_skill import Attack
 from skills.shaman_skills import EarthQuake, HealingRain
 
@@ -27,7 +27,7 @@ class Shaman(Enemy):
                 move.perform(character)
             else:
                 if self.has_mana(move):
-                    if move.type == Type.MAGIC or move.type == Type.PHYSICAL:
+                    if move.type == AttackType.MAGIC or move.type == AttackType.PHYSICAL:
                         move.perform(character)
                         self.lose_mana(move.mana_cost)
                     else:

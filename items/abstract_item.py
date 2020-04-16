@@ -1,24 +1,23 @@
-from enum import Enum
-
-
-class ItemType(Enum):
-    EQUIPABLE = "EQUIPABLE"
+from enums import ItemType
 
 
 class Item:
     TYPE = NotImplemented
 
-    def use(self):
-        return NotImplemented
-
     @staticmethod
     def get_item_type(item):
-        return item.TYPE.value.lower()
+        return item.TYPE
 
 
 class EquipableItem(Item):
-    TYPE = ItemType.EQUIPABLE
+    TYPE = ItemType.EQUIPPABLE
+    NAME = NotImplemented
+    SECTION = NotImplemented
+    WEARABLE_FOR: tuple = NotImplemented
 
     @staticmethod
-    def get_item_section(item):
+    def get_item_section(item) -> str:
         return item.SECTION.value.lower()
+
+    def can_wear(self, player_class) -> bool:
+        return player_class in self.WEARABLE_FOR

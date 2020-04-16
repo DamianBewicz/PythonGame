@@ -1,4 +1,5 @@
 from effects.effects import FireShieldEffect
+from enums import PlayerClasses
 from skills.mage_skills import FireShield, Fireball, Lightining
 from .player import Player
 from skills.abstract_skills import SkillSet
@@ -7,7 +8,7 @@ from math import ceil
 
 
 class Mage(Player):
-    NAME = "Mag"
+    NAME = PlayerClasses.MAGE
 
     def __init__(self, name):
         super().__init__(name)

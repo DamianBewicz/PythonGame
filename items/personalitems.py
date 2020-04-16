@@ -7,7 +7,7 @@ class PersonalItems:
     def __str__(self) -> str:
         all_items = ""
         for category, item in self.items.items():
-            all_items += "{category}: {item}\n".format(
+            all_items += "{category:10}: {item}\n".format(
                 category=category.capitalize(),
                 item=item or "Puste"
             )

@@ -1,3 +1,4 @@
+from enums import PlayerClasses
 from .player import Player
 from skills.abstract_skills import SkillSet
 from skills.attack_skill import Attack
@@ -5,7 +6,7 @@ from skills.paladin_skills import HammerTime, HolyLight, HolyShield
 
 
 class Paladin(Player):
-    NAME = "Paladyn"
+    NAME = PlayerClasses.PALADIN
 
     def __init__(self, name) -> None:
         super().__init__(name)

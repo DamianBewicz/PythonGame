@@ -1,19 +1,10 @@
-from enum import Enum
+from enums import EquipmentSections
 from items.abstract_item import EquipableItem
-
-
-class DefenseType(Enum):
-    HELMET = "HEŁM"
-    ARMOR = "ZBROJA"
-    TROUSERS = "SPODNIE"
-    GLOVES = "RĘKAWICE"
-    BOOTS = "BUTY"
-    SHIELD = "TARCZA"
 
 
 class DefensiveItem(EquipableItem):
     SECTION = NotImplemented
-    NAME = NotImplemented
+    RESISTANCE = NotImplemented
 
     def __init__(self) -> None:
         self.defense = NotImplemented
@@ -23,28 +14,28 @@ class DefensiveItem(EquipableItem):
 
 
 class Helmet(DefensiveItem):
-    SECTION = DefenseType.HELMET
+    SECTION = EquipmentSections.HELMET
 
 
 class Armor(DefensiveItem):
-    SECTION = DefenseType.ARMOR
+    SECTION = EquipmentSections.ARMOR
 
 
 class Trousers(DefensiveItem):
-    SECTION = DefenseType.TROUSERS
+    SECTION = EquipmentSections.TROUSERS
 
 
 class Gloves(DefensiveItem):
-    SECTION = DefenseType.GLOVES
+    SECTION = EquipmentSections.GLOVES
 
 
 class Boots(DefensiveItem):
-    SECTION = DefenseType.BOOTS
+    SECTION = EquipmentSections.BOOTS
 
 
 class Shield(DefensiveItem):
-    SECTION = DefenseType.SHIELD
+    SECTION = EquipmentSections.SHIELD
+    BLOCK_CHANCE = NotImplemented
 
     def __init__(self):
         super().__init__()
-        self.percent_block_chance = NotImplemented

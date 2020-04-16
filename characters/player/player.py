@@ -65,8 +65,6 @@ class Player(Character):
         self.rest_mana = NotImplemented
         self.skills = NotImplemented
         self.equipment = PersonalItems()
-        self.backpack = Backpack(self.equipment)
-        self.equipment.set_backpack(self.backpack)
         self.actions = (
             "Zwykły atak",
             "Umiejętność",
@@ -82,9 +80,6 @@ class Player(Character):
         if self.mana > self.max_mana:
             self.mana = self.max_mana
 
-    def use_backpack(self):
-        self.backpack.use_item(self)
-
     def introduce_actions(self) -> None:
         for number, action in enumerate(self.actions, start=1):
             print(number, action)
@@ -96,7 +91,6 @@ class Player(Character):
                     "1": self.attack.perform,
                     "2": self.perform_skill,
                     "3": self.rest,
-                    "4": self.use_backpack
                 }
                 self.introduce_actions()
                 try:

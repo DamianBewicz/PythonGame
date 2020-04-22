@@ -25,7 +25,3 @@ class MagicResistance:
 
     def get_resistance_value(self, magic_type: MagicNature) -> int:
         return self.resistance[magic_type]
-
-
-a = MagicResistance()
-print(a)

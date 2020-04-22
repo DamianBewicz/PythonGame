@@ -2,6 +2,7 @@ from effects.abstract_effects import CrowdControl
 from effects.effects import Blind
 from effects.effects_set import EffectSet
 from items import Backpack, PersonalItems
+from items.equipment import Equipment
 from skills.abstract_skills import AttackType
 
 
@@ -64,7 +65,7 @@ class Player(Character):
         self.rest_hp = NotImplemented
         self.rest_mana = NotImplemented
         self.skills = NotImplemented
-        self.equipment = PersonalItems()
+        self.equipment = Equipment(self.CLASS_NAME)
         self.actions = (
             "Zwykły atak",
             "Umiejętność",

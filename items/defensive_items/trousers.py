@@ -11,10 +11,17 @@ class RustyTrousers(Trousers):
         PlayerClasses.PALADIN,
         PlayerClasses.MAGE,
     )
+    STARTING_DEFENSE = 3
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 3
+
+class PlateTrousers(Trousers):
+    NAME: str = "Spodnie płytowe"
+    RESISTANCE: MagicResistance = MagicResistance(fire=2, water=2, earth=2, lightning=2, shadow=2)
+    WEARABLE_FOR: tuple = (
+        PlayerClasses.KNIGHT,
+        PlayerClasses.PALADIN
+    )
+    STARTING_DEFENSE = 15
 
 
 class PhoenixTrousers(Trousers):
@@ -23,9 +30,4 @@ class PhoenixTrousers(Trousers):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 10
-
-
+    STARTING_DEFENSE = 5

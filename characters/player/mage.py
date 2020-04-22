@@ -8,7 +8,7 @@ from math import ceil
 
 
 class Mage(Player):
-    NAME = PlayerClasses.MAGE
+    CLASS_NAME = PlayerClasses.MAGE
 
     def __init__(self, name):
         super().__init__(name)

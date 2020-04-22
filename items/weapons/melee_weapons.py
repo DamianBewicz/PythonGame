@@ -1,14 +1,44 @@
 from items.weapons.abstract_weapons import MeleeWeapon
 
 
-class RustySword(MeleeWeapon):
+class Scythe(MeleeWeapon):
     CRITICAL_STRIKE_CHANCE = 5
-    NAME = "Zardzewiały miecz"
+    NAME = "Kosa"
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.min_dmg = 5
+        self.max_dmg = 5
+
+
+class Cudgel(MeleeWeapon):
+    CRITICAL_STRIKE_CHANCE = 5
+    NAME = "Maczuga"
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.min_dmg = 7
+        self.max_dmg = 10
+
+
+class Axe(MeleeWeapon):
+    CRITICAL_STRIKE_CHANCE = 7
+    NAME = "Topór"
 
     def __init__(self) -> None:
         super().__init__()
         self.min_dmg = 10
-        self.max_dmg = 10
+        self.max_dmg = 12
+
+
+class RustySword(MeleeWeapon):
+    CRITICAL_STRIKE_CHANCE = 8
+    NAME = "Zardzewiały miecz"
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.min_dmg = 12
+        self.max_dmg = 15
 
 
 class BattleAxe(MeleeWeapon):

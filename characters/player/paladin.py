@@ -6,7 +6,7 @@ from skills.paladin_skills import HammerTime, HolyLight, HolyShield
 
 
 class Paladin(Player):
-    NAME = PlayerClasses.PALADIN
+    CLASS_NAME = PlayerClasses.PALADIN
 
     def __init__(self, name) -> None:
         super().__init__(name)

@@ -11,22 +11,17 @@ class RustyArmor(Armor):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 5
+    STARTING_DEFENSE = 5
 
 
 class PlateArmor(Armor):
     NAME: str = "Zbroja płytowa"
     RESISTANCE: MagicResistance = MagicResistance(fire=3, water=3, earth=3, lightning=3, shadow=3)
     WEARABLE_FOR: tuple = (
-        PlayerClasses.MAGE,
+        PlayerClasses.KNIGHT,
+        PlayerClasses.PALADIN
     )
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 20
+    STARTING_DEFENSE = 20
 
 
 class ArchmageRobe(Armor):
@@ -35,10 +30,4 @@ class ArchmageRobe(Armor):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 10
-
-
-
+    STARTING_DEFENSE = 10

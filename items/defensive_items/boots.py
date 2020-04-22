@@ -11,10 +11,17 @@ class RustyBoots(Boots):
         PlayerClasses.PALADIN,
         PlayerClasses.MAGE,
     )
+    STARTING_DEFENSE = 2
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 2
+
+class PlateBoots(Boots):
+    NAME: str = "Buty płytowe"
+    RESISTANCE: MagicResistance = MagicResistance(fire=2, water=2, earth=2, lightning=2, shadow=2)
+    WEARABLE_FOR: tuple = (
+        PlayerClasses.KNIGHT,
+        PlayerClasses.PALADIN
+    )
+    STARTING_DEFENSE = 5
 
 
 class ShadowGloves(Boots):
@@ -23,7 +30,4 @@ class ShadowGloves(Boots):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.defense: int = 5
+    STARTING_DEFENSE = 5

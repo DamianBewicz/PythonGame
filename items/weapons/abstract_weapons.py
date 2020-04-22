@@ -43,12 +43,13 @@ class MeleeWeapon(Weapon):
         self.is_sharpened = False
 
     def __str__(self) -> str:
-        return "{} - obrażenia {} - {}".format(self.NAME, self.min_dmg, self.max_dmg)
-
-    def is_sharpened(self) -> bool:
-        return self.is_sharpened
+        return "{}\n" \
+               "Obrażenia {} - {}\n" \
+               "Szansa na trafienie krytyczne {}%".format(self.NAME, self.min_dmg, self.max_dmg, self.CRITICAL_STRIKE_CHANCE)
 
     def sharpen(self) -> None:
+        self.min_dmg += self.BONUS_DMG.min_dmg
+        self.max_dmg += self.BONUS_DMG.max_dmg
         self.is_sharpened = True
 
 

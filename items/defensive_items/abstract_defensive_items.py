@@ -5,9 +5,10 @@ from items.abstract_item import EquipableItem
 class DefensiveItem(EquipableItem):
     SECTION = NotImplemented
     RESISTANCE = NotImplemented
+    STARTING_DEFENSE = NotImplemented
 
     def __init__(self) -> None:
-        self.defense = NotImplemented
+        self.defense = self.STARTING_DEFENSE
 
     def __str__(self) -> str:
         return "{} - {} pkt pancerza".format(self.NAME, self.defense)

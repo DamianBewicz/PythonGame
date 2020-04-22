@@ -6,7 +6,7 @@ from skills.knight_skills import Berserker, BloodySlice, BattleShout
 
 
 class Knight(Player):
-    NAME = PlayerClasses.KNIGHT
+    CLASS_NAME = PlayerClasses.KNIGHT
 
     def __init__(self, name=None):
         super().__init__(name)

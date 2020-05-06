@@ -37,4 +37,3 @@ class CrowdControl(Effect):
     def __init__(self, duration=None, chance=None) -> None:
         super().__init__(duration, chance)
         self.name = NotImplemented
-

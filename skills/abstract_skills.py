@@ -1,6 +1,6 @@
-from enum import Enum
 from typing import Optional
 from random import randint
+from enums import AttackType
 
 
 class Skill:
@@ -85,11 +85,3 @@ class DmgDebuff(Debuff):
     def perform(self, character) -> None:
         super().perform(character)
         character.take_dmg(self.dmg)
-
-
-class AttackType(Enum):
-    HEAL = "HEAL"
-    BUFF = "BUFF"
-    PHYSICAL = "PHYSICAL"
-    MAGIC = "MAGIC"
-    DEBUFF = "DEBUFF"

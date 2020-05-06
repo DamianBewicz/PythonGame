@@ -4,7 +4,6 @@ from skills.abstract_skills import AttackType
 
 
 class Enemy(Character):
-
     def __init__(self, name: str):
         super().__init__(name)
         self.max_hp = NotImplemented

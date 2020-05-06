@@ -1,6 +1,6 @@
-from .armors import RustyArmor
-from .trousers import RustyTrousers
-from .boots import RustyBoots
-from .shields import RustyShield
-from .gloves import RustyGloves
-from .helmets import RustyHelmet
+from .armors import RustyArmor, PlateArmor, ArchmageRobe
+from .trousers import RustyTrousers, PlateTrousers, PhoenixTrousers
+from .boots import RustyBoots, PlateBoots, ShadowGloves
+from .shields import RustyShield, BurnishedShield, IronShield
+from .gloves import RustyGloves, PlateGloves, MysticalGloves
+from .helmets import RustyHelmet, PlateHelmet, ArchmageHeadpiece

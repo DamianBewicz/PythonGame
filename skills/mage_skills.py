@@ -1,6 +1,7 @@
 from effects.abstract_effects import Effect
 from effects.effects import BurnEffect, FireShieldEffect, Blind
-from skills.abstract_skills import Skill, AttackType
+from enums import AttackType
+from skills.abstract_skills import Skill
 from random import randint
 
 

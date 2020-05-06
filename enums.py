@@ -12,6 +12,10 @@ class MagicNature(Enum):
 class AttackType(Enum):
     MAGIC: str = "MAGICZNY"
     PHYSICAL: str = "FIZYCZNY"
+    NORMAL: str = "NORMALNY"
+    HEAL: str = "LECZENIE"
+    BUFF: str = "BUFF"
+    DEBUFF: str = "DEBUFF"
 
 
 class EquipmentSections(Enum):

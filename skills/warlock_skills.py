@@ -1,7 +1,8 @@
 from characters.player.player import Character, Player
 from effects.effects import CurseEffect
+from enums import AttackType
 from pets.warlock_pet import Imp
-from skills.abstract_skills import Debuff, Skill, AttackType
+from skills.abstract_skills import Debuff, Skill
 
 
 class Curse(Debuff):

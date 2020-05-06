@@ -5,7 +5,6 @@ from random import choices
 
 
 class Goblin(Enemy):
-
     def __init__(self, name="Goblin"):
         super().__init__(name)
         self.max_hp = 60

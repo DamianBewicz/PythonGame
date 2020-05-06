@@ -1,5 +1,5 @@
 from random import randint
-from enums import AttackType, EquipmentSections, MagicNature
+from enums import AttackType, EquipmentSections, MagicNature, PlayerClasses
 from items.abstract_item import EquipableItem
 
 
@@ -18,9 +18,12 @@ class Weapon(EquipableItem):
     def __init__(self) -> None:
         self.min_dmg: int = NotImplemented
         self.max_dmg: int = NotImplemented
+        self.is_improved: bool = False
 
     def __str__(self) -> str:
-        return NotImplemented
+        return "{}\n" \
+               "Obrażenia {}-{}\n" \
+               "Szansa na trafienie krytyczne {} %".format(self.NAME, self.min_dmg, self.max_dmg, self.CRITICAL_STRIKE_CHANCE)
 
     @property
     def damage(self) -> int:
@@ -33,42 +36,42 @@ class Weapon(EquipableItem):
     def _critically_strikes(self) -> bool:
         return randint(1, 100) in range(1, self.CRITICAL_STRIKE_CHANCE + 1)
 
+    def improve(self):
+        return NotImplemented
+
 
 class MeleeWeapon(Weapon):
-    ATTACK_TYPE: AttackType = AttackType.PHYSICAL
+    ATTACK_TYPE: AttackType = AttackType.NORMAL
     BONUS_DMG: BonusDamage = BonusDamage(5, 5)
 
     def __init__(self) -> None:
         super().__init__()
         self.is_sharpened = False
 
-    def __str__(self) -> str:
-        return "{}\n" \
-               "Obrażenia {} - {}\n" \
-               "Szansa na trafienie krytyczne {}%".format(self.NAME, self.min_dmg, self.max_dmg, self.CRITICAL_STRIKE_CHANCE)
-
-    def sharpen(self) -> None:
+    def improve(self) -> None:
         self.min_dmg += self.BONUS_DMG.min_dmg
         self.max_dmg += self.BONUS_DMG.max_dmg
-        self.is_sharpened = True
+        self.is_improved = True
 
 
 class Wand(Weapon):
     ATTACK_TYPE: AttackType = AttackType.MAGIC
     NATURE: MagicNature = NotImplemented
     MAX_LEVEL: int = 4
+    WEARABLE_FOR: tuple = (
+        PlayerClasses.MAGE,
+    )
 
     def __init__(self) -> None:
         super().__init__()
         self.level: int = 1
 
-    def __str__(self) -> str:
-        return "{} - obrażenia {}-{}".format(self.NAME, self.min_dmg, self.max_dmg)
-
-    def upgrade(self) -> None:
+    def improve(self) -> None:
         self.min_dmg += self.BONUS_DMG.min_dmg
         self.max_dmg += self.BONUS_DMG.max_dmg
         self.level += 1
+        if self.is_maximum_level():
+            self.is_improved = True
 
     def is_maximum_level(self) -> bool:
         return self.MAX_LEVEL == self.level

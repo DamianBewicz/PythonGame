@@ -1,7 +1,6 @@
 from effects.abstract_effects import CrowdControl
 from effects.effects import Blind
 from effects.effects_set import EffectSet
-from items import Backpack, PersonalItems
 from items.equipment import Equipment
 from skills.abstract_skills import AttackType
 
@@ -110,14 +109,14 @@ class Player(Character):
 
     def perform_skill(self, character) -> None:
         while True:
-            chosen_attack = self.skills.choose()
-            if chosen_attack is None:
+            chosen_skill = self.skills.choose()
+            if chosen_skill is None:
                 break
-            elif self.has_mana(chosen_attack):
-                self.lose_mana(chosen_attack.mana_cost)
-                if chosen_attack.type in (AttackType.BUFF, AttackType.HEAL):
-                    return chosen_attack.perform(self)
-                return chosen_attack.perform(character)
+            elif self.has_mana(chosen_skill):
+                self.lose_mana(chosen_skill.mana_cost)
+                if chosen_skill.type in (AttackType.BUFF, AttackType.HEAL):
+                    return chosen_skill.perform(self)
+                return chosen_skill.perform(character)
             raise NoManaException
 
     def reset(self) -> None:

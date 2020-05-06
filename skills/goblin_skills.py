@@ -1,5 +1,6 @@
 from effects.effects import BleedEffect
-from skills.abstract_skills import DmgDebuff, AttackType
+from enums import AttackType
+from skills.abstract_skills import DmgDebuff
 
 
 class SpearAttack(DmgDebuff):

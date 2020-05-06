@@ -1,14 +1,14 @@
 from math import floor
 from random import randint
 from effects.effects import CurseEffect
-from skills.abstract_skills import AttackType
+from enums import AttackType
 
 
 class Attack:
-    def __init__(self, min_dmg=None, max_dmg=None, effects=None, type=AttackType.PHYSICAL) -> None:
+    def __init__(self, min_dmg=None, max_dmg=None, effects=None) -> None:
         self.min_dmg = min_dmg
         self.max_dmg = max_dmg
-        self.type = type
+        self.type = AttackType.NORMAL
         self.effects = effects
 
     @property

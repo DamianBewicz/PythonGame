@@ -1,3 +1,4 @@
+from random import randint
 from enums import EquipmentSections
 from items.abstract_item import EquipableItem
 
@@ -11,7 +12,8 @@ class DefensiveItem(EquipableItem):
         self.defense = self.STARTING_DEFENSE
 
     def __str__(self) -> str:
-        return "{} - {} pkt pancerza".format(self.NAME, self.defense)
+        return "{}\n" \
+               "{}".format(self.NAME, str(self.defense))
 
 
 class Helmet(DefensiveItem):
@@ -38,5 +40,8 @@ class Shield(DefensiveItem):
     SECTION = EquipmentSections.SHIELD
     BLOCK_CHANCE = NotImplemented
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
+
+    def has_blocked(self) -> bool:
+        return randint(1, 100) in range(1, self.BLOCK_CHANCE + 1)

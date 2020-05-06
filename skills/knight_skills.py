@@ -1,5 +1,6 @@
 from effects.effects import BleedEffect, BattleShoutEffect
-from skills.abstract_skills import Skill, AttackType, DmgDebuff, Buff
+from enums import AttackType
+from skills.abstract_skills import Skill, DmgDebuff, Buff
 from random import randint
 
 

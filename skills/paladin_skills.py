@@ -1,6 +1,7 @@
 from effects.abstract_effects import Effect
 from effects.effects import HolyShieldEffect
-from skills.abstract_skills import Skill, AttackType, Heal
+from enums import AttackType
+from skills.abstract_skills import Skill, Heal
 from random import randint
 
 

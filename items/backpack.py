@@ -9,7 +9,7 @@ class Backpack:
     def filter(self, type: ItemType, sorted: bool = True) -> list:
         list_of_items = [x for x in filter(lambda x: x.TYPE.value == type.value, self.items)]
         if sorted:
-            list_of_items.sort(key=lambda x: x.__str__())
+            list_of_items.sort(key=lambda object: str(object))
         return list_of_items
 
     def append(self, item):

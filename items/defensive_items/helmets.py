@@ -1,4 +1,5 @@
-from defense.magic_resist import MagicResistance
+from items.defense.defense import Defense
+from items.defense.magic_resist import MagicResistance
 from enums import PlayerClasses
 from items.defensive_items.abstract_defensive_items import Helmet
 
@@ -11,7 +12,7 @@ class RustyHelmet(Helmet):
         PlayerClasses.PALADIN,
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = 2
+    STARTING_DEFENSE = Defense(2)
 
 
 class PlateHelmet(Helmet):
@@ -21,7 +22,7 @@ class PlateHelmet(Helmet):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = 10
+    STARTING_DEFENSE = Defense(10)
 
 
 class ArchmageHeadpiece(Helmet):
@@ -30,4 +31,4 @@ class ArchmageHeadpiece(Helmet):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = 5
+    STARTING_DEFENSE = Defense(5)

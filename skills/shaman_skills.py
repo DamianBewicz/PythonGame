@@ -1,6 +1,7 @@
 from random import randint
 from effects.effects import EarthQuakeEffect
-from skills.abstract_skills import Heal, DmgDebuff, AttackType
+from enums import AttackType
+from skills.abstract_skills import Heal, DmgDebuff
 
 
 class HealingRain(Heal):
@@ -30,4 +31,4 @@ class EarthQuake(DmgDebuff):
     def perform(self, character) -> None:
         if self.debuff.is_activated():
             character.effects.append(self.debuff)
-        character.take_dmg(self)
+        character.take_dmg(self.dmg)

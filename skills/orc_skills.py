@@ -1,5 +1,6 @@
 from effects.effects import FuryEffect
-from skills.abstract_skills import AttackType, Buff
+from enums import AttackType
+from skills.abstract_skills import Buff
 
 
 class Fury(Buff):

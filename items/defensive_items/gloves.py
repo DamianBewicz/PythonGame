@@ -1,4 +1,5 @@
-from defense.magic_resist import MagicResistance
+from items.defense.defense import Defense
+from items.defense.magic_resist import MagicResistance
 from enums import PlayerClasses
 from items.defensive_items.abstract_defensive_items import Gloves
 
@@ -11,7 +12,7 @@ class RustyGloves(Gloves):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN,
     )
-    STARTING_DEFENSE = 2
+    STARTING_DEFENSE = Defense(2)
 
 
 class PlateGloves(Gloves):
@@ -21,7 +22,7 @@ class PlateGloves(Gloves):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = 5
+    STARTING_DEFENSE = Defense(5)
 
 
 class MysticalGloves(Gloves):
@@ -30,4 +31,4 @@ class MysticalGloves(Gloves):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = 5
+    STARTING_DEFENSE = Defense(5)

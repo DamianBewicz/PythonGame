@@ -1,4 +1,5 @@
-from defense.magic_resist import MagicResistance
+from items.defense.defense import Defense
+from items.defense.magic_resist import MagicResistance
 from enums import PlayerClasses
 from items.defensive_items.abstract_defensive_items import Trousers
 
@@ -11,7 +12,7 @@ class RustyTrousers(Trousers):
         PlayerClasses.PALADIN,
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = 3
+    STARTING_DEFENSE = Defense(3)
 
 
 class PlateTrousers(Trousers):
@@ -21,7 +22,7 @@ class PlateTrousers(Trousers):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = 15
+    STARTING_DEFENSE = Defense(15)
 
 
 class PhoenixTrousers(Trousers):
@@ -30,4 +31,4 @@ class PhoenixTrousers(Trousers):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = 5
+    STARTING_DEFENSE = Defense(5)

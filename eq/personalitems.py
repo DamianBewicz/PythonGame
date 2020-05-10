@@ -2,7 +2,15 @@ from itertools import zip_longest
 
 
 class PersonalItems:
-    ITEMS = ["broń", "zbroja", "tarcza", "spodnie", "buty", "rękawice", "hełm"]
+    ITEMS = [
+        "broń",
+        "zbroja",
+        "tarcza",
+        "spodnie",
+        "buty",
+        "rękawice",
+        "hełm"
+    ]
 
     def __init__(self) -> None:
         self.items = {item_type: None for item_type in PersonalItems.ITEMS}

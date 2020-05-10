@@ -1,4 +1,4 @@
-from items.weapons import WandOfFire, WandOfWater, WandOfEarth, WandOfLightning, WandOfShadow
+from items import WandOfFire, WandOfWater, WandOfEarth, WandOfLightning, WandOfShadow
 from items.weapons.abstract_weapons import Wand
 from merchants.merchant import WeaponImprover
 

@@ -1,8 +1,7 @@
 from random import choices
 from characters.enemies.enemy import Enemy
-from skills.abstract_skills import AttackType
-from skills.attack_skill import Attack
-from skills.shaman_skills import EarthQuake, HealingRain
+from enums import AttackType
+from skills import HealingRain, EarthQuake, Attack
 
 
 class Shaman(Enemy):
@@ -12,8 +11,11 @@ class Shaman(Enemy):
         self.max_mana = 70
         self.hp = 100
         self.mana = 70
-        self.attack = Attack(10, 10, effects=self.effects)
         self.skills = [HealingRain(), EarthQuake()]
+
+    @property
+    def attack(self):
+        return Attack(10, 12, effects=self.effects)
 
     def heal(self, effect) -> None:
         self.hp += effect.hp
@@ -23,11 +25,11 @@ class Shaman(Enemy):
     def perform_action(self, character):
         if not self.cant_move():
             move = self.randomize_move()[0]
-            if isinstance(move, Attack):
+            if type(move) == Attack:
                 move.perform(character)
             else:
                 if self.has_mana(move):
-                    if move.type == AttackType.MAGIC or move.type == AttackType.PHYSICAL:
+                    if move.TYPE == AttackType.MAGIC or move.TYPE == AttackType.PHYSICAL:
                         move.perform(character)
                         self.lose_mana(move.mana_cost)
                     else:

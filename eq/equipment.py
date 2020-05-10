@@ -1,11 +1,10 @@
-from enums import PlayerClasses
-from items import Backpack
-from items.abstract_item import EquipableItem, ItemType
-from items.defense.defense import Defense
-from items.defense.magic_resist import MagicResistance
-from items.gold import Gold
-from items.personalitems import PersonalItems
+from enums import PlayerClasses, ItemType
+from eq.defense import MagicResistance, Defense
+from items.abstract_item import EquipableItem
 from utils import introduce_from_list, choose_item
+from .backpack import Backpack
+from .gold import Gold
+from .personalitems import PersonalItems
 
 
 class Equipment:
@@ -13,16 +12,17 @@ class Equipment:
         self.backpack: Backpack = Backpack()
         self.personal_items: PersonalItems = PersonalItems()
         self.player_class_type: PlayerClasses = player_class_type
-        self.magic_resistance: MagicResistance = MagicResistance()
+        self.magic_resistance: MagicResistance = MagicResistance(shadow=50)
         self.defense: Defense = Defense()
         self.gold: Gold = Gold()
 
     def choose_item_to_wear(self) -> None:
         while True:
             try:
+                print()
                 print(self.personal_items)
                 equipable_items = self.backpack.filter(ItemType.EQUIPPABLE)
-                introduce_from_list(equipable_items)
+                introduce_from_list(equipable_items, space=True)
                 question = "\nPodaj numer przedmiotu, który chcesz użyć, lub naciśnij enter aby wyjść.\n"
                 item = choose_item(equipable_items, question)
                 if item is None:
@@ -49,4 +49,3 @@ class Equipment:
         except AttributeError:
             pass
         self.personal_items.set(item)
-        print(self.defense)

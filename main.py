@@ -1,7 +1,8 @@
 from castle import OldCastle
-from characters import Paladin, Mage, Knight, Goblin, Orc, Shaman, Warlock
 from termcolor import colored
 from os import system
+from characters.enemies import Goblin, Orc, Warlock, Shaman
+from characters.player import Knight, Paladin, Mage
 from utils import introduce_from_list, choose_action
 
 

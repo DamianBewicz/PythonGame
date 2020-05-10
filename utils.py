@@ -41,10 +41,6 @@ def classes_to_items(list_of_classes: list) -> list:
     return [item() for item in list_of_classes]
 
 
-def set_of_names(list_of_classes: list):
-    return set([cls.__str__() for cls in list_of_classes])
-
-
 def count_class_occurances(list_of_classes: list, names_set: set) -> dict:
     class_occurances = {}
     list_of_names = list(names_set)

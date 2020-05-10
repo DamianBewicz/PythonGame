@@ -1,51 +1,99 @@
 from typing import Optional
 from random import randint
+from dmg_object.damage_object import DamageObject
+from effects.abstract_effects import Effect
 from enums import AttackType
 
 
 class Skill:
+    TYPE = NotImplemented
+
     def __init__(self, mana_cost: int = None) -> None:
-        self.mana_cost = mana_cost
-        self.type = NotImplemented
+        self.mana_cost: int = mana_cost
 
 
-class StatusEffect(Skill):
-    pass
+class DamageSkill(Skill):
 
-
-class Buff(StatusEffect):
-    def __init__(self, mana_cost) -> None:
+    def __init__(self, mana_cost: int = None, min_dmg: int = None, max_dmg: int = None):
         super().__init__(mana_cost)
-        self.type = AttackType.BUFF
+        self.min_dmg = min_dmg
+        self.max_dmg = max_dmg
 
     @property
-    def buff(self):
+    def dmg(self) -> int:
+        return randint(self.min_dmg, self.max_dmg)
+
+
+class PhysicalDamageSkill(DamageSkill):
+    TYPE = AttackType.PHYSICAL
+
+
+class MagicDamageSkill(DamageSkill):
+    TYPE = AttackType.MAGIC
+    SOURCE = NotImplemented
+
+
+class AttackWithEffect(Skill):
+    TYPE = NotImplemented
+
+    @property
+    def effect(self) -> Effect:
         return NotImplemented
 
     def perform(self, character) -> None:
-        if self.buff.is_activated():
-            character.effects.append(self.buff)
+        if self.effect.is_activated():
+            character.effects.append(self.effect)
 
 
-class Debuff(StatusEffect):
-    def __init__(self, mana_cost) -> None:
+class Buff(AttackWithEffect):
+    TYPE: str = AttackType.BUFF
+
+    def __init__(self, mana_cost: int) -> None:
         super().__init__(mana_cost)
-        self.type = AttackType.DEBUFF
 
-    @property
-    def debuff(self):
+    def __str__(self) -> str:
         return NotImplemented
 
+
+class Debuff(AttackWithEffect):
+    TYPE: str = AttackType.DEBUFF
+
+    def __init__(self, mana_cost: int) -> None:
+        super().__init__(mana_cost)
+
+
+class DmgDebuff(Debuff):
+    ATTACK_TYPE = NotImplemented
+
+    def __init__(self, mana_cost, min_dmg, max_dmg) -> None:
+        super().__init__(mana_cost)
+        self.min_dmg = min_dmg
+        self.max_dmg = max_dmg
+
+    @property
+    def dmg(self) -> int:
+        return randint(self.min_dmg, self.max_dmg)
+
     def perform(self, character) -> None:
-        if self.debuff.is_activated():
-            character.effects.append(self.debuff)
+        super().perform(character)
+        character.take_dmg(DamageObject(dmg=self.dmg, attack_type=self.ATTACK_TYPE))
+
+
+class PhysicalDmgDebuff(DmgDebuff):
+    ATTACK_TYPE = AttackType.PHYSICAL
+
+
+class MagicDmgDebuff(DmgDebuff):
+    ATTACK_TYPE = AttackType
+    SOURCE = NotImplemented
 
 
 class Heal(Skill):
-    def __init__(self, mana_cost) -> None:
+    TYPE: str = AttackType.HEAL
+
+    def __init__(self, mana_cost: int, hp: int) -> None:
         super().__init__(mana_cost)
-        self.type = AttackType.HEAL
-        self.hp = NotImplemented
+        self.hp: int = hp
 
     def perform(self, character) -> None:
         character.heal(self.hp)
@@ -69,19 +117,3 @@ class SkillSet:
                 return self.skills[choice]
             except KeyError:
                 print("\nPodana wartość jest nieprawidłowa, proszę podać cyfrę!\n")
-
-
-class DmgDebuff(Debuff):
-    def __init__(self, mana_cost, min_dmg, max_dmg) -> None:
-        super().__init__(mana_cost)
-        self.min_dmg = min_dmg
-        self.max_dmg = max_dmg
-        self.type = NotImplemented
-
-    @property
-    def dmg(self) -> int:
-        return randint(self.min_dmg, self.max_dmg)
-
-    def perform(self, character) -> None:
-        super().perform(character)
-        character.take_dmg(self.dmg)

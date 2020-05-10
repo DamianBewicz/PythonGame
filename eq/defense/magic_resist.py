@@ -1,5 +1,6 @@
-from enums import MagicNature
 from termcolor import colored
+
+from enums import MagicNature
 
 
 class MagicResistance:
@@ -40,9 +41,3 @@ class MagicResistance:
 
     def get_value(self, magic_type: MagicNature) -> int:
         return self.resistance[magic_type]
-
-
-magic_resistance1 = MagicResistance(fire=5, water=5, earth=5, lightning=5, shadow=5)
-magic_resistance2 = MagicResistance(fire=5, water=10, earth=5, lightning=5, shadow=5)
-print(magic_resistance1 + magic_resistance2)
-

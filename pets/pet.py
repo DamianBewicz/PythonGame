@@ -1,6 +1,3 @@
-from characters.player.player import Character
-
-
 class Pet:
     def __init__(self, name: str = None, mana: int = None) -> None:
         self.name = name

@@ -1,6 +1,5 @@
-from items.defense.defense import Defense
-from items.defense.magic_resist import MagicResistance
 from enums import PlayerClasses
+from eq.defense import MagicResistance, Defense
 from items.defensive_items.abstract_defensive_items import Helmet
 
 

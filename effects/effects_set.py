@@ -1,5 +1,4 @@
 from termcolor import colored
-
 from effects.abstract_effects import Effect
 
 
@@ -11,7 +10,7 @@ class EffectSet:
         buffs = ""
         debuffs = ""
         for effect in self.__effects:
-            if effect.TYPE == "BUFF" or effect.TYPE == "BUFF STATS":
+            if effect.STATUS_EFFECT == "BUFF" or effect.STATUS_EFFECT == "BUFF STATS":
                 buffs += effect.name + " "
             else:
                 debuffs += effect.name + " "
@@ -44,7 +43,7 @@ class EffectSet:
         return next(filter(lambda x: type(x) == effect,  self.__effects))
 
     def stats_effects(self) -> iter:
-        return filter(lambda effect: effect.TYPE in ("BUFF STATS", "DEBUFF STATS"), self.__effects)
+        return filter(lambda effect: effect.STATUS_EFFECT in ("BUFF STATS", "DEBUFF STATS"), self.__effects)
 
     def contains_stats_effect(self) -> bool:
-        return any((effect.TYPE in ("BUFF STATS", "DEBUFF STATS") for effect in self.__effects))
+        return any((effect.STATUS_EFFECT in ("BUFF STATS", "DEBUFF STATS") for effect in self.__effects))

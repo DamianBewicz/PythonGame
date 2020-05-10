@@ -1,15 +1,17 @@
 from math import floor
 from random import randint
-from effects.effects import CurseEffect
+from dmg_object.damage_object import DamageObject
+from effects import EffectSet, CurseEffect
 from enums import AttackType
 
 
 class Attack:
-    def __init__(self, min_dmg=None, max_dmg=None, effects=None) -> None:
-        self.min_dmg = min_dmg
-        self.max_dmg = max_dmg
-        self.type = AttackType.NORMAL
-        self.effects = effects
+    TYPE: str = AttackType.PHYSICAL
+
+    def __init__(self, min_dmg: int = None, max_dmg: int = None, effects: EffectSet = None) -> None:
+        self.min_dmg: int = min_dmg
+        self.max_dmg: int = max_dmg
+        self.effects: EffectSet = effects
 
     @property
     def dmg(self) -> int:
@@ -25,7 +27,7 @@ class Attack:
         return floor(percent_damage_reduction * randint(self.min_dmg + bonus_dmg["min_dmg"], self.max_dmg + bonus_dmg["max_dmg"]))
 
     def perform(self, character) -> None:
-        character.take_dmg(self.dmg)
+        character.take_dmg(DamageObject(dmg=self.dmg, attack_type=self.TYPE))
 
     def count_bonus_dmg(self) -> dict:
         bonus_min_dmg = 0

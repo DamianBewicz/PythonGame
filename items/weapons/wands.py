@@ -1,6 +1,6 @@
 from enums import MagicNature
-from items.weapons.abstract_weapons import Wand, BonusDamage
 from termcolor import colored
+from items.weapons.abstract_weapons import Wand, BonusDamage
 
 
 class WandOfFire(Wand):

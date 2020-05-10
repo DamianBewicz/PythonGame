@@ -1,9 +1,7 @@
 from random import choices
 from characters.enemies.enemy import Enemy
-from effects.effects import FuryEffect, Blind
-from skills.attack_skill import Attack
-from skills.knight_skills import BloodySlice
-from skills.orc_skills import Fury
+from effects import Blind, FuryEffect
+from skills import Fury, BloodySlice, Attack
 
 
 class Orc(Enemy):
@@ -13,8 +11,11 @@ class Orc(Enemy):
         self.max_mana = 0
         self.hp = 60
         self.mana = 0
-        self.attack = Attack(10, 10, effects=self.effects)
         self.skills = [Fury(), BloodySlice()]
+
+    @property
+    def attack(self):
+        return Attack(20, 20, effects=self.effects)
 
     def perform_action(self, character):
         super().perform_action(character)

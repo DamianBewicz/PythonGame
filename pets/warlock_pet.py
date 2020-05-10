@@ -1,6 +1,5 @@
-from pets.pet import Pet
-from skills.attack_skill import Attack
-from skills.mage_skills import Fireball
+from .pet import Pet
+from skills import Attack, Fireball
 
 
 class Imp(Pet):
@@ -10,6 +9,7 @@ class Imp(Pet):
         self.skill = Fireball()
 
     def perform(self, character) -> None:
+        print(self.mana)
         if self.has_mana():
             self.skill.perform(character)
         else:

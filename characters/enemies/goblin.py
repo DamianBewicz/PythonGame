@@ -1,18 +1,20 @@
-from characters.enemies.enemy import Enemy
-from skills.attack_skill import Attack
-from skills.goblin_skills import SpearAttack
 from random import choices
+from characters.enemies.enemy import Enemy
+from skills import SpearAttack, Attack
 
 
 class Goblin(Enemy):
     def __init__(self, name="Goblin"):
         super().__init__(name)
-        self.max_hp = 60
+        self.max_hp = 6000
         self.max_mana = 0
-        self.hp = 60
+        self.hp = 6000
         self.mana = 0
-        self.attack = Attack(5, 5, effects=self.effects)
         self.skills = [SpearAttack()]
+
+    @property
+    def attack(self):
+        return Attack(10, 12, effects=self.effects)
 
     def perform_action(self, character):
         if not self.cant_move():

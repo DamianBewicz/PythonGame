@@ -1,5 +1,4 @@
 from math import floor
-from characters.player.player import Player
 from items.abstract_item import Item
 from utils import get_classes_from_keys, choose_item, classes_to_items, introduce_from_list, choose_action
 
@@ -19,8 +18,8 @@ class Merchant:
                     price=floor(margin*price),
                 ))
 
-    def _has_money(self, player: Player, item: Item) -> bool:
-        return player.equipment.gold.ammount >= self._get_price(item)
+    def _has_money(self, player: 'Player', item: Item) -> bool:
+        return player.equipment.gold.amount >= self._get_price(item)
 
     def _get_price(self, item: Item) -> int:
         return self.ITEMS_PRICES[type(item)]
@@ -28,7 +27,7 @@ class Merchant:
     def _can_sell(self, item: Item) -> bool:
         return type(item) in get_classes_from_keys(self.ITEMS_PRICES)
 
-    def _buy_items(self, player: Player) -> None:
+    def _buy_items(self, player: 'Player') -> None:
         while True:
             self._introduce_items()
             print(player.equipment.gold)
@@ -45,7 +44,7 @@ class Merchant:
             else:
                 break
 
-    def _sell_items(self, player: Player) -> None:
+    def _sell_items(self, player: 'Player') -> None:
         while True:
             self._introduce_items(margin=self.MARGIN)
             players_backpack_items = player.equipment.backpack.items
@@ -70,10 +69,9 @@ class Merchant:
 class WeaponImprover(Merchant):
     IMPROVE_PRICE: int = NotImplemented
     WEAPON_FOR_IMPROVING = NotImplemented
-    INTERACTIONS_NAMES = ("Kup przedmiot", "Sprzedaj przedmiot", "Ulepsz przedmiot")
 
     def _has_money_for_improve(self, player) -> bool:
-        return player.equipment.gold.ammount >= self.IMPROVE_PRICE
+        return player.equipment.gold.amount >= self.IMPROVE_PRICE
 
     def _can_improve(self, player, item) -> bool:
         return self._has_money_for_improve(player) and isinstance(item, self.WEAPON_FOR_IMPROVING) and not item.is_improved
@@ -100,9 +98,16 @@ class WeaponImprover(Merchant):
             self._sell_items,
             self._improve_weapon
         )
+
+        interactions_names: tuple = (
+            "Kup przedmiot",
+            "Sprzedaj przedmiot",
+            "Ulepsz przedmiot"
+        )
+
         interaction_question = "\nWybierz interakcje, jeśli chcesz wyjść naciśnij enter\n"
         while True:
-            introduce_from_list(self.INTERACTIONS_NAMES)
+            introduce_from_list(interactions_names)
             chosen_action = choose_action(actions, interaction_question)
             if chosen_action is not None:
                 chosen_action(player)

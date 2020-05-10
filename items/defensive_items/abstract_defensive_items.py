@@ -1,4 +1,5 @@
 from random import randint
+
 from enums import EquipmentSections
 from items.abstract_item import EquipableItem
 

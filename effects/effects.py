@@ -1,7 +1,9 @@
-from effects.abstract_effects import PeriodicDamage, Effect, CrowdControl
+from .abstract_effects import PeriodicDamage, Effect, CrowdControl
+from enums import AttackType
 
 
 class BleedEffect(PeriodicDamage):
+    TYPE = AttackType.PHYSICAL
 
     def __init__(self, duration=3, dmg=4, chance=100):
         super().__init__(duration, dmg=dmg, chance=chance)
@@ -9,6 +11,7 @@ class BleedEffect(PeriodicDamage):
 
 
 class BurnEffect(PeriodicDamage):
+    TYPE = AttackType.MAGIC
 
     def __init__(self, duration=3, dmg=4, chance=30):
         super().__init__(duration, dmg=dmg, chance=chance)
@@ -16,7 +19,7 @@ class BurnEffect(PeriodicDamage):
 
 
 class BattleShoutEffect(Effect):
-    TYPE = "BUFF STATS"
+    STATUS_EFFECT = "BUFF STATS"
 
     def __init__(self, duration=3, chance=100):
         super().__init__(duration, chance)
@@ -26,7 +29,7 @@ class BattleShoutEffect(Effect):
 
 
 class HolyShieldEffect(Effect):
-    TYPE = "BUFF"
+    STATUS_EFFECT = "BUFF"
 
     def __init__(self, duration=3, chance=100):
         super().__init__(duration, chance)
@@ -39,7 +42,7 @@ class HolyShieldEffect(Effect):
 
 
 class FireShieldEffect(Effect):
-    TYPE = "BUFF"
+    STATUS_EFFECT = "BUFF"
     DMG_RED = 0.6
 
     def __init__(self, duration=3, chance=100):
@@ -62,7 +65,7 @@ class EarthQuakeEffect(CrowdControl):
 
 
 class FuryEffect(Effect):
-    TYPE = "BUFF"
+    STATUS_EFFECT = "BUFF"
 
     def __init__(self, duration=2, chance=50):
         super().__init__(duration, chance)
@@ -70,7 +73,7 @@ class FuryEffect(Effect):
 
 
 class CurseEffect(Effect):
-    TYPE = "DEBUFF"
+    STATUS_EFFECT = "DEBUFF"
 
     def __init__(self, duration=2, chance=100, percent_damage_reduction=40) -> None:
         super().__init__(duration, chance)

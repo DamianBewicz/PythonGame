@@ -30,6 +30,7 @@ class EquipmentSections(Enum):
 
 class ItemType(Enum):
     EQUIPPABLE: str = "WYPOSAŻENIE"
+    POTION: str = "MIKSTURA"
 
 
 class PlayerClasses(Enum):

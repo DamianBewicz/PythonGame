@@ -6,7 +6,7 @@ class Item:
 
     @staticmethod
     def get_item_type(item):
-        return item.TYPE
+        return item.STATUS_EFFECT
 
 
 class EquipableItem(Item):
@@ -21,3 +21,8 @@ class EquipableItem(Item):
 
     def can_wear(self, player_class) -> bool:
         return player_class in self.WEARABLE_FOR
+
+
+class Potion:
+    TYPE: str = ItemType.POTION
+    NAME: str = NotImplemented

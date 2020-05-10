@@ -1,59 +1,14 @@
-from effects.abstract_effects import CrowdControl
-from effects.effects import Blind
-from effects.effects_set import EffectSet
-from items.equipment import Equipment
-from skills.abstract_skills import AttackType
+from math import floor
+
+from characters.character import Character
+from enums import EquipmentSections, AttackType
+from eq import Equipment
+from settings import MAX_DEFENSE
+from termcolor import colored
 
 
 class NoManaException(Exception):
     pass
-
-
-class Character:
-    def __init__(self, name: str) -> None:
-        self.name = name
-        self.max_hp = NotImplemented
-        self.max_mana = NotImplemented
-        self.hp = NotImplemented
-        self.mana = NotImplemented
-        self.attack = NotImplemented
-        self.effects = EffectSet()
-
-    def __str__(self) -> str:
-        return f'{self.name}\n' \
-               f'Punkty życia: {self.hp}\n' \
-               f'Punkty many: {self.mana}\n'
-
-    def take_dmg(self, dmg: int) -> None:
-        self.hp -= dmg
-
-    def is_dead(self) -> None:
-        return self.hp <= 0
-
-    def perform_action(self, character) -> None:
-        self.attack.perform(character)
-
-    def cant_move(self) -> bool:
-        return self.effects.contains(Blind) or self.effects.contains(CrowdControl)
-
-    def activate_effects(self) -> None:
-        self.effects.activate(self)
-
-    def heal(self, heal: int) -> None:
-        self.hp += heal
-        if self.hp > self.max_hp:
-            self.hp = self.max_hp
-
-    def gain_mana(self, mana: int) -> None:
-        self.mana += mana
-        if self.mana > self.max_mana:
-            self.mana = self.max_mana
-
-    def lose_mana(self, mana: int) -> None:
-        self.mana -= mana
-
-    def has_mana(self, skill):
-        return self.mana >= skill.mana_cost
 
 
 class Player(Character):
@@ -71,6 +26,24 @@ class Player(Character):
             "Odpoczynek",
             "Plecak",
         )
+
+    def take_dmg(self, dmg_object):
+        try:
+            resistance_from_items = self.equipment.magic_resistance.get_value(dmg_object.source) / 200
+            magic_source_resistance = 1
+            self.hp -= floor(dmg_object.dmg * (magic_source_resistance - resistance_from_items))
+        except (KeyError, AttributeError):
+            physical_dmg_resistance = 1
+            total_armor = self.equipment.defense.amount
+            total_dmg_resistance = physical_dmg_resistance - total_armor / MAX_DEFENSE / 2
+            try:
+                shield = self.equipment.personal_items.get_item(EquipmentSections.SHIELD.value)
+                if shield.has_blocked():
+                    print(colored("\nAtak został zablokowany!\n", "green"))
+                else:
+                    self.hp -= floor(dmg_object.dmg * total_dmg_resistance)
+            except AttributeError:
+                self.hp -= floor(dmg_object.dmg * total_dmg_resistance)
 
     def rest(self) -> None:
         self.hp += self.rest_hp
@@ -91,6 +64,7 @@ class Player(Character):
                     "1": self.attack.perform,
                     "2": self.perform_skill,
                     "3": self.rest,
+                    "4": self.equipment.backpack.use_item_during_combat
                 }
                 self.introduce_actions()
                 try:
@@ -99,6 +73,8 @@ class Player(Character):
                     action = actions[choice]
                     if choice in ("1", "2"):
                         action(character)
+                    elif choice == "4":
+                        action(self)
                     else:
                         action()
                     return
@@ -114,7 +90,7 @@ class Player(Character):
                 break
             elif self.has_mana(chosen_skill):
                 self.lose_mana(chosen_skill.mana_cost)
-                if chosen_skill.type in (AttackType.BUFF, AttackType.HEAL):
+                if chosen_skill.TYPE in (AttackType.BUFF, AttackType.HEAL):
                     return chosen_skill.perform(self)
                 return chosen_skill.perform(character)
             raise NoManaException

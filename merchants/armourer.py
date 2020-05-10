@@ -1,4 +1,4 @@
-from items.defensive_items import RustyArmor, RustyTrousers, RustyBoots, RustyGloves, RustyHelmet, RustyShield
+from items import RustyArmor, RustyTrousers, RustyShield, RustyBoots, RustyGloves, RustyHelmet
 from merchants.merchant import Merchant
 from utils import introduce_from_list, choose_action
 

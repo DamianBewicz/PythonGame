@@ -1,3 +1,4 @@
-from .armourer import Armourer, AmateurArmourer
-from .blacksmith import Blacksmith, AmateurBlacksmith
-from .enchanter import Enchanter, AmateurEnchanter
+from .armourer import AmateurArmourer
+from .blacksmith import AmateurBlacksmith
+from .enchanter import AmateurEnchanter
+from .alchemist import AmateurAlchemist

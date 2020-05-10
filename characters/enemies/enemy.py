@@ -1,6 +1,7 @@
-from characters.player.player import Character
-from effects.effects_set import EffectSet
-from skills.abstract_skills import AttackType
+from ..character import Character
+from dmg_object.damage_object import DamageObject
+from effects import EffectSet
+from enums import AttackType
 
 
 class Enemy(Character):
@@ -10,13 +11,15 @@ class Enemy(Character):
         self.max_mana = NotImplemented
         self.hp = NotImplemented
         self.mana = NotImplemented
-        self.attack = NotImplemented
         self.effects = EffectSet()
+
+    def take_dmg(self, damage_object: DamageObject) -> None:
+        self.hp -= damage_object.dmg
 
     def perform_action(self, character):
         if not self.cant_move():
             move = self.randomize_move()[0]
-            if move.type == AttackType.MAGIC or move.type == AttackType.PHYSICAL:
+            if move.TYPE == AttackType.MAGIC or move.TYPE == AttackType.PHYSICAL:
                 move.perform(character)
             else:
                 move.perform(self)

@@ -1,40 +1,31 @@
-class ManaPotion:
-    mana = NotImplemented
-    cost = NotImplemented
+from items.abstract_item import Potion
+
+
+class ManaPotion(Potion):
+    MANA_REGEN: int = NotImplemented
 
     def __str__(self) -> str:
-        return "NotImplemented"
+        return f"{self.NAME}: Regeneruje {self.MANA_REGEN} punktów many"
 
-    def use_item(self, player) -> False:
-        # Return false, use items makes no round loss
-        if player.mana > player.max_mana:
-            print("\nMasz pełną manę!\n")
-        else:
-            player.mana += self.mana
-            if player.mana > player.max_mana:
-                player.mana = player.max_mana
-        return False
+    def drink(self, player: 'Player') -> None:
+        player.gain_mana(self.MANA_REGEN)
 
 
 class MinorManaPotion(ManaPotion):
-    mana = 15
-    cost = 40
-
-    def __str__(self) -> str:
-        return "Mniejsza mikstura many"
+    MANA_REGEN: int = 15
+    NAME: str = "Mniejsza mikstura many"
 
 
 class NormalManaPotion(ManaPotion):
-    mana = 20
-    cost = 65
-
-    def __str__(self) -> str:
-        return "Mikstura many"
+    MANA_REGEN: int = 20
+    NAME: str = "Mikstura many"
 
 
 class GreaterManaPotion(ManaPotion):
-    mana = 30
-    cost = 100
+    MANA_REGEN: int = 30
+    NAME: str = "Większa mikstura many"
 
-    def __str__(self) -> str:
-        return "Większa mikstura many"
+
+class ElixirOfMana(ManaPotion):
+    MANA_REGEN: int = 50
+    NAME: str = "Eliksir many"

@@ -1,5 +1,4 @@
-
-from items.weapons import Scythe, Cudgel, Axe, RustySword
+from items import Scythe, Cudgel, Axe, RustySword
 from items.weapons.abstract_weapons import MeleeWeapon
 from merchants.merchant import WeaponImprover
 

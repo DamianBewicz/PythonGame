@@ -16,14 +16,12 @@ class Game:
         "2": Paladin,
         "3": Mage,
     }
-
     ENEMIES = {
         1: Goblin(),
         2: Orc(),
         3: Warlock(),
         4: Shaman()
     }
-
     LAST_PART = len(ENEMIES)
 
     def __init__(self) -> None:
@@ -104,7 +102,7 @@ class Game:
         main_actions = (
             self.continue_story,
             self.old_castle.visit_merchant,
-            self.player.equipment.choose_item_to_wear
+            self.player.equipment.choose_main_action
         )
         question = "\nWybierz interakcje\n"
         while True:

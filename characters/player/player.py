@@ -1,5 +1,4 @@
 from math import floor
-
 from characters.character import Character
 from enums import EquipmentSections, AttackType
 from eq import Equipment
@@ -8,6 +7,10 @@ from termcolor import colored
 
 
 class NoManaException(Exception):
+    pass
+
+
+class HasMovedException(Exception):
     pass
 
 
@@ -27,7 +30,7 @@ class Player(Character):
             "Plecak",
         )
 
-    def take_dmg(self, dmg_object):
+    def take_dmg(self, dmg_object) -> None:
         try:
             resistance_from_items = self.equipment.magic_resistance.get_value(dmg_object.source) / 200
             magic_source_resistance = 1
@@ -52,6 +55,7 @@ class Player(Character):
             self.hp = self.max_hp
         if self.mana > self.max_mana:
             self.mana = self.max_mana
+        raise HasMovedException
 
     def introduce_actions(self) -> None:
         for number, action in enumerate(self.actions, start=1):
@@ -71,13 +75,17 @@ class Player(Character):
                     choice = input("\nWybierz akcję\n")
                     print()
                     action = actions[choice]
-                    if choice in ("1", "2"):
+                    if choice == "1":
                         action(character)
-                    elif choice == "4":
-                        action(self)
-                    else:
+                        raise HasMovedException
+                    elif choice == "2":
+                        action(character)
+                    elif choice == "3":
                         action()
-                    return
+                    else:
+                        action(self)
+                except HasMovedException:
+                    break
                 except KeyError:
                     print("\nPodana wartość jest nieprawidłowa\n")
                 except NoManaException:
@@ -88,12 +96,15 @@ class Player(Character):
             chosen_skill = self.skills.choose()
             if chosen_skill is None:
                 break
-            elif self.has_mana(chosen_skill):
-                self.lose_mana(chosen_skill.mana_cost)
-                if chosen_skill.TYPE in (AttackType.BUFF, AttackType.HEAL):
-                    return chosen_skill.perform(self)
-                return chosen_skill.perform(character)
-            raise NoManaException
+            else:
+                if self.has_mana(chosen_skill):
+                    self.lose_mana(chosen_skill.mana_cost)
+                    if chosen_skill.TYPE in (AttackType.BUFF, AttackType.HEAL):
+                        chosen_skill.perform(self)
+                    else:
+                        chosen_skill.perform(character)
+                    raise HasMovedException
+                raise NoManaException
 
     def reset(self) -> None:
         self.hp = self.max_hp

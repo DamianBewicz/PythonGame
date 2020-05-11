@@ -24,4 +24,4 @@ class Goblin(Enemy):
     def randomize_move(self):
         possible_moves = [self.attack]
         possible_moves.extend(self.skills)
-        return choices(possible_moves, [80, 20])
+        return choices(possible_moves, [10, 90])

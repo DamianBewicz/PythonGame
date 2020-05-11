@@ -1,7 +1,7 @@
 from enums import PlayerClasses, ItemType
 from eq.defense import MagicResistance, Defense
 from items.abstract_item import EquipableItem
-from utils import introduce_from_list, choose_item
+from utils import introduce_from_list, choose_item, choose_action
 from .backpack import Backpack
 from .gold import Gold
 from .personalitems import PersonalItems
@@ -16,7 +16,26 @@ class Equipment:
         self.defense: Defense = Defense()
         self.gold: Gold = Gold()
 
-    def choose_item_to_wear(self) -> None:
+    def choose_main_action(self):
+        actions_names = (
+            "Załóż przedmiot",
+            "Zdejmij przedmiot",
+            "Pokaż statystyki"
+        )
+        actions = (
+            self._choose_item_to_wear,
+            self._choose_item_to_take_off,
+            self._show_defense
+        )
+        while True:
+            introduce_from_list(actions_names)
+            question = "\nWybierz akcje, lub naciśnij enter aby wyjść\n"
+            choosen_action = choose_action(actions, question)
+            if choosen_action is None:
+                break
+            choosen_action()
+
+    def _choose_item_to_wear(self) -> None:
         while True:
             try:
                 print()
@@ -35,6 +54,28 @@ class Equipment:
             except IndexError:
                 print("\nPodany numer jest nieprawidłowy\n")
 
+    def _choose_item_to_take_off(self) -> None:
+        while True:
+            print(self.personal_items)
+            introduce_from_list(self.personal_items.items.keys())
+            question = "\nWybierz przedmiot który chcesz zdjąć, lub naciśnij enter aby wyjść\n"
+            choosen_item_type = choose_item(list(self.personal_items.items.keys()), question)
+            if choosen_item_type is None:
+                break
+            self._take_off(choosen_item_type)
+
+    def _take_off(self, item_type):
+        item = self.personal_items.pop(item_type)
+        if item is not None:
+            try:
+                self.defense -= item.defense
+                self.magic_resistance -= item.magic_resistance
+            except AttributeError:
+                pass
+            self.backpack.append(item)
+        else:
+            print("\nWybrany slot jest pusty!\n")
+
     def _wear_item(self, item) -> None:
         if self.personal_items.is_in_slot(item):
             item_type = EquipableItem.get_item_section(item)
@@ -49,3 +90,8 @@ class Equipment:
         except AttributeError:
             pass
         self.personal_items.set(item)
+
+    def _show_defense(self) -> None:
+        print()
+        print(self.defense)
+        print(self.magic_resistance)

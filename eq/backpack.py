@@ -17,10 +17,10 @@ class Backpack:
     def append(self, item: Item) -> None:
         self.items.append(item)
 
-    def remove_item(self, item: Item):
+    def remove_item(self, item: Item) -> None:
         self.items.remove(item)
 
-    def use_item_during_combat(self, player: 'Player'):
+    def use_item_during_combat(self, player: 'Player') -> None:
         while True:
             potion_items = self.filter(ItemType.POTION)
             introduce_from_list(potion_items)

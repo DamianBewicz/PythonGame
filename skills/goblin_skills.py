@@ -4,9 +4,9 @@ from skills.abstract_skills import DmgDebuff
 
 
 class SpearAttack(DmgDebuff):
-    TYPE = AttackType.PHYSICAL
+    TYPE: AttackType = AttackType.PHYSICAL
 
-    def __init__(self, mana_cost=0, min_dmg=20, max_dmg=30):
+    def __init__(self, mana_cost: int = 0, min_dmg: int = 20, max_dmg: int = 30):
         super().__init__(mana_cost, min_dmg, max_dmg)
 
     @property

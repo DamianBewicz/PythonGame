@@ -23,7 +23,7 @@ class HealthDrain(MagicDamageSkill):
         super().__init__(mana_cost, min_dmg=500, max_dmg=500)
 
     @property
-    def dmg(self):
+    def dmg(self) -> int:
         return randint(self.min_dmg, self.max_dmg)
 
     def perform(self, caster: 'Enemy', character: 'Player') -> None:
@@ -33,11 +33,11 @@ class HealthDrain(MagicDamageSkill):
 
 
 class ManaDrain(MagicDamageSkill):
-    SOURCE = MagicNature.SHADOW
+    SOURCE: MagicNature = MagicNature.SHADOW
 
     def __init__(self, mana_cost: int = 10, mana_drain: int = 30) -> None:
         super().__init__(mana_cost)
-        self.mana_drain = mana_drain
+        self.mana_drain: int = mana_drain
 
     def perform(self, caster: 'Enemy', character: 'Player') -> None:
         character.take_dmg(DamageObject(dmg=self.mana_drain, attack_type=self.TYPE, source=self.SOURCE))

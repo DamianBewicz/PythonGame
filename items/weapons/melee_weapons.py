@@ -3,8 +3,8 @@ from items.weapons.abstract_weapons import MeleeWeapon
 
 
 class Scythe(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 5
-    NAME = "Kosa"
+    CRITICAL_STRIKE_CHANCE: int = 5
+    NAME: str = "Kosa"
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
         PlayerClasses.KNIGHT,
@@ -13,13 +13,13 @@ class Scythe(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 5
-        self.max_dmg = 5
+        self.min_dmg: int = 5
+        self.max_dmg: int = 5
 
 
 class Cudgel(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 5
-    NAME = "Maczuga"
+    CRITICAL_STRIKE_CHANCE: int = 5
+    NAME: str = "Maczuga"
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
         PlayerClasses.KNIGHT,
@@ -28,13 +28,13 @@ class Cudgel(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 7
-        self.max_dmg = 10
+        self.min_dmg: int = 7
+        self.max_dmg: int = 10
 
 
 class Axe(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 7
-    NAME = "Topór"
+    CRITICAL_STRIKE_CHANCE: int = 7
+    NAME: str = "Topór"
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
         PlayerClasses.KNIGHT,
@@ -43,13 +43,13 @@ class Axe(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 10
-        self.max_dmg = 12
+        self.min_dmg: int = 10
+        self.max_dmg: int = 12
 
 
 class RustySword(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 12
-    NAME = "Zardzewiały miecz"
+    CRITICAL_STRIKE_CHANCE: int = 12
+    NAME: str = "Zardzewiały miecz"
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
         PlayerClasses.KNIGHT,
@@ -58,13 +58,13 @@ class RustySword(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 12
-        self.max_dmg = 15
+        self.min_dmg: int = 12
+        self.max_dmg: int = 15
 
 
 class BattleAxe(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 20
-    NAME = "Topór bojowy"
+    CRITICAL_STRIKE_CHANCE: int = 20
+    NAME: str = "Topór bojowy"
     WEARABLE_FOR: tuple = (
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
@@ -72,13 +72,13 @@ class BattleAxe(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 20
-        self.max_dmg = 30
+        self.min_dmg: int = 20
+        self.max_dmg: int = 30
 
 
 class Inquisitor(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 20
-    NAME = "Inkwizytor"
+    CRITICAL_STRIKE_CHANCE: int = 20
+    NAME: str = "Inkwizytor"
     WEARABLE_FOR: tuple = (
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
@@ -86,13 +86,13 @@ class Inquisitor(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 35
-        self.max_dmg = 40
+        self.min_dmg: int = 35
+        self.max_dmg: int = 40
 
 
 class MasterSword(MeleeWeapon):
-    CRITICAL_STRIKE_CHANCE = 25
-    NAME = "Mistrzowski miecz"
+    CRITICAL_STRIKE_CHANCE: int = 25
+    NAME: str = "Mistrzowski miecz"
     WEARABLE_FOR: tuple = (
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
@@ -100,5 +100,5 @@ class MasterSword(MeleeWeapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 40
-        self.max_dmg = 60
+        self.min_dmg: int = 40
+        self.max_dmg: int = 60

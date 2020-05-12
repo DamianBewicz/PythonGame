@@ -2,7 +2,10 @@ from merchants.alchemist import Alchemist
 from merchants.armourer import Armourer
 from merchants.blacksmith import Blacksmith
 from merchants.enchanter import Enchanter
-from utils import introduce_from_list, choose_action
+from utils import (
+    introduce_from_list,
+    choose_action,
+)
 
 
 class Castle:
@@ -12,14 +15,14 @@ class Castle:
     ALCHEMIST: Alchemist = NotImplemented
     REQUIRED_STORY_LINE: int = NotImplemented
 
-    def __init__(self, game_story_part, player):
-        self.required_part = game_story_part
+    def __init__(self, game_story_part: int, player):
+        self.required_part: int = game_story_part
         self.player = player
 
-    def can_enter(self):
+    def can_enter(self) -> bool:
         pass
 
-    def visit_merchant(self):
+    def visit_merchant(self) -> None:
         actions: list = [
             self.ARMOURER,
             self.BLACKSMITH,

@@ -1,8 +1,8 @@
-from enums import ItemType
+from enums import ItemType, EquipmentSections
 
 
 class Item:
-    TYPE = NotImplemented
+    TYPE: ItemType = NotImplemented
 
     @staticmethod
     def get_item_type(item):
@@ -10,9 +10,9 @@ class Item:
 
 
 class EquipableItem(Item):
-    TYPE = ItemType.EQUIPPABLE
-    NAME = NotImplemented
-    SECTION = NotImplemented
+    TYPE: ItemType = ItemType.EQUIPPABLE
+    NAME: str = NotImplemented
+    SECTION: EquipmentSections = NotImplemented
     WEARABLE_FOR: tuple = NotImplemented
 
     @staticmethod

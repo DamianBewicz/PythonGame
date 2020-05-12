@@ -3,38 +3,38 @@ from enums import AttackType
 
 
 class BleedEffect(PeriodicDamage):
-    TYPE = AttackType.PHYSICAL
+    TYPE: AttackType = AttackType.PHYSICAL
 
-    def __init__(self, duration=3, dmg=4, chance=100):
+    def __init__(self, duration: int = 3, dmg: int = 4, chance: int = 100) -> None:
         super().__init__(duration, dmg=dmg, chance=chance)
-        self.name = "Krwawienie"
+        self.name: str = "Krwawienie"
 
 
 class BurnEffect(PeriodicDamage):
-    TYPE = AttackType.MAGIC
+    TYPE: AttackType = AttackType.MAGIC
 
-    def __init__(self, duration=3, dmg=4, chance=30):
+    def __init__(self, duration: int = 3, dmg: int = 4, chance: int = 30) -> None:
         super().__init__(duration, dmg=dmg, chance=chance)
-        self.name = "Podpalenie"
+        self.name: str = "Podpalenie"
 
 
 class BattleShoutEffect(Effect):
-    STATUS_EFFECT = "BUFF STATS"
+    STATUS_EFFECT: str = "BUFF STATS"
 
-    def __init__(self, duration=3, chance=100):
+    def __init__(self, duration: int = 3, chance: int = 100) -> None:
         super().__init__(duration, chance)
-        self.name = "Okrzyk bojowy"
-        self.min_dmg = 5
-        self.max_dmg = 5
+        self.name: str = "Okrzyk bojowy"
+        self.min_dmg: int = 5
+        self.max_dmg: int = 5
 
 
 class HolyShieldEffect(Effect):
-    STATUS_EFFECT = "BUFF"
+    STATUS_EFFECT: str = "BUFF"
 
-    def __init__(self, duration=3, chance=100):
+    def __init__(self, duration: int = 3, chance: int = 100) -> None:
         super().__init__(duration, chance)
-        self.name = "Święta tarcza"
-        self.hp = 4
+        self.name: str = "Święta tarcza"
+        self.hp: int = 4
 
     def activate(self, character):
         super().activate(character)
@@ -42,43 +42,43 @@ class HolyShieldEffect(Effect):
 
 
 class FireShieldEffect(Effect):
-    STATUS_EFFECT = "BUFF"
-    DMG_RED = 0.6
+    STATUS_EFFECT: str = "BUFF"
+    DMG_RED: float = 0.6
 
-    def __init__(self, duration=3, chance=100):
+    def __init__(self, duration: int = 3, chance: int = 100) -> None:
         super().__init__(duration, chance)
-        self.name = "Płomienna Tarcza"
+        self.name: str = "Płomienna Tarcza"
 
 
 class Blind(CrowdControl):
 
-    def __init__(self, duration=2, chance=50) -> None:
+    def __init__(self, duration: int = 2, chance: int = 50) -> None:
         super().__init__(duration, chance)
-        self.name = "Oślepienie"
+        self.name: str = "Oślepienie"
 
 
 class EarthQuakeEffect(CrowdControl):
 
-    def __init__(self, duration=2, chance=100) -> None:
+    def __init__(self, duration: int = 2, chance: int = 100) -> None:
         super().__init__(duration, chance)
-        self.name = "Ogłuszenie"
+        self.name: str = "Ogłuszenie"
 
 
 class FuryEffect(Effect):
-    STATUS_EFFECT = "BUFF"
+    STATUS_EFFECT: str = "BUFF"
 
-    def __init__(self, duration=2, chance=50):
+    def __init__(self, duration: int = 2, chance: int = 50) -> None:
         super().__init__(duration, chance)
-        self.name = "Szał"
+        self.name: str = "Szał"
 
 
 class CurseEffect(Effect):
-    STATUS_EFFECT = "DEBUFF"
+    STATUS_EFFECT: str = "DEBUFF"
 
-    def __init__(self, duration=2, chance=100, percent_damage_reduction=40) -> None:
+    def __init__(self, duration: int = 2, chance: int = 100, percent_damage_reduction: int = 40) -> None:
         super().__init__(duration, chance)
-        self.name = "Klątwa"
-        self.percent_damage_reduction = percent_damage_reduction
+        self.name: str = "Klątwa"
+        self.percent_damage_reduction: int = percent_damage_reduction
 
     def activate(self, character) -> None:
         self._duration -= 1

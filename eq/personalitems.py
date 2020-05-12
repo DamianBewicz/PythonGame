@@ -2,7 +2,7 @@ from itertools import zip_longest
 
 
 class PersonalItems:
-    ITEMS = [
+    ITEMS: list = [
         "broń",
         "zbroja",
         "tarcza",
@@ -13,7 +13,7 @@ class PersonalItems:
     ]
 
     def __init__(self) -> None:
-        self.items = {item_type: None for item_type in PersonalItems.ITEMS}
+        self.items: dict = {item_type: None for item_type in PersonalItems.ITEMS}
 
     def __str__(self) -> str:
         string = ""

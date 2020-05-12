@@ -7,7 +7,7 @@ from merchants import (
     AmateurArmourer,
     AmateurBlacksmith,
     AmateurEnchanter,
-    AmateurAlchemist
+    AmateurAlchemist,
 )
 
 

@@ -5,18 +5,18 @@ from enums import AttackType
 
 
 class Enemy(Character):
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         super().__init__(name)
-        self.max_hp = NotImplemented
-        self.max_mana = NotImplemented
-        self.hp = NotImplemented
-        self.mana = NotImplemented
-        self.effects = EffectSet()
+        self.max_hp: int = NotImplemented
+        self.max_mana: int = NotImplemented
+        self.hp: int = NotImplemented
+        self.mana: int = NotImplemented
+        self.effects: EffectSet = EffectSet()
 
     def take_dmg(self, damage_object: DamageObject) -> None:
         self.hp -= damage_object.dmg
 
-    def perform_action(self, character):
+    def perform_action(self, character: Character) -> None:
         if not self.cant_move():
             move = self.randomize_move()[0]
             if move.TYPE == AttackType.MAGIC or move.TYPE == AttackType.PHYSICAL:

@@ -7,15 +7,15 @@ from skills import Curse, HealthDrain, ManaDrain, SummonImp, Attack
 class Warlock(Enemy):
     def __init__(self, name: str = "Czarnoksiężnik") -> None:
         super().__init__(name)
-        self.max_hp = 100
-        self.max_mana = 200
-        self.hp = 100
-        self.mana = 200
-        self.skills = [Curse(), HealthDrain(), ManaDrain(), SummonImp()]
-        self.pet = []
+        self.max_hp: int = 100
+        self.max_mana: int = 200
+        self.hp: int = 100
+        self.mana: int = 200
+        self.skills: list = [Curse(), HealthDrain(), ManaDrain(), SummonImp()]
+        self.pet: list = []
 
     @property
-    def attack(self):
+    def attack(self) -> Attack:
         return Attack(10, 12, effects=self.effects)
 
     def perform_action(self, character: Player) -> None:

@@ -4,12 +4,12 @@ from effects.abstract_effects import CrowdControl
 
 class Character:
     def __init__(self, name: str) -> None:
-        self.name = name
-        self.max_hp = NotImplemented
-        self.max_mana = NotImplemented
-        self.hp = NotImplemented
-        self.mana = NotImplemented
-        self.effects = EffectSet()
+        self.name: str = name
+        self.max_hp: int = NotImplemented
+        self.max_mana: int = NotImplemented
+        self.hp: int = NotImplemented
+        self.mana: int = NotImplemented
+        self.effects: EffectSet = EffectSet()
 
     def __str__(self) -> str:
         return f'{self.name}\n' \

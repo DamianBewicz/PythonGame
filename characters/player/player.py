@@ -16,19 +16,19 @@ class HasMovedException(Exception):
 
 class Player(Character):
     CLASS_NAME = NotImplemented
+    ACTIONS: tuple = (
+        "Zwykły atak",
+        "Umiejętność",
+        "Odpoczynek",
+        "Plecak",
+    )
 
     def __init__(self, name: str) -> None:
         super().__init__(name)
-        self.rest_hp = NotImplemented
-        self.rest_mana = NotImplemented
+        self.rest_hp: int = NotImplemented
+        self.rest_mana: int = NotImplemented
         self.skills = NotImplemented
-        self.equipment = Equipment(self.CLASS_NAME)
-        self.actions = (
-            "Zwykły atak",
-            "Umiejętność",
-            "Odpoczynek",
-            "Plecak",
-        )
+        self.equipment: Equipment = Equipment(self.CLASS_NAME)
 
     def take_dmg(self, dmg_object) -> None:
         try:
@@ -58,7 +58,7 @@ class Player(Character):
         raise HasMovedException
 
     def introduce_actions(self) -> None:
-        for number, action in enumerate(self.actions, start=1):
+        for number, action in enumerate(self.ACTIONS, start=1):
             print(number, action)
 
     def perform_action(self, character) -> None:

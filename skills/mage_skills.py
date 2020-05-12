@@ -7,9 +7,9 @@ from skills.abstract_skills import MagicDmgDebuff, Buff
 
 
 class Fireball(MagicDmgDebuff):
-    SOURCE = MagicNature.FIRE
+    SOURCE: MagicNature = MagicNature.FIRE
 
-    def __init__(self, mana_cost=20, min_dmg=25, max_dmg=40) -> None:
+    def __init__(self, mana_cost: int = 20, min_dmg: int = 25, max_dmg: int = 40) -> None:
         super().__init__(mana_cost, min_dmg, max_dmg)
 
     def __str__(self) -> str:
@@ -31,7 +31,7 @@ class Fireball(MagicDmgDebuff):
 
 class FireShield(Buff):
 
-    def __init__(self, mana_cost=20) -> None:
+    def __init__(self, mana_cost: int = 20) -> None:
         super().__init__(mana_cost)
 
     def __str__(self) -> str:
@@ -44,7 +44,7 @@ class FireShield(Buff):
 
 class Lightining(MagicDmgDebuff):
 
-    def __init__(self, mana_cost=30, min_dmg=15, max_dmg=25) -> None:
+    def __init__(self, mana_cost: int = 30, min_dmg: int = 15, max_dmg: int = 25) -> None:
         super().__init__(mana_cost, min_dmg, max_dmg)
 
     @property

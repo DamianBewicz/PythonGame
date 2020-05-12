@@ -4,19 +4,19 @@ from skills import SpearAttack, Attack
 
 
 class Goblin(Enemy):
-    def __init__(self, name="Goblin"):
+    def __init__(self, name: str = "Goblin") -> None:
         super().__init__(name)
-        self.max_hp = 6000
-        self.max_mana = 0
-        self.hp = 6000
-        self.mana = 0
-        self.skills = [SpearAttack()]
+        self.max_hp: int = 6000
+        self.max_mana: int = 0
+        self.hp: int = 6000
+        self.mana: int = 0
+        self.skills: list = [SpearAttack()]
 
     @property
-    def attack(self):
+    def attack(self) -> Attack:
         return Attack(10, 12, effects=self.effects)
 
-    def perform_action(self, character):
+    def perform_action(self, character) -> None:
         if not self.cant_move():
             move = self.randomize_move()[0]
             move.perform(character)

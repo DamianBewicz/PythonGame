@@ -3,10 +3,10 @@ from effects.abstract_effects import Effect
 
 
 class EffectSet:
-    def __init__(self):
-        self.__effects = []
+    def __init__(self) -> None:
+        self.__effects: list = []
 
-    def __str__(self):
+    def __str__(self) -> str:
         buffs = ""
         debuffs = ""
         for effect in self.__effects:

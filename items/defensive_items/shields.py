@@ -11,7 +11,7 @@ class RustyShield(Shield):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN,
     )
-    STARTING_DEFENSE = Defense(2)
+    STARTING_DEFENSE: Defense = Defense(2)
 
 
 class BurnishedShield(Shield):
@@ -22,7 +22,7 @@ class BurnishedShield(Shield):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN,
     )
-    STARTING_DEFENSE = Defense(10)
+    STARTING_DEFENSE: Defense = Defense(10)
 
 
 class IronShield(Shield):
@@ -33,4 +33,4 @@ class IronShield(Shield):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN,
     )
-    STARTING_DEFENSE = Defense(15)
+    STARTING_DEFENSE: Defense = Defense(15)

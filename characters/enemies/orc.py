@@ -5,19 +5,19 @@ from skills import Fury, BloodySlice, Attack
 
 
 class Orc(Enemy):
-    def __init__(self, name="Ork"):
+    def __init__(self, name: str = "Ork") -> None:
         super().__init__(name)
-        self.max_hp = 60
-        self.max_mana = 0
-        self.hp = 60
-        self.mana = 0
-        self.skills = [Fury(), BloodySlice()]
+        self.max_hp: int = 60
+        self.max_mana: int = 0
+        self.hp: int = 60
+        self.mana: int = 0
+        self.skills: list = [Fury(), BloodySlice()]
 
     @property
-    def attack(self):
+    def attack(self) -> Attack:
         return Attack(20, 20, effects=self.effects)
 
-    def perform_action(self, character):
+    def perform_action(self, character) -> None:
         super().perform_action(character)
         if not self.effects.contains(Blind) and self.effects.contains(FuryEffect):
             self.attack.perform(character)

@@ -198,7 +198,7 @@ class Blackjack:
                 break
 
     @staticmethod
-    def main(player):
+    def main(player) -> None:
         while True:
             print()
             print(player.equipment.gold)

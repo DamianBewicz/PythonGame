@@ -11,7 +11,7 @@ class RustyTrousers(Trousers):
         PlayerClasses.PALADIN,
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = Defense(3)
+    STARTING_DEFENSE: Defense = Defense(3)
 
 
 class PlateTrousers(Trousers):
@@ -21,7 +21,7 @@ class PlateTrousers(Trousers):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = Defense(15)
+    STARTING_DEFENSE: Defense = Defense(15)
 
 
 class PhoenixTrousers(Trousers):
@@ -30,4 +30,4 @@ class PhoenixTrousers(Trousers):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = Defense(5)
+    STARTING_DEFENSE: Defense = Defense(5)

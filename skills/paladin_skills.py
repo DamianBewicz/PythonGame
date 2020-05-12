@@ -7,7 +7,7 @@ from skills.abstract_skills import Heal, Skill, Buff
 
 
 class HolyLight(Heal):
-    def __init__(self, mana_cost=20, heal=30) -> None:
+    def __init__(self, mana_cost: int = 20, heal: int = 30) -> None:
         super().__init__(mana_cost, heal)
 
     def __str__(self) -> str:
@@ -15,10 +15,10 @@ class HolyLight(Heal):
 
 
 class HammerTime(Skill):
-    TYPE = AttackType.MAGIC
-    SOURCE = MagicNature.LIGHTNING
+    TYPE: AttackType = AttackType.MAGIC
+    SOURCE: MagicNature = MagicNature.LIGHTNING
 
-    def __init__(self, mana_cost=15):
+    def __init__(self, mana_cost: int = 15):
         super().__init__(mana_cost)
         self.min_dmg = 10
         self.max_dmg = 25
@@ -35,9 +35,9 @@ class HammerTime(Skill):
 
 
 class HolyShield(Buff):
-    def __init__(self, mana_cost=20) -> None:
+    def __init__(self, mana_cost: int = 20) -> None:
         super().__init__(mana_cost)
-        self.type = AttackType.BUFF
+        self.type: AttackType = AttackType.BUFF
 
     def __str__(self) -> str:
         return "Święta Tarcza"

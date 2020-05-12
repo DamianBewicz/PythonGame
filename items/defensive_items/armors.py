@@ -11,7 +11,7 @@ class RustyArmor(Armor):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = Defense(5)
+    STARTING_DEFENSE: Defense = Defense(5)
 
 
 class PlateArmor(Armor):
@@ -21,7 +21,7 @@ class PlateArmor(Armor):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = Defense(20)
+    STARTING_DEFENSE: Defense = Defense(20)
 
 
 class ArchmageRobe(Armor):
@@ -30,4 +30,4 @@ class ArchmageRobe(Armor):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = Defense(10)
+    STARTING_DEFENSE: Defense = Defense(10)

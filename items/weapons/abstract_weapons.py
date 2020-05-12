@@ -39,10 +39,10 @@ class Weapon(EquipableItem):
     def _critically_strikes(self) -> bool:
         return randint(1, 100) in range(1, self.CRITICAL_STRIKE_CHANCE + 1)
 
-    def perform(self, character):
+    def perform(self, character) -> None:
         return NotImplemented
 
-    def improve(self):
+    def improve(self) -> None:
         return NotImplemented
 
 
@@ -52,14 +52,14 @@ class MeleeWeapon(Weapon):
 
     def __init__(self) -> None:
         super().__init__()
-        self.is_sharpened = False
+        self.is_sharpened: bool = False
 
     def improve(self) -> None:
         self.min_dmg += self.BONUS_DMG.min_dmg
         self.max_dmg += self.BONUS_DMG.max_dmg
         self.is_improved = True
 
-    def perform(self, character):
+    def perform(self, character) -> None:
         character.take_dmg(DamageObject(dmg=self.damage, attack_type=self.ATTACK_TYPE))
 
 
@@ -85,5 +85,5 @@ class Wand(Weapon):
     def is_maximum_level(self) -> bool:
         return self.MAX_LEVEL == self.level
 
-    def perform(self, character):
+    def perform(self, character) -> None:
         character.take_dmg(DamageObject(dmg=self.damage, attack_type=self.ATTACK_TYPE, source=self.NATURE))

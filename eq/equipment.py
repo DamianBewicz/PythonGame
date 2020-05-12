@@ -16,7 +16,7 @@ class Equipment:
         self.defense: Defense = Defense()
         self.gold: Gold = Gold()
 
-    def choose_main_action(self):
+    def choose_main_action(self) -> None:
         actions_names = (
             "Załóż przedmiot",
             "Zdejmij przedmiot",
@@ -66,7 +66,7 @@ class Equipment:
                 break
             self._take_off(choosen_item_type)
 
-    def _take_off(self, item_type):
+    def _take_off(self, item_type) -> None:
         item = self.personal_items.pop(item_type)
         if item is not None:
             try:

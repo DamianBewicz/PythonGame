@@ -5,15 +5,15 @@ from skills.abstract_skills import Heal, MagicDmgDebuff
 
 class HealingRain(Heal):
 
-    def __init__(self, mana_cost=30, hp=20) -> None:
+    def __init__(self, mana_cost: int = 30, hp: int = 20) -> None:
         super().__init__(mana_cost, hp)
 
 
 class EarthQuake(MagicDmgDebuff):
-    TYPE = AttackType.MAGIC
-    SOURCE = MagicNature.EARTH
+    TYPE: AttackType = AttackType.MAGIC
+    SOURCE: MagicNature = MagicNature.EARTH
 
-    def __init__(self, mana_cost=20, min_dmg=10, max_dmg=20):
+    def __init__(self, mana_cost: int = 20, min_dmg: int = 10, max_dmg: int = 20) -> None:
         super().__init__(mana_cost, min_dmg, max_dmg)
 
     @property

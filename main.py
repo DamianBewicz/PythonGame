@@ -12,12 +12,12 @@ class GameHasFinished(Exception):
 
 
 class Game:
-    AVAIBLE_CLASSES = {
+    AVAIBLE_CLASSES: dict = {
         "1": Knight,
         "2": Paladin,
         "3": Mage,
     }
-    ENEMIES = {
+    ENEMIES: dict = {
         1: Goblin(),
         2: Orc(),
         3: Warlock(),
@@ -28,8 +28,8 @@ class Game:
     def __init__(self) -> None:
         self.player = NotImplemented
         self.enemy = Goblin()
-        self.part = 1
-        self.game_over = False
+        self.part: int = 1
+        self.game_over: bool = False
         self.old_castle = NotImplemented
 
     @staticmethod
@@ -82,7 +82,7 @@ class Game:
     def change_enemy(self) -> None:
         self.enemy = Game.ENEMIES[self.part]
 
-    def continue_story(self):
+    def continue_story(self) -> None:
         self.change_enemy()
         self.start_fight()
         if self.player.is_dead():
@@ -94,7 +94,7 @@ class Game:
         self.player.reset()
         self.add_part()
 
-    def choose_main_actions(self):
+    def choose_main_actions(self) -> None:
         main_actions_names = (
             "Kontynuuj historię",
             "Idź do starego zamku",

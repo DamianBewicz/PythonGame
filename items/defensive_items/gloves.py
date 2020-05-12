@@ -11,7 +11,7 @@ class RustyGloves(Gloves):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN,
     )
-    STARTING_DEFENSE = Defense(2)
+    STARTING_DEFENSE: Defense = Defense(2)
 
 
 class PlateGloves(Gloves):
@@ -21,7 +21,7 @@ class PlateGloves(Gloves):
         PlayerClasses.KNIGHT,
         PlayerClasses.PALADIN
     )
-    STARTING_DEFENSE = Defense(5)
+    STARTING_DEFENSE: Defense = Defense(5)
 
 
 class MysticalGloves(Gloves):
@@ -30,4 +30,4 @@ class MysticalGloves(Gloves):
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,
     )
-    STARTING_DEFENSE = Defense(5)
+    STARTING_DEFENSE: Defense = Defense(5)

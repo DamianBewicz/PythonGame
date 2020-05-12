@@ -1,12 +1,11 @@
 from termcolor import colored
-
 from enums import MagicNature
 
 
 class MagicResistance:
 
     def __init__(self, fire: int = 0, water: int = 0, earth: int = 0, lightning: int = 0, shadow: int = 0) -> None:
-        self.resistance = {
+        self.resistance: dict = {
             MagicNature.FIRE: fire,
             MagicNature.WATER: water,
             MagicNature.EARTH: earth,

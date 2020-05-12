@@ -23,14 +23,14 @@ class WandOfWater(Wand):
 
     def __init__(self) -> None:
         super().__init__()
-        self.min_dmg = 10
-        self.max_dmg = 25
+        self.min_dmg: int = 10
+        self.max_dmg: int = 25
 
 
 class WandOfEarth(Wand):
-    NATURE = MagicNature.EARTH
-    CRITICAL_STRIKE_CHANCE = 25
-    NAME = colored("Różdzka ziemi", "yellow")
+    NATURE: MagicNature = MagicNature.EARTH
+    CRITICAL_STRIKE_CHANCE: int = 25
+    NAME: str = colored("Różdzka ziemi", "yellow")
     BONUS_DMG: BonusDamage = BonusDamage(5, 10)
 
     def __init__(self) -> None:

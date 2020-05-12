@@ -1,5 +1,4 @@
 from random import randint
-
 from enums import EquipmentSections
 from items.abstract_item import EquipableItem
 
@@ -18,28 +17,28 @@ class DefensiveItem(EquipableItem):
 
 
 class Helmet(DefensiveItem):
-    SECTION = EquipmentSections.HELMET
+    SECTION: EquipmentSections = EquipmentSections.HELMET
 
 
 class Armor(DefensiveItem):
-    SECTION = EquipmentSections.ARMOR
+    SECTION: EquipmentSections = EquipmentSections.ARMOR
 
 
 class Trousers(DefensiveItem):
-    SECTION = EquipmentSections.TROUSERS
+    SECTION: EquipmentSections = EquipmentSections.TROUSERS
 
 
 class Gloves(DefensiveItem):
-    SECTION = EquipmentSections.GLOVES
+    SECTION: EquipmentSections = EquipmentSections.GLOVES
 
 
 class Boots(DefensiveItem):
-    SECTION = EquipmentSections.BOOTS
+    SECTION: EquipmentSections = EquipmentSections.BOOTS
 
 
 class Shield(DefensiveItem):
-    SECTION = EquipmentSections.SHIELD
-    BLOCK_CHANCE = NotImplemented
+    SECTION: EquipmentSections = EquipmentSections.SHIELD
+    BLOCK_CHANCE: ubt = NotImplemented
 
     def __init__(self) -> None:
         super().__init__()

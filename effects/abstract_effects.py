@@ -6,10 +6,10 @@ from dmg_object.damage_object import DamageObject
 class Effect:
     STATUS_EFFECT = NotImplemented
 
-    def __init__(self, duration=None, chance=None) -> None:
-        self.name = NotImplemented
-        self._duration = duration
-        self.chance = chance
+    def __init__(self, duration: int = None, chance: int = None) -> None:
+        self.name: str = NotImplemented
+        self._duration: int = duration
+        self.chance: int = chance
 
     def is_activated(self) -> bool:
         return randint(1, 100) in range(1, self.chance + 1)
@@ -23,11 +23,11 @@ class Effect:
 
 class PeriodicDamage(Effect):
     TYPE = NotImplemented
-    STATUS_EFFECT = "DEBUFF"
+    STATUS_EFFECT: str = "DEBUFF"
 
-    def __init__(self, duration, chance, dmg) -> None:
+    def __init__(self, duration: int, chance: int, dmg: int) -> None:
         super().__init__(duration, chance)
-        self.dmg = dmg
+        self.dmg: int = dmg
 
     def activate(self, character) -> None:
         super().activate(character)
@@ -35,7 +35,7 @@ class PeriodicDamage(Effect):
 
 
 class CrowdControl(Effect):
-    STATUS_EFFECT = "CROWD CONTROL"
+    STATUS_EFFECT: str = "CROWD CONTROL"
 
     def __init__(self, duration=None, chance=None) -> None:
         super().__init__(duration, chance)

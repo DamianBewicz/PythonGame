@@ -20,12 +20,12 @@ class Equipment:
         actions_names = (
             "Załóż przedmiot",
             "Zdejmij przedmiot",
-            "Pokaż statystyki"
+            "Pokaż statystyki",
         )
         actions = (
             self._choose_item_to_wear,
             self._choose_item_to_take_off,
-            self._show_defense
+            self._show_defense,
         )
         while True:
             introduce_from_list(actions_names)
@@ -57,7 +57,9 @@ class Equipment:
     def _choose_item_to_take_off(self) -> None:
         while True:
             print(self.personal_items)
-            introduce_from_list(self.personal_items.items.keys())
+            items_names = [slot_name.capitalize() for slot_name in self.personal_items.items.keys()]
+            introduce_from_list(items_names)
+            print()
             question = "\nWybierz przedmiot który chcesz zdjąć, lub naciśnij enter aby wyjść\n"
             choosen_item_type = choose_item(list(self.personal_items.items.keys()), question)
             if choosen_item_type is None:

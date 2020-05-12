@@ -1,36 +1,29 @@
 from random import shuffle
+from characters.player.player import Player
 
 
-class Player:
+class Deck:
     def __init__(self) -> None:
-        self.gold = 100
+        self.cards: list = [
+            Card(suit, rank, value)
+            for suit in Card.SUITS
+            for rank, value in Card.RANKS.items()
+        ]
+
+    def shuffle(self) -> None:
+        shuffle(self.cards)
 
 
 class PlayerHand:
     def __init__(self) -> None:
-        self.cards = []
-        self.stand = False
+        self.cards: list = []
+        self.stand: bool = False
 
     def __str__(self) -> str:
         hand = ''
         for card in self.cards:
             hand += f'{card}\n'
         return "Karty gracza:\n" + hand
-
-    def make_decision(self, dealer) -> None:
-        while True:
-            try:
-                answer = input("Czy chcesz dobrać kartę?\n"
-                               "Tak\n"
-                               "Nie\n")
-                if answer.capitalize() == "Tak":
-                    return dealer.give_card(self)
-                elif answer.capitalize() == "Nie":
-                    self.stand = True
-                    break
-                print("Podana wartość jest nieprawidłowa!")
-            except AttributeError:
-                print("Podana wartość jest nieprawidłowa!")
 
     @property
     def points(self) -> int:
@@ -39,16 +32,45 @@ class PlayerHand:
             points += card.value
         return points
 
+    def has_blackjack(self) -> bool:
+        return self.points == 21
+
+    def make_decision(self, dealer) -> None:
+        while True:
+            answer = input("Czy chcesz dobrać kartę?\n"
+                           "Tak\n"
+                           "Nie\n")
+            if answer.capitalize() == "Tak":
+                return dealer.give_card(self)
+            elif answer.capitalize() == "Nie":
+                self.stand = True
+                break
+            print("\nPodana wartość jest nieprawidłowa!\n")
+
+    @staticmethod
+    def wants_another_game() -> bool:
+        choices = {
+            "tak": True,
+            "nie": False
+        }
+        while True:
+            try:
+                choice = input("\nCzy chcesz zagrać jeszcze jedną gre?\n"
+                               "Tak\n"
+                               "Nie\n")
+                return choices[choice.lower()]
+            except KeyError:
+                print("\nPodana wartość jest nieprawidłowa\n")
+
 
 class Dealer:
     def __init__(self, deck) -> None:
-        self.deck = deck
-        self.rejected_card = []
-        self.cards = []
-        self.bet = 0
-        self.min_bet = 10
-        self.max_bet = 50
-        self.has_finished = False
+        self.deck: Deck = deck
+        self.cards: list = []
+        self.bet: int = 0
+        self.min_bet: int = 10
+        self.max_bet: int = 50
+        self.has_finished: bool = False
 
     def __str__(self) -> str:
         hand = ''
@@ -57,30 +79,30 @@ class Dealer:
         return "Karty krupiera:\n" + hand
 
     def have_money_for_game(self, player: Player) -> bool:
-        return player.gold < self.min_bet
+        return player.equipment.gold.amount > self.min_bet
 
     def shuffle_deck(self) -> None:
-        shuffle(self.deck)
+        shuffle(self.deck.cards)
 
     def take_bet(self, player: Player) -> None:
         while True:
             try:
                 bet = int(input("Ile pieniędzy chcesz przeznaczyć na grę.\n"
-                                "minimalna wartość zakładu: {}\n"
-                                "maksymalna wartość zakładu: {}\n".format(self.min_bet, self.max_bet)))
+                                "Minimalna wartość zakładu: {}\n"
+                                "Maksymalna wartość zakładu: {}\n".format(self.min_bet, self.max_bet)))
                 if self.min_bet <= bet <= self.max_bet:
-                    player.gold -= bet
+                    player.equipment.gold.subtract(bet)
                     self.bet += bet
                     break
-                print("Podana wartość jest wartość jest spoza przedziału, spróbuj jeszcze raz.\n")
+                print("\nPodana wartość jest wartość jest spoza przedziału, spróbuj jeszcze raz.\n")
             except (ValueError, KeyError, AttributeError):
                 print("Podana wartość jest nieprawidłowa, spróbuj jeszcze raz!\n")
 
     def give_card(self, player_hand: PlayerHand) -> None:
-        player_hand.cards.append(self.deck.pop())
+        player_hand.cards.append(self.deck.cards.pop())
 
     def take_card(self) -> None:
-        self.cards.append(self.deck.pop())
+        self.cards.append(self.deck.cards.pop())
 
     def deal_starting_cards(self, player_hand: PlayerHand) -> None:
         for starting_cards in range(2):
@@ -103,12 +125,13 @@ class Dealer:
                       "Przegrałeś!\n")
             elif self.points > 21:
                 print("Wygrałeś!\n")
-                player.gold += round(self.bet * 2.5)
+                winning_money = self.bet * 3
+                player.equipment.gold.add(winning_money)
             elif self.points > player_hand.points:
                 print("Przegrałeś!\n")
             elif self.points == player_hand.points:
                 print("Remis!")
-                player.gold += self.bet
+                player.equipment.gold.add(self.bet)
             self.has_finished = True
             break
 
@@ -121,7 +144,12 @@ class Dealer:
 
 
 class Card:
-    SUITS = ["Serce", "Dzwonek", "Żołądź", "Wino"]
+    SUITS = (
+        "Serce",
+        "Dzwonek",
+        "Żołądź",
+        "Wino",
+    )
     RANKS = {
         "2": 2,
         "3": 3,
@@ -147,26 +175,40 @@ class Card:
         return "{} {}".format(self.rank, self.suit)
 
 
-def main():
-    deck = [Card(suit, rank, value)
-            for suit in Card.SUITS
-            for rank, value in Card.RANKS.items()]
-    player = Player()
-    player_hand = PlayerHand()
-    dealer = Dealer(deck)
-    dealer.shuffle_deck()
-    dealer.take_bet(player)
-    dealer.deal_starting_cards(player_hand)
-    while True:
-        print(player_hand)
-        dealer.show_card()
-        player_hand.make_decision(dealer)
-        if player_hand.points > 21 or player_hand.stand:
-            print(player_hand)
-            dealer.end_game(player_hand, player)
-        if dealer.has_finished:
-            break
+class Blackjack:
+    def __init__(self) -> None:
+        self.player_hand = PlayerHand()
+        self.dealer = Dealer(Deck())
+        self.wants_to_play = True
 
+    def play_game(self, player) -> None:
+        self.dealer.deck.shuffle()
+        print()
+        self.dealer.take_bet(player)
+        self.dealer.deal_starting_cards(self.player_hand)
+        while True:
+            print()
+            print(self.player_hand)
+            self.dealer.show_card()
+            self.player_hand.make_decision(self.dealer)
+            if self.player_hand.points > 21 or self.player_hand.stand:
+                print(self.player_hand)
+                self.dealer.end_game(self.player_hand, player)
+            if self.dealer.has_finished:
+                break
 
-if __name__ == "__main__":
-    main()
+    @staticmethod
+    def main(player):
+        while True:
+            print()
+            print(player.equipment.gold)
+            b = Blackjack()
+            if b.dealer.have_money_for_game(player):
+                b.play_game(player)
+                if b.player_hand.wants_another_game():
+                    continue
+                else:
+                    break
+            else:
+                print("\nNie masz pieniędzy na gre\n")
+                break

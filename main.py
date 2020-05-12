@@ -3,6 +3,7 @@ from termcolor import colored
 from os import system
 from characters.enemies import Goblin, Orc, Warlock, Shaman
 from characters.player import Knight, Paladin, Mage
+from minigames.blackjack import Blackjack
 from utils import introduce_from_list, choose_action
 
 
@@ -97,12 +98,14 @@ class Game:
         main_actions_names = (
             "Kontynuuj historię",
             "Idź do starego zamku",
-            "Ekwipunek"
+            "Ekwipunek",
+            "Zagraj w Blackjack'a"
         )
         main_actions = (
             self.continue_story,
             self.old_castle.visit_merchant,
-            self.player.equipment.choose_main_action
+            self.player.equipment.choose_main_action,
+            Blackjack.main
         )
         question = "\nWybierz interakcje\n"
         while True:
@@ -110,7 +113,10 @@ class Game:
                 introduce_from_list(main_actions_names)
                 chosen_action = choose_action(main_actions, question)
                 if chosen_action is not None:
-                    chosen_action()
+                    try:
+                        chosen_action()
+                    except TypeError:
+                        chosen_action(self.player)
                 else:
                     print("\nPodana wartość jest nieprawidłowa!\n")
             except GameHasFinished:

@@ -14,23 +14,15 @@ def introduce_from_list(list_: iter, space=False) -> None:
     print()
 
 
-def choose_action(actions, question):
-    choices_actions = {str(number): value for number, value in enumerate(actions, start=1)}
+def choose_item(items: iter, question: str):
+    choices_actions = {str(number): item for number, item in enumerate(items, start=1)}
     while True:
         try:
-            choice = input(question)
-            return choices_actions[choice] if choice else None
+            if (choice := input(question)) != "":
+                return choices_actions[choice]
+            return None
         except KeyError:
             print("\nPodana wartość jest nieprawidłowa, spróbuj jeszcze raz!\n")
-
-
-def choose_item(list_of_items: iter, question: str) -> Item:
-    while True:
-        try:
-            choice = input(question)
-            return list_of_items[int(choice) - 1] if choice else None
-        except (ValueError, IndexError):
-            print("\nPodano nieprawidłowy numer, spróbuj jeszcze raz.\n")
 
 
 def get_classes_from_keys(dict_: dict) -> list:

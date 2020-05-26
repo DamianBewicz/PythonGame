@@ -1,12 +1,11 @@
-from items import MinorHealthPotion, NormalHealthPotion, MinorManaPotion, NormalManaPotion
+from items import MinorHealthPotion, NormalHealthPotion, MinorManaPotion, NormalManaPotion, GreaterManaPotion, \
+    ElixirOfLife, GreaterHealthPotion, ElixirOfMana
 from merchants.merchant import Merchant
-from utils import introduce_from_list, choose_action
+from utils import introduce_from_list, choose_item
 
 
 class Alchemist(Merchant):
-    pass
-
-    "Going to make method only avaible in alchemist, left for later"
+    # TODO: Going to make method only avaible in alchemist, left for later
 
     def choose_interaction(self, player):
         actions = (
@@ -19,10 +18,9 @@ class Alchemist(Merchant):
             "Sprzedaj przedmiot",
         )
 
-        question = "\nWybierz interakcje\n"
         while True:
             introduce_from_list(interactions_names)
-            chosen_action = choose_action(actions, question)
+            chosen_action = choose_item(actions, "\nWybierz interakcje\n")
             if chosen_action is not None:
                 chosen_action(player)
             else:
@@ -37,3 +35,13 @@ class AmateurAlchemist(Alchemist):
         NormalManaPotion: 80,
     }
     MARGIN: float = 0.5
+
+
+class ExperiencedAlchemist(Alchemist):
+    ITEMS_PRICES: dict = {
+        GreaterHealthPotion: 70,
+        ElixirOfLife: 100,
+        GreaterManaPotion: 70,
+        ElixirOfMana: 100,
+    }
+    MARGIN: float = 0.6

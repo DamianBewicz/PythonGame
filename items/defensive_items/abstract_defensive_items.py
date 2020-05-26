@@ -38,7 +38,7 @@ class Boots(DefensiveItem):
 
 class Shield(DefensiveItem):
     SECTION: EquipmentSections = EquipmentSections.SHIELD
-    BLOCK_CHANCE: ubt = NotImplemented
+    BLOCK_CHANCE: int = NotImplemented
 
     def __init__(self) -> None:
         super().__init__()

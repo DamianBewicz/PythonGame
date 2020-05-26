@@ -2,38 +2,38 @@ from enum import Enum
 
 
 class MagicNature(Enum):
-    FIRE: str = "OGIEŃ"
-    WATER: str = "WODA"
-    EARTH: str = "ZIEMIA"
-    LIGHTNING: str = "BŁYSKAWICA"
-    SHADOW: str = "CIEŃ"
+    FIRE = "OGIEŃ"
+    WATER = "WODA"
+    EARTH = "ZIEMIA"
+    LIGHTNING = "BŁYSKAWICA"
+    SHADOW = "CIEŃ"
 
 
 class AttackType(Enum):
-    MAGIC: str = "MAGICZNY"
-    PHYSICAL: str = "FIZYCZNY"
-    NORMAL: str = "NORMALNY"
-    HEAL: str = "LECZENIE"
-    BUFF: str = "BUFF"
-    DEBUFF: str = "DEBUFF"
+    MAGIC = "MAGICZNY"
+    PHYSICAL = "FIZYCZNY"
+    NORMAL = "NORMALNY"
+    HEAL = "LECZENIE"
+    BUFF = "BUFF"
+    DEBUFF = "DEBUFF"
 
 
 class EquipmentSections(Enum):
-    WEAPON: str = "BROŃ"
-    HELMET: str = "HEŁM"
-    ARMOR: str = "ZBROJA"
-    TROUSERS: str = "SPODNIE"
-    GLOVES: str = "RĘKAWICE"
-    BOOTS: str = "BUTY"
-    SHIELD: str = "TARCZA"
+    WEAPON = "BROŃ"
+    HELMET = "HEŁM"
+    ARMOR = "ZBROJA"
+    TROUSERS = "SPODNIE"
+    GLOVES = "RĘKAWICE"
+    BOOTS = "BUTY"
+    SHIELD = "TARCZA"
 
 
 class ItemType(Enum):
-    EQUIPPABLE: str = "WYPOSAŻENIE"
-    POTION: str = "MIKSTURA"
+    EQUIPPABLE = "WYPOSAŻENIE"
+    POTION = "MIKSTURA"
 
 
 class PlayerClasses(Enum):
-    KNIGHT: str = "RYCERZ"
-    PALADIN: str = "PALADYN"
-    MAGE: str = "CZARODZIEJ"
+    KNIGHT = "RYCERZ"
+    PALADIN = "PALADYN"
+    MAGE = "CZARODZIEJ"

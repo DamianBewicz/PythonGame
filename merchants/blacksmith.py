@@ -1,4 +1,4 @@
-from items import Scythe, Cudgel, Axe, RustySword
+from items import Scythe, Cudgel, Axe, RustySword, BattleAxe, Inquisitor, MasterSword
 from items.weapons.abstract_weapons import MeleeWeapon
 from merchants.merchant import WeaponImprover
 
@@ -16,3 +16,12 @@ class AmateurBlacksmith(Blacksmith):
         RustySword: 80,
     }
     MARGIN: float = 0.5
+
+
+class ExperiencedBlacksmith(Blacksmith):
+    ITEMS_PRICES: dict = {
+        BattleAxe: 150,
+        Inquisitor: 250,
+        MasterSword: 400,
+    }
+    MARGIN: float = 0.6

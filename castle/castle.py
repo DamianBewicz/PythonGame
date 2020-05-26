@@ -2,10 +2,7 @@ from merchants.alchemist import Alchemist
 from merchants.armourer import Armourer
 from merchants.blacksmith import Blacksmith
 from merchants.enchanter import Enchanter
-from utils import (
-    introduce_from_list,
-    choose_action,
-)
+from utils import introduce_from_list, choose_item
 
 
 class Castle:
@@ -15,15 +12,14 @@ class Castle:
     ALCHEMIST: Alchemist = NotImplemented
     REQUIRED_STORY_LINE: int = NotImplemented
 
-    def __init__(self, game_story_part: int, player):
-        self.required_part: int = game_story_part
+    def __init__(self, player):
         self.player = player
 
-    def can_enter(self) -> bool:
-        pass
+    def can_enter(self, game_part) -> bool:
+        return game_part >= self.REQUIRED_STORY_LINE
 
     def visit_merchant(self) -> None:
-        actions: list = [
+        merchants: list = [
             self.ARMOURER,
             self.BLACKSMITH,
             self.ENCHANTER,
@@ -36,12 +32,11 @@ class Castle:
             "Idź do zaklinacza",
             "Idź do alchemika"
         ]
-
         while True:
-            question = "\nWybierz, do kogo chcesz się wybrać, lub naciśnij enter, aby wyjść\n"
             introduce_from_list(merchant_actions_names)
-            chosen_merchant = choose_action(actions, question)
+            question = "\nWybierz, do kogo chcesz się wybrać, lub naciśnij enter, aby wyjść\n"
+            chosen_merchant = choose_item(merchants, question)
             if chosen_merchant is not None:
                 chosen_merchant.choose_interaction(self.player)
             else:
-                break
+                return

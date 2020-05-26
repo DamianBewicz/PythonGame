@@ -24,8 +24,8 @@ class PlateBoots(Boots):
     STARTING_DEFENSE: Defense = Defense(5)
 
 
-class ShadowGloves(Boots):
-    NAME: str = "Mityczne rękawice"
+class SorcererBoots(Boots):
+    NAME: str = "Buty maga"
     RESISTANCE: MagicResistance = MagicResistance(fire=5, water=5, earth=5, lightning=5, shadow=15)
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,

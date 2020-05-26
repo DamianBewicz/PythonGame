@@ -25,7 +25,7 @@ class PlateTrousers(Trousers):
 
 
 class PhoenixTrousers(Trousers):
-    NAME: str = "Gacie Feniksa"
+    NAME: str = "Spodnie Feniksa"
     RESISTANCE: MagicResistance = MagicResistance(fire=15, water=0, earth=10, lightning=5, shadow=5)
     WEARABLE_FOR: tuple = (
         PlayerClasses.MAGE,

@@ -1,6 +1,6 @@
 from math import floor
 from items.abstract_item import Item
-from utils import get_classes_from_keys, choose_item, classes_to_items, introduce_from_list, choose_action
+from utils import get_classes_from_keys, choose_item, classes_to_items, introduce_from_list, choose_item
 
 
 class Merchant:
@@ -108,7 +108,7 @@ class WeaponImprover(Merchant):
         interaction_question = "\nWybierz interakcje, jeśli chcesz wyjść naciśnij enter\n"
         while True:
             introduce_from_list(interactions_names)
-            chosen_action = choose_action(actions, interaction_question)
+            chosen_action = choose_item(actions, interaction_question)
             if chosen_action is not None:
                 chosen_action(player)
             else:

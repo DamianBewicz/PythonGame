@@ -1,7 +1,7 @@
 from enums import PlayerClasses, ItemType
 from eq.defense import MagicResistance, Defense
 from items.abstract_item import EquipableItem
-from utils import introduce_from_list, choose_item, choose_action
+from utils import introduce_from_list, choose_item, choose_item
 from .backpack import Backpack
 from .gold import Gold
 from .personalitems import PersonalItems
@@ -30,10 +30,10 @@ class Equipment:
         while True:
             introduce_from_list(actions_names)
             question = "\nWybierz akcje, lub naciśnij enter aby wyjść\n"
-            choosen_action = choose_action(actions, question)
-            if choosen_action is None:
+            chosen_action = choose_item(actions, question)
+            if chosen_action is None:
                 break
-            choosen_action()
+            chosen_action()
 
     def _choose_item_to_wear(self) -> None:
         while True:
@@ -61,10 +61,10 @@ class Equipment:
             introduce_from_list(items_names)
             print()
             question = "\nWybierz przedmiot który chcesz zdjąć, lub naciśnij enter aby wyjść\n"
-            choosen_item_type = choose_item(list(self.personal_items.items.keys()), question)
-            if choosen_item_type is None:
+            chosen_item_type = choose_item(list(self.personal_items.items.keys()), question)
+            if chosen_item_type is None:
                 break
-            self._take_off(choosen_item_type)
+            self._take_off(chosen_item_type)
 
     def _take_off(self, item_type) -> None:
         item = self.personal_items.pop(item_type)

@@ -1,6 +1,6 @@
 from enums import ItemType
 from items.abstract_item import Item
-from utils import introduce_from_list, choose_item
+from utils import introduce_from_list, choose_item, choose_item
 
 
 class Backpack:
@@ -25,8 +25,8 @@ class Backpack:
             potion_items = self.filter(ItemType.POTION)
             introduce_from_list(potion_items)
             question = "\nWybierz miskturę do użycia, lub naciśnij enter aby wyjść\n"
-            choosen_item = choose_item(potion_items, question)
-            if choosen_item is None:
+            chosen_item = choose_item(potion_items, question)
+            if chosen_item is None:
                 break
-            self.remove_item(choosen_item)
-            choosen_item.drink(player)
+            self.remove_item(chosen_item)
+            chosen_item.drink(player)

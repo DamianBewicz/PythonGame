@@ -23,7 +23,7 @@ class Character:
     def take_dmg(self, dmg: int) -> None:
         return NotImplemented
 
-    def is_dead(self) -> None:
+    def is_dead(self) -> bool:
         return self.hp <= 0
 
     def perform_action(self, character) -> None:

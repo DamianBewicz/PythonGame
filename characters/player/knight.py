@@ -1,54 +1,29 @@
-from typing import Type
-from random import randint
-from effects.bleed import Bleed
-from ..enemies import Enemy
-from .player import Player
-from skills.knight_skills import Berserker
+from characters.player.level_up_stats import LevelUpStats
+from characters.player.player import Player
+from enums import PlayerClasses
+from skills import Berserker, BloodySlice, BattleShout, Attack
+from skills.abstract_skills import SkillSet
 
 
 class Knight(Player):
-    NAME = "Rycerz"
+    CLASS_NAME: PlayerClasses = PlayerClasses.KNIGHT
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str = None) -> None:
         super().__init__(name)
-        self.name = name
-        self.max_dmg = 15
-        self.min_dmg = 10
-        self.max_hp = 80
-        self.max_mana = 20
-        self.hp = 80
-        self.mana = 20
-        self.rest_hp_rate = 20
-        self.rest_mana_rate = 5
-        self.skills = [
-            (Berserker(), Berserker().main),
-            ("Krwawe cięcie", self.bloody_slice),
-            ("Okrzyk bojowy", self.battle_shout),
-        ]
+        self.name: str = name
+        self.max_hp: int = 60
+        self.max_mana: int = 25
+        self.hp: int = 60
+        self.mana: int = 25
+        self.rest_hp: int = 15
+        self.rest_mana: int = 5
+        self.level_up_stats = LevelUpStats(hp=30, mana=10)
+        self.skills: SkillSet = SkillSet({
+            "1": Berserker(),
+            "2": BloodySlice(),
+            "3": BattleShout(),
+        })
 
-    def berserker(self, enemy: Enemy) -> bool:
-        # Returns True if action was corectly performed,otherwise returns False.
-        if self.mana >= 15:
-            self.mana -= 15
-            enemy.hp -= randint(self.min_dmg, self.max_dmg) * 2
-            return True
-        print("\nBrakuje many\n")
-        return False
-
-    def bloody_slice(self, enemy: Enemy):
-        if self.mana >= 10:
-            bleed = Bleed(100)
-            enemy.hp -= randint(self.min_dmg, self.max_dmg)
-            bleed.add_effect(enemy)
-            return True
-        print("\nBrakuje many\n")
-        return False
-
-    def battle_shout(self) -> bool:
-        # Returns True if action was corectly performed,otherwise returns False.
-        if self.mana >= 5:
-            self.min_dmg += 4
-            self.max_dmg += 4
-            return True
-        print("\nBrakuje many\n")
-        return False
+    @property
+    def attack(self) -> Attack:
+        return Attack(10, 12, effects=self.effects) if self.equipment.personal_items.get_item("broń") is None else self.equipment.personal_items.get_item("broń")

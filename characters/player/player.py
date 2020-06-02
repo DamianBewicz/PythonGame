@@ -1,90 +1,123 @@
-from random import randint
-from characters.enemies import Enemy
-from items.backpack import Backpack
+from math import floor
+from characters.character import Character
+from characters.player.level_up_stats import LevelUpStats
+from enums import EquipmentSections, AttackType
+from eq import Equipment
+from settings import MAX_DEFENSE
+from termcolor import colored
 
 
-class Player:
-    NAME = NotImplemented
+class NoManaException(Exception):
+    pass
+
+
+class HasMovedException(Exception):
+    pass
+
+
+class Player(Character):
+    CLASS_NAME = NotImplemented
+    ACTIONS: tuple = (
+        "Zwykły atak",
+        "Umiejętność",
+        "Odpoczynek",
+        "Plecak",
+    )
 
     def __init__(self, name: str) -> None:
-        self.name = name
-        self.max_dmg = NotImplemented
-        self.min_dmg = NotImplemented
-        self.max_hp = NotImplemented
-        self.max_mana = NotImplemented
-        self.hp = NotImplemented
-        self.mana = NotImplemented
-        self.rest_hp_rate = NotImplemented
-        self.rest_mana_rate = NotImplemented
-        self.backpack = Backpack()
-        self.money = 100
+        super().__init__(name)
+        self.rest_hp: int = NotImplemented
+        self.rest_mana: int = NotImplemented
         self.skills = NotImplemented
-        self.effects = []
-        self.actions = [
-            ("Zwykły atak", self.attack),
-            ("Atak specjalny", self.choose_skill),
-            ("Odpoczynek", self.rest),
-            ("Plecak", self.use),
-        ]
+        self.equipment: Equipment = Equipment(self.CLASS_NAME)
+        self.level_up_stats: LevelUpStats = NotImplemented
+        self.level: int = 1
 
-    def __str__(self) -> str:
-        return f"\n{self.name}\n" \
-               f"Życie postaci : {self.hp}\n" \
-               f"Mana postaci : {self.mana}\n"
+    def take_dmg(self, dmg_object) -> None:
+        try:
+            resistance_from_items = self.equipment.magic_resistance.get_value(dmg_object.source) / 200
+            magic_source_resistance = 1
+            self.hp -= floor(dmg_object.dmg * (magic_source_resistance - resistance_from_items))
+        except (KeyError, AttributeError):
+            physical_dmg_resistance = 1
+            total_armor = self.equipment.defense.amount
+            total_dmg_resistance = physical_dmg_resistance - total_armor / MAX_DEFENSE / 2
+            try:
+                shield = self.equipment.personal_items.get_item(EquipmentSections.SHIELD.value)
+                if shield.has_blocked():
+                    print(colored("\nAtak został zablokowany!\n", "green"))
+                else:
+                    self.hp -= floor(dmg_object.dmg * total_dmg_resistance)
+            except AttributeError:
+                self.hp -= floor(dmg_object.dmg * total_dmg_resistance)
 
-    def attack(self, enemy: Enemy) -> True:
-        enemy.hp -= randint(self.min_dmg, self.max_dmg)
-        return True
-
-    def perform_action(self, enemy: Enemy) -> None:
-        while True:
-            for number, action in enumerate(self.actions):
-                print(number + 1, action[0])
-            choice = int(input("\nWybierz akcje\n"))
-            result = True
-            if choice == 1 or choice == 2:
-                result = self.actions[choice - 1][1](enemy)
-            if choice == 3 or choice == 4:
-                result = self.actions[choice - 1][1]()
-            if result is True:
-                break
-
-    def choose_skill(self, enemy: Enemy) -> bool:
-        for number, skill in enumerate(self.skills):
-            print(f"{number + 1} {skill[0]}")
-        choice = int(input("\nWybierz atak\n")) - 1
-        return self.skills[choice][1](self, enemy)
-
-    def use(self) -> bool:
-        # Returns True if item was corectly used,otherwise returns False.
-        if not self.backpack.is_empty():
-            self.backpack.print_available_items()
-            choice = int(input("\nWybierz przedmiot\n"))
-            if self.backpack.items[choice - 1].use_item(self):
-                self.backpack.items.pop(choice - 1)
-                return True
-            return False
-        print("\nPlecak jest pusty!\n")
-        return False
-
-    def is_dead(self) -> bool:
-        return self.hp <= 0
-
-    def lose_item(self) -> None:
-        self.money = int(0.1 * self.money)
-        self.backpack.items.clear()
-
-    def rest(self) -> True:
-        self.hp += self.rest_hp_rate
+    def rest(self) -> None:
+        self.hp += self.rest_hp
+        self.mana += self.rest_mana
         if self.hp > self.max_hp:
             self.hp = self.max_hp
-
-        self.mana += self.rest_mana_rate
         if self.mana > self.max_mana:
             self.mana = self.max_mana
-        return True
+        raise HasMovedException
+
+    def introduce_actions(self) -> None:
+        for number, action in enumerate(self.ACTIONS, start=1):
+            print(number, action)
+
+    def perform_action(self, character) -> None:
+        if not self.cant_move():
+            while True:
+                actions = {
+                    "1": self.attack.perform,
+                    "2": self.perform_skill,
+                    "3": self.rest,
+                    "4": self.equipment.backpack.use_item_during_combat
+                }
+                self.introduce_actions()
+                try:
+                    choice = input("\nWybierz akcję\n")
+                    print()
+                    action = actions[choice]
+                    if choice == "1":
+                        action(character)
+                        raise HasMovedException
+                    elif choice == "2":
+                        action(character)
+                    elif choice == "3":
+                        action()
+                    else:
+                        action(self)
+                except HasMovedException:
+                    break
+                except KeyError:
+                    print("\nPodana wartość jest nieprawidłowa\n")
+                except NoManaException:
+                    print("\nBrakuje many\n")
+
+    def perform_skill(self, character) -> None:
+        while True:
+            chosen_skill = self.skills.choose()
+            if chosen_skill is None:
+                break
+            else:
+                if self.has_mana(chosen_skill):
+                    self.lose_mana(chosen_skill.mana_cost)
+                    if chosen_skill.TYPE in (AttackType.BUFF, AttackType.HEAL):
+                        chosen_skill.perform(self)
+                    else:
+                        chosen_skill.perform(character)
+                    raise HasMovedException
+                raise NoManaException
 
     def reset(self) -> None:
         self.hp = self.max_hp
         self.mana = self.max_mana
-        self.effects = []
+        self.effects.clear()
+
+    def level_up(self) -> None:
+        print("\nTwoja postać awansowała na następny poziom!\n")
+        self.level += 1
+        self.max_hp += self.level_up_stats.level_up_hp
+        self.max_mana += self.level_up_stats.level_up_mana
+        self.hp += self.level_up_stats.level_up_hp
+        self.mana += self.level_up_stats.level_up_mana

@@ -1,26 +1,37 @@
-from characters.enemies import Enemy
-from .player import Player
+from characters.player.level_up_stats import LevelUpStats
+from characters.player.player import Player
+from effects import FireShieldEffect
+from enums import PlayerClasses
+from math import ceil
+from skills import Attack, Fireball, FireShield, Lightining
+from skills.abstract_skills import SkillSet
 
 
 class Mage(Player):
-    NAME = "Mag"
+    CLASS_NAME: PlayerClasses = PlayerClasses.MAGE
 
     def __init__(self, name: str) -> None:
         super().__init__(name)
-        self.name = name
-        self.max_dmg = 7
-        self.min_dmg = 5
-        self.max_hp = 50
-        self.max_mana = 40
-        self.hp = 50
-        self.mana = 40
-        self.rest_hp_rate = 10
-        self.rest_mana_rate = 15
-        self.skills = [("Kula ognia", self.fireball), ]
+        self.name: str = name
+        self.max_hp: int = 40
+        self.max_mana: int = 60
+        self.hp: int = 40
+        self.mana: int = 60
+        self.rest_hp: int = 10
+        self.rest_mana: int = 20
+        self.level_up_stats = LevelUpStats(hp=15, mana=25)
+        self.skills: SkillSet = SkillSet({
+            "1": Fireball(),
+            "2": FireShield(),
+            "3": Lightining(),
+        })
 
-    def fireball(self, enemy: Enemy) -> bool:
-        if self.mana >= 20:
-            enemy.hp -= 25
-            return True
-        print("\nBrakuje many\n")
-        return False
+    @property
+    def attack(self) -> Attack:
+        return Attack(10, 12, effects=self.effects) if self.equipment.personal_items.get_item("broń") is None else self.equipment.personal_items.get_item("broń")
+
+    def take_dmg(self, damage_object) -> None:
+        if self.effects.contains(FireShieldEffect):
+            self.hp -= ceil(FireShieldEffect.DMG_RED * damage_object.dmg)
+            return
+        super().take_dmg(damage_object)

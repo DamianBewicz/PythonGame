@@ -1,3 +1,4 @@
-from .enemy import Enemy
-from .blacksmith import Blacksmith
-from .villager import Villager
+from .goblin import Goblin
+from .orc import Orc
+from .shaman import Shaman
+from .warlock import Warlock

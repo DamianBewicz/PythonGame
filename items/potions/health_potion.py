@@ -1,43 +1,31 @@
-from items.item import Item
+from items.abstract_item import Potion
 
 
-class HealthPotion(Item):
-    hp = NotImplemented
-    cost = NotImplemented
+class HealthPotion(Potion):
+    HP_REGEN: int = NotImplemented
 
-    def __repr__(self) -> str:
-        return "NotImplemented"
+    def __str__(self) -> str:
+        return f"{self.NAME}: Regeneruje {self.HP_REGEN} punktów życia"
 
-    def use_item(self, player) -> False:
-        # Return false, use items makes no round loss
-        if player.hp >= player.max_hp:
-            print("\nMasz pełne życie!\n")
-        else:
-            player.hp += self.hp
-            if player.hp > player.max_hp:
-                player.hp = player.max_hp
-        return False
+    def drink(self, player: 'Player') -> None:
+        player.heal(self.HP_REGEN)
 
 
 class MinorHealthPotion(HealthPotion):
-    hp = 20
-    cost = 40
-
-    def __str__(self) -> str:
-        return "Mniejsza mikstura zdrowia"
+    HP_REGEN: int = 30
+    NAME: str = "Mniejsza mikstura zdrowia"
 
 
 class NormalHealthPotion(HealthPotion):
-    hp = 25
-    cost = 65
-
-    def __str__(self) -> str:
-        return "Mikstura zdrowia"
+    HP_REGEN: int = 40
+    NAME: str = "Mikstura zdrowia"
 
 
 class GreaterHealthPotion(HealthPotion):
-    hp = 35
-    cost = 100
+    HP_REGEN: int = 60
+    NAME: str = "Większa mikstura zdrowia"
 
-    def __str__(self) -> str:
-        return "Większa mikstura zdrowia"
+
+class ElixirOfLife(HealthPotion):
+    HP_REGEN: int = 100
+    NAME: str = "Eliksir życia"

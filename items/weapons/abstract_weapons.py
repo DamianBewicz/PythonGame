@@ -32,7 +32,6 @@ class Weapon(EquipableItem):
         if self._critically_strikes:
             damage_multiplier = 2
         total_dmg = damage_multiplier * randint(self.min_dmg, self.max_dmg)
-        print(total_dmg)
         return total_dmg
 
     @property

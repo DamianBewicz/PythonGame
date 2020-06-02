@@ -1,6 +1,7 @@
 from castle import OldCastle
 from termcolor import colored
 from os import system
+from castle.new_castle import NewCastle
 from characters.enemies import Goblin, Orc, Warlock, Shaman
 from characters.player import Knight, Paladin, Mage
 from minigames.blackjack import Blackjack
@@ -20,8 +21,8 @@ class Game:
     ENEMIES: list = [
         Goblin,
         Orc,
-        Warlock,
-        Shaman
+        Shaman,
+        Warlock
     ]
     LAST_PART = len(ENEMIES)
 
@@ -29,7 +30,7 @@ class Game:
         self.player = None
         self.part: int = 0
         self.game_over: bool = False
-        self.old_castle = None
+        self.locations = []
 
     def create_character(self) -> None:
         chosen_name = input("\nWybierz imię swojej postaci\n")
@@ -39,11 +40,18 @@ class Game:
                 classes_names = [cls.CLASS_NAME.value.capitalize() for cls in self.AVAIBLE_CLASSES]
                 introduce_from_list(classes_names)
                 chosen_character = input("\nWybierz klasę swojej postaci\n")
-                self.player = self.AVAIBLE_CLASSES[int(chosen_character)](chosen_name)
-                self.old_castle = OldCastle(self.player)  # TODO: self.part
+                self.player = self.AVAIBLE_CLASSES[int(chosen_character) - 1](chosen_name)
+                self.add_locations(self.player)
                 return
             except KeyError:
                 print("\nPodana wartość jest nieprawidłowa\n")
+
+    def add_locations(self, player) -> None:
+        castles = [
+            OldCastle(player),
+            NewCastle(player)
+        ]
+        self.locations.extend(castles)
 
     def start_fight(self) -> None:
         enemy = Game.ENEMIES[self.part]()
@@ -70,22 +78,23 @@ class Game:
             system("clear")
 
     def continue_story(self) -> None:
-        self.part += 1
         self.start_fight()
+        self.part += 1
         if self.part == self.LAST_PART:
             raise GameHasFinished(colored("\nBrawo, pokonałeś wszystkich wrogów, moje gratulacje :D\n", "blue"))
         self.player.reset()
+        self.player.level_up()
 
     def choose_main_actions(self) -> None:
         main_actions_names = (
             "Kontynuuj historię",
-            "Idź do starego zamku",
+            "Idź do zamku",
             "Ekwipunek",
             "Zagraj w Blackjack'a",
         )
         main_actions = (
             self.continue_story,
-            self.old_castle.visit_merchant,
+            self.choose_castle,
             self.player.equipment.choose_main_action,
             Blackjack.main
         )
@@ -104,6 +113,28 @@ class Game:
             except GameHasFinished as reason:
                 print(reason)
                 return None
+
+    def choose_castle(self) -> None:
+        question = "\nWybierz lokacje\n"
+        main_actions_names = (
+            "Idź do starego zamku",
+            "Idź do nowego zamku",
+        )
+        main_actions = (
+            self.locations[0].visit_merchant,
+            self.locations[1].visit_merchant
+        )
+
+        while True:
+            try:
+                introduce_from_list(main_actions_names)
+                chosen_action = choose_item(main_actions, question)
+                if chosen_action is not None:
+                    chosen_action()
+                else:
+                    break
+            except IndexError:
+                print("\nPodana wartość jest nieprawidłowa!\n")
 
 
 def main() -> None:

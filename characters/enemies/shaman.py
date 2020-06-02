@@ -17,11 +17,6 @@ class Shaman(Enemy):
     def attack(self) -> Attack:
         return Attack(10, 12, effects=self.effects)
 
-    def heal(self, effect) -> None:
-        self.hp += effect.hp
-        if self.hp > self.max_hp:
-            self.hp = self.max_hp
-
     def perform_action(self, character) -> None:
         if not self.cant_move():
             move = self.randomize_move()[0]
@@ -38,6 +33,8 @@ class Shaman(Enemy):
                             self.lose_mana(move.mana_cost)
                         else:
                             self.attack.perform(character)
+                else:
+                    self.attack.perform(character)
 
     def randomize_move(self):
         possible_moves = [self.attack]

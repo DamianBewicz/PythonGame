@@ -1,10 +1,11 @@
 from enums import PlayerClasses, ItemType
 from eq.defense import MagicResistance, Defense
 from items.abstract_item import EquipableItem
-from utils import introduce_from_list, choose_item, choose_item
+from utils import introduce_from_list, choose_item
 from .backpack import Backpack
 from .gold import Gold
 from .personalitems import PersonalItems
+from termcolor import colored
 
 
 class Equipment:
@@ -12,7 +13,7 @@ class Equipment:
         self.backpack: Backpack = Backpack()
         self.personal_items: PersonalItems = PersonalItems()
         self.player_class_type: PlayerClasses = player_class_type
-        self.magic_resistance: MagicResistance = MagicResistance(shadow=50)
+        self.magic_resistance: MagicResistance = MagicResistance()
         self.defense: Defense = Defense()
         self.gold: Gold = Gold()
 
@@ -50,9 +51,9 @@ class Equipment:
                     self.backpack.remove_item(item)
                     self._wear_item(item)
                 else:
-                    print("\nNie można założyć przedmiotu!\n")
+                    print(colored("\nNie można założyć przedmiotu!\n"), "red")
             except IndexError:
-                print("\nPodany numer jest nieprawidłowy\n")
+                print(colored("\nPodany numer jest nieprawidłowy\n"), "red")
 
     def _choose_item_to_take_off(self) -> None:
         while True:
@@ -76,7 +77,7 @@ class Equipment:
                 pass
             self.backpack.append(item)
         else:
-            print("\nWybrany slot jest pusty!\n")
+            print(colored("\nWybrany slot jest pusty!\n", "red"))
 
     def _wear_item(self, item) -> None:
         if self.personal_items.is_in_slot(item):

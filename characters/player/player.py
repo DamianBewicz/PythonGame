@@ -1,5 +1,6 @@
 from math import floor
 from characters.character import Character
+from characters.player.level_up_stats import LevelUpStats
 from enums import EquipmentSections, AttackType
 from eq import Equipment
 from settings import MAX_DEFENSE
@@ -29,6 +30,8 @@ class Player(Character):
         self.rest_mana: int = NotImplemented
         self.skills = NotImplemented
         self.equipment: Equipment = Equipment(self.CLASS_NAME)
+        self.level_up_stats: LevelUpStats = NotImplemented
+        self.level: int = 1
 
     def take_dmg(self, dmg_object) -> None:
         try:
@@ -110,3 +113,11 @@ class Player(Character):
         self.hp = self.max_hp
         self.mana = self.max_mana
         self.effects.clear()
+
+    def level_up(self) -> None:
+        print("\nTwoja postać awansowała na następny poziom!\n")
+        self.level += 1
+        self.max_hp += self.level_up_stats.level_up_hp
+        self.max_mana += self.level_up_stats.level_up_mana
+        self.hp += self.level_up_stats.level_up_hp
+        self.mana += self.level_up_stats.level_up_mana

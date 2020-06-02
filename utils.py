@@ -1,5 +1,4 @@
 from itertools import zip_longest
-from items.abstract_item import Item
 
 
 def introduce_from_list(list_: iter, space=False) -> None:

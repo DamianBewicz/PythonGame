@@ -11,4 +11,4 @@ class NewCastle(Castle):
     BLACKSMITH: Blacksmith = ExperiencedBlacksmith()
     ENCHANTER: Enchanter = ExperiencedEnchanter()
     ALCHEMIST: Alchemist = ExperiencedAlchemist()
-    REQUIRED_STORY_LINE: int = 0
+    REQUIRED_LEVEL: int = 3

@@ -5,8 +5,8 @@ from skills.abstract_skills import Heal, MagicDmgDebuff
 
 class HealingRain(Heal):
 
-    def __init__(self, mana_cost: int = 30, hp: int = 20) -> None:
-        super().__init__(mana_cost, hp)
+    def __init__(self, mana_cost: int = 30, heal: int = 20) -> None:
+        super().__init__(mana_cost, heal)
 
 
 class EarthQuake(MagicDmgDebuff):

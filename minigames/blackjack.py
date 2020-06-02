@@ -69,7 +69,7 @@ class Dealer:
         self.cards: list = []
         self.bet: int = 0
         self.min_bet: int = 10
-        self.max_bet: int = 50
+        self.max_bet: int = 200
         self.has_finished: bool = False
 
     def __str__(self) -> str:

@@ -7,9 +7,9 @@ from skills import Curse, HealthDrain, ManaDrain, SummonImp, Attack
 class Warlock(Enemy):
     def __init__(self, name: str = "Czarnoksiężnik") -> None:
         super().__init__(name)
-        self.max_hp: int = 100
+        self.max_hp: int = 400
         self.max_mana: int = 200
-        self.hp: int = 100
+        self.hp: int = 400
         self.mana: int = 200
         self.skills: list = [Curse(), HealthDrain(), ManaDrain(), SummonImp()]
         self.pet: list = []
@@ -23,7 +23,6 @@ class Warlock(Enemy):
             if self.pet:
                 self.pet[0].perform(character)
             move = self.randomize_move()[0]
-            print(move)
             if type(move) == SummonImp:
                 if not self.pet and self.has_mana(move):
                     move.perform(self)
@@ -44,7 +43,7 @@ class Warlock(Enemy):
     def randomize_move(self) -> None:
         possible_moves = [self.attack]
         possible_moves.extend(self.skills)
-        return choices(possible_moves, [10, 15, 45, 15, 15])
+        return choices(possible_moves, [25, 15, 30, 15, 15])
 
     def add_pet(self, pet) -> None:
         self.pet.append(pet)

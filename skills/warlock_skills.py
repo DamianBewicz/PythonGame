@@ -20,7 +20,7 @@ class HealthDrain(MagicDamageSkill):
     SOURCE = MagicNature.SHADOW
 
     def __init__(self, mana_cost: int = 30) -> None:
-        super().__init__(mana_cost, min_dmg=500, max_dmg=500)
+        super().__init__(mana_cost, min_dmg=15, max_dmg=20)
 
     @property
     def dmg(self) -> int:

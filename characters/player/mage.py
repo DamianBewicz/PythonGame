@@ -1,3 +1,4 @@
+from characters.player.level_up_stats import LevelUpStats
 from characters.player.player import Player
 from effects import FireShieldEffect
 from enums import PlayerClasses
@@ -12,12 +13,13 @@ class Mage(Player):
     def __init__(self, name: str) -> None:
         super().__init__(name)
         self.name: str = name
-        self.max_hp: int = 4000
-        self.max_mana: int = 6000
-        self.hp: int = 4000
-        self.mana: int = 6000
+        self.max_hp: int = 40
+        self.max_mana: int = 60
+        self.hp: int = 40
+        self.mana: int = 60
         self.rest_hp: int = 10
         self.rest_mana: int = 20
+        self.level_up_stats = LevelUpStats(hp=15, mana=25)
         self.skills: SkillSet = SkillSet({
             "1": Fireball(),
             "2": FireShield(),

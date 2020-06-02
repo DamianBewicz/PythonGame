@@ -11,4 +11,4 @@ class OldCastle(Castle):
     BLACKSMITH: Blacksmith = AmateurBlacksmith()
     ENCHANTER: Enchanter = AmateurEnchanter()
     ALCHEMIST: Alchemist = AmateurAlchemist()
-    REQUIRED_STORY_LINE: int = 2
+    REQUIRED_LEVEL: int = 1
